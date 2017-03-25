@@ -22,7 +22,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <TextField>
+            <TextField fx:id="tfNome">
                <VBox.margin>
                   <Insets right="10.0" top="5.0" />
                </VBox.margin>
@@ -32,7 +32,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="cbSigla" prefWidth="150.0" />
             <Label text="Status">
                <VBox.margin>
                   <Insets />
@@ -40,15 +40,15 @@
             </Label>
             <HBox prefHeight="25.0" prefWidth="600.0">
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="Ativo">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="Status" />
-                     </toggleGroup>
+                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
                      <HBox.margin>
                         <Insets left="10.0" right="20.0" />
                      </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgStatus" />
+                     </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Inativo" toggleGroup="$Status">
+                  <RadioButton mnemonicParsing="false" text="Inativo" toggleGroup="$tgStatus">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -57,17 +57,17 @@
             </HBox>
             <HBox prefHeight="44.0" prefWidth="600.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
+                  <Button mnemonicParsing="false" onAction="#btNovo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
+                  <Button mnemonicParsing="false" onAction="#btEditar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
+                  <Button mnemonicParsing="false" onAction="#btSalvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -82,11 +82,11 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView>
+            <TableView fx:id="tbCidade">
                <columns>
-                  <TableColumn prefWidth="353.0" text="Cidade" />
-                  <TableColumn minWidth="0.0" prefWidth="88.0" text="UF" />
-                  <TableColumn prefWidth="148.0" text="Status" />
+                  <TableColumn fx:id="tcCidade" prefWidth="353.0" text="Cidade" />
+                  <TableColumn fx:id="tcUf" minWidth="0.0" prefWidth="88.0" text="UF" />
+                  <TableColumn fx:id="tcStatus" prefWidth="148.0" text="Status" />
                </columns>
             </TableView>
          </children>
