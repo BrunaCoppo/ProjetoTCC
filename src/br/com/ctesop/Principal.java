@@ -18,12 +18,12 @@ public class Principal extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        String url = "/br/com/ctesop/view/CadastroEstado.fxml";
+        String url = "/br/com/ctesop/view/Menu.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Sistema");
+        primaryStage.setTitle("Sistema de Controle de Produção Agrícola");
         primaryStage.show();
     }
 }

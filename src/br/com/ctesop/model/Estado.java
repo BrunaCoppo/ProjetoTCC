@@ -46,7 +46,7 @@ public class Estado {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Nome obrigatório.");
         }
-       if (nome.trim().length() < 2) {
+        if (nome.trim().length() < 2) {
             throw new ExceptionValidacao("Nome muito curto.");
         }
         if (nome.trim().length() > 200) {
@@ -71,5 +71,18 @@ public class Estado {
         }
 
         this.sigla = sigla.trim().toUpperCase();
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Estado) {
+            return ((Estado) o).getCodigo() == getCodigo();
+        }
+        return false;
     }
 }

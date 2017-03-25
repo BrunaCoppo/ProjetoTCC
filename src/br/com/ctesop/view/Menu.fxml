@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="br.com.ctesop.control.MenuController">
+    <stylesheets>
+        <URL value="@Menu.css" />
+    </stylesheets>
+   <children>
+      <MenuBar layoutX="33.0" layoutY="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Cadastros">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#cidade" text="Cidade" />
+                  <MenuItem mnemonicParsing="false" onAction="#estado" text="Estado" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Movimentações" />
+          <Menu mnemonicParsing="false" text="Relatórios" />
+            <Menu mnemonicParsing="false" text="Sistema">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Sobre" />
+                  <MenuItem mnemonicParsing="false" text="Sair" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

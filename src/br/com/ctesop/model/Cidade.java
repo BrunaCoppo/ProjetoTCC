@@ -9,10 +9,9 @@ import br.com.ctesop.controller.util.ExceptionValidacao;
 public class Cidade {
 
     private String nome;
-    private String sigla;
+    private Estado estado;
     private String status;
     private int codigo;
-    private Estado estado;
 
     public int getCodigo() {
         return codigo;
@@ -55,18 +54,4 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public String getSigla() {
-        return sigla;
-    }
-
-    public void setSigla(String sigla) throws ExceptionValidacao {
-        if (sigla.isEmpty()) {
-            throw new ExceptionValidacao("Sigla obrigatória");
-        }
-        if (sigla.trim().length() != 2) {
-            throw new ExceptionValidacao("Sigla inválida");
-
-        }
-        this.sigla = sigla.toUpperCase();
-    }
 }

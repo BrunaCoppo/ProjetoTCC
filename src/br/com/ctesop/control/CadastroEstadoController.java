@@ -76,6 +76,13 @@ public class CadastroEstadoController implements Initializable {
     }
 
     @FXML
+    public void novo(ActionEvent event) {
+        codigo = 0;
+        limpar();
+        habilitar(true);
+    }
+
+    @FXML
     public void editar(ActionEvent event) {
         if (tbEstado.getSelectionModel().isEmpty()) {
             return;
@@ -90,13 +97,6 @@ public class CadastroEstadoController implements Initializable {
         } else {
             rbInativo.setSelected(true);
         }
-        habilitar(true);
-    }
-
-    @FXML
-    public void novo(ActionEvent event) {
-        codigo = 0;
-        limpar();
         habilitar(true);
     }
 
@@ -137,7 +137,7 @@ public class CadastroEstadoController implements Initializable {
 
     private void atualizarTabela() {
         try {
-            tbEstado.setItems(EstadoDAO.listar());
+            tbEstado.setItems(EstadoDAO.listar(false));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
         }
@@ -159,4 +159,5 @@ public class CadastroEstadoController implements Initializable {
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
+
 }

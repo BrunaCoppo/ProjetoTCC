@@ -28,9 +28,13 @@ public class EstadoDAO {
         con.confirmar();
     }
 
-    public static ObservableList<Estado> listar() throws Exception {
+    public static ObservableList<Estado> listar(boolean somenteAtivos) throws Exception {
 
-        String sql = "Select * from tbestado order by nomeestado";
+        String sql = "select * from tbestado ";
+        if (somenteAtivos) {
+            sql += " where status='A' ";
+        }
+        sql += " order by nomeestado";
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
 
