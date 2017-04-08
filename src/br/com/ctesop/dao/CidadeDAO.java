@@ -30,12 +30,16 @@ public class CidadeDAO {
 
     }
 
-    public static ObservableList<Cidade> listar() throws Exception {
+    public static ObservableList<Cidade> listar(boolean somenteAtivos) throws Exception {
         String sql = ""
                 + " select *"
                 + " from tbcidade as c"
-                + " inner join tbestado as e on e.codestado = c.codestado"
-                + " order by c.status, c.nomecidade ";
+                + " inner join tbestado as e on e.codestado = c.codestado";
+        if (somenteAtivos) {
+            sql += " where status='A' ";
+        }
+        sql += " order by c.status, c.nomecidade ";
+
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();

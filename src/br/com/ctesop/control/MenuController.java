@@ -17,9 +17,6 @@ import javafx.stage.Stage;
  */
 public class MenuController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -27,18 +24,24 @@ public class MenuController implements Initializable {
 
     @FXML
     public void cidade(ActionEvent event) {
-        abrir("CadastroCidade.fxml", "Cadastro de Cidades");
+        abrir("CadastroCidade", "Cadastro de Cidades");
     }
 
     @FXML
     public void estado(ActionEvent event) {
-        abrir("CadastroEstado.fxml", "Cadastro de Estados");
+        abrir("CadastroEstado", "Cadastro de Estados");
+    }
+    
+    
+    @FXML
+    void produto(ActionEvent event) {
+        abrir("CadastroProduto", "Cadastro de Produto");
     }
 
     @SuppressWarnings("UseSpecificCatch")
     private void abrir(String arquivo, String titulo) {
         try {
-            String url = "/br/com/ctesop/view/" + arquivo;
+            String url = "/br/com/ctesop/view/" + arquivo + ".fxml";
             Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
             Stage stage = new Stage();
             stage.setTitle(titulo);

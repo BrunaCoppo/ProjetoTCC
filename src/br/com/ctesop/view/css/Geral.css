@@ -1,0 +1,25 @@
+.botao-novo,
+.botao-editar,
+.botao-salvar,
+.botao-cancelar {
+    -fx-background-size: 13px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 10;
+    -fx-padding: 8 0 8 8;
+}
+
+.botao-novo {
+    -fx-background-image: url('../img/add-1.png');
+}
+
+.botao-editar {
+    -fx-background-image: url('../img/edit.png');
+}
+
+.botao-salvar {
+    -fx-background-image: url('../img/save.png');
+}
+
+.botao-cancelar {
+    -fx-background-image: url('../img/garbage-1.png');
+}

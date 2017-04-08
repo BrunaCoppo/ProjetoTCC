@@ -14,50 +14,35 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroCidadeController">
+
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="br.com.ctesop.control.CadastroCooperativaController">
    <children>
       <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
          <children>
-            <Label text="Nome *">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="tfNome">
-               <VBox.margin>
-                  <Insets right="10.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <Label text="Estado *">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <HBox spacing="5.0">
-               <children>
-                  <ComboBox fx:id="cbEstado" prefWidth="250.0" />
-                  <Button fx:id="btnCadastroEstado" mnemonicParsing="false" onAction="#cadastroEstado" text="•••" />
-               </children>
-            </HBox>
-            <Label text="Status *">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
+            <Label text="Nome *" />
+            <TextField fx:id="tfNome" />
+            <Label text="Cidade *" />
+            <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+            <Label text="Número Unidade *" />
+            <TextField fx:id="tfUnidade" />
+            <Label text="Status *" />
             <HBox prefHeight="25.0" prefWidth="600.0">
                <children>
                   <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="status" />
+                     </toggleGroup>
                      <HBox.margin>
                         <Insets left="10.0" right="20.0" />
                      </HBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tgStatus" />
-                     </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$tgStatus">
-                     <HBox.margin>
+                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
+                     <padding>
                         <Insets right="20.0" />
-                     </HBox.margin>
+                     </padding>
                   </RadioButton>
                </children>
             </HBox>
@@ -88,12 +73,13 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tbCidade">
-               <columns>
-                  <TableColumn fx:id="tcCidade" prefWidth="353.0" text="Cidade" />
-                  <TableColumn fx:id="tcUf" minWidth="0.0" prefWidth="88.0" text="UF" />
-                  <TableColumn fx:id="tcStatus" prefWidth="148.0" text="Status" />
-               </columns>
+            <TableView fx:id="tbCooperativa" prefHeight="239.0" prefWidth="576.0">
+              <columns>
+                <TableColumn fx:id="tcNome" prefWidth="279.0" text="Nome" />
+                <TableColumn fx:id="tcCidade" prefWidth="133.0" text="Cidade" />
+                  <TableColumn fx:id="tcUnidade" prefWidth="70.0" text="Unidade" />
+                  <TableColumn fx:id="tcStatus" prefWidth="91.0" text="Status" />
+              </columns>
             </TableView>
             <Label text="* Campos obrigatórios">
                <font>
@@ -101,9 +87,6 @@
                </font>
             </Label>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
       </VBox>
    </children>
 </AnchorPane>

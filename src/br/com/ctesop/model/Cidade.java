@@ -13,6 +13,20 @@ public class Cidade {
     private String status;
     private int codigo;
 
+    public Cidade() {
+        this.codigo = 0;
+    }
+
+    public Cidade(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    public Cidade (int codigo, String nome){
+       this.codigo = codigo;
+        this.nome = nome;
+        
+    }
+
     public int getCodigo() {
         return codigo;
     }
@@ -46,6 +60,9 @@ public class Cidade {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Nome obrigatório.");
         }
+        if (nome.trim().length() < 2) {
+            throw new ExceptionValidacao("Nome muito curto.");
+        }
 
         if (nome.trim().length() > 200) {
             throw new ExceptionValidacao("Nome muito longo.");
@@ -54,4 +71,17 @@ public class Cidade {
         this.nome = nome;
     }
 
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Cidade) {
+            return ((Cidade) o).getCodigo() == getCodigo();
+
+        }
+        return false;
+    }
 }

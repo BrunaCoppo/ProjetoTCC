@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroEstadoController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroEstadoController">
    <children>
       <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -76,7 +76,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-excluir" text="Cancelar">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -86,7 +86,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tbEstado">
+            <TableView fx:id="tbEstado" prefWidth="576.0">
                <columns>
                   <TableColumn fx:id="tcEstado" prefWidth="353.0" text="Estado" />
                   <TableColumn fx:id="tcSigla" minWidth="0.0" prefWidth="88.0" text="Sigla" />

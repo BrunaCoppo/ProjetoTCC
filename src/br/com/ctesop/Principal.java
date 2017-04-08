@@ -22,6 +22,7 @@ public class Principal extends Application{
         FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Sistema de Controle de Produção Agrícola");
         primaryStage.show();

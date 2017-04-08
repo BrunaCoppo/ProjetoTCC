@@ -138,6 +138,7 @@ public class CadastroEstadoController implements Initializable {
     private void atualizarTabela() {
         try {
             tbEstado.setItems(EstadoDAO.listar(false));
+            tbEstado.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
         }

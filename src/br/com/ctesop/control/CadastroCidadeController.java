@@ -150,6 +150,7 @@ public class CadastroCidadeController implements Initializable {
             stage.setTitle("Cadastro de Estado");
             stage.setScene(scene);
             stage.show();
+            //Carregar o estado na cidade alterado
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -163,7 +164,8 @@ public class CadastroCidadeController implements Initializable {
 
     private void atualizarTabela() {
         try {
-            tbCidade.setItems(CidadeDAO.listar());
+            tbCidade.setItems(CidadeDAO.listar(false));
+            tbCidade.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
         }
