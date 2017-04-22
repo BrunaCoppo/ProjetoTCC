@@ -4,14 +4,16 @@ import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.dao.CidadeDAO;
 import br.com.ctesop.dao.CooperativaDAO;
-import br.com.ctesop.dao.EstadoDAO;
 import br.com.ctesop.model.Cidade;
 import br.com.ctesop.model.Cooperativa;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
@@ -20,6 +22,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -74,13 +78,16 @@ public class CadastroCooperativaController implements Initializable {
     @FXML
     private TableColumn<Cooperativa, String> tcStatus;
 
+    @FXML
+    private Button btnCadastrarCidade;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tcCidade.setCellValueFactory(new PropertyValueFactory<>("Cidade"));
+        tcCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
         tcUnidade.setCellValueFactory(new PropertyValueFactory<>("unidade"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        carregarComboEstado();
+        carregarComboCidade();
         atualizarTabela();
         habilitar(false);
     }
@@ -102,7 +109,7 @@ public class CadastroCooperativaController implements Initializable {
         codigo = selecionado.getCodigo();
         tfNome.setText(selecionado.getNome());
         cbCidade.getSelectionModel().select(selecionado.getCidade());
-        
+        tfUnidade.setText(selecionado.getNome());
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
@@ -119,6 +126,7 @@ public class CadastroCooperativaController implements Initializable {
             cooperativa.setCodigo(codigo);
             cooperativa.setNome(tfNome.getText());
             cooperativa.setCidade(cbCidade.getSelectionModel().getSelectedItem());
+            //cooperativa.setUnidade(tfUnidade.);
 
             if (rbAtivo.isSelected()) {
                 cooperativa.setStatus("A");
@@ -138,12 +146,34 @@ public class CadastroCooperativaController implements Initializable {
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
         }
+
     }
 
     @FXML
     void cancelar(ActionEvent event) {
         habilitar(false);
         limpar();
+    }
+
+    @FXML
+    void cadastroCidade(ActionEvent event) {
+        try {
+            String url = "/br/com/ctesop/view/CadastroCidade.fxml";
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Cidade");
+            stage.setScene(scene);
+            stage.show();
+            //Carregar o estado na cidade alterado
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    carregarComboCidade();
+                }
+            });
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir cadastro de cidade.", e);
+        }
     }
 
     private void atualizarTabela() {
@@ -153,12 +183,15 @@ public class CadastroCooperativaController implements Initializable {
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
         }
+
     }
 
     private void limpar() {
         tfNome.setText("");
         cbCidade.getSelectionModel().select(0);
+        tfUnidade.setText("");
         rbAtivo.setSelected(true);
+
     }
 
     private void habilitar(boolean habilitar) {
@@ -168,12 +201,13 @@ public class CadastroCooperativaController implements Initializable {
         btnCancelar.setDisable(!habilitar);
         tfNome.setDisable(!habilitar);
         cbCidade.setDisable(!habilitar);
-        // btn.setDisable(!habilitar);
+        btnCadastrarCidade.setDisable(!habilitar);
+        tfUnidade.setDisable(!habilitar);
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
 
-    private void carregarComboEstado() {
+    private void carregarComboCidade() {
         try {
             cbCidade.setItems(CidadeDAO.listar(true));
         } catch (Exception e) {

@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="br.com.ctesop.control.CadastroCooperativaController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroCooperativaController">
    <children>
       <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -25,7 +24,12 @@
             <Label text="Nome *" />
             <TextField fx:id="tfNome" />
             <Label text="Cidade *" />
-            <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+                  <Button fx:id="btnCadastrarCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
+               </children>
+            </HBox>
             <Label text="Número Unidade *" />
             <TextField fx:id="tfUnidade" />
             <Label text="Status *" />

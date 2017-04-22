@@ -1,5 +1,7 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
+
 /**
  *
  * @author Bruna
@@ -41,7 +43,18 @@ public class Terra {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(String descricao) throws ExceptionValidacao{
+        if (descricao.isEmpty()) {
+            throw new ExceptionValidacao("Descrição obrigatória.");
+        }
+        if (descricao.trim().length() < 2) {
+            throw new ExceptionValidacao("Descriçao muito curta.");
+        }
+
+        if (descricao.trim().length() > 200) {
+            throw new ExceptionValidacao("Descrição muito longa.");
+
+        }
         this.descricao = descricao;
     }
 
@@ -53,5 +66,18 @@ public class Terra {
         this.status = status;
     }
     
+    @Override
+    public String toString() {
+        return getDescricao();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Terra) {
+            return ((Terra) o).getCodigo() == getCodigo();
+
+        }
+        return false;
+    }
     
 }

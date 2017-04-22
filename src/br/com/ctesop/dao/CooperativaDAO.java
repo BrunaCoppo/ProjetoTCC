@@ -34,12 +34,12 @@ public class CooperativaDAO {
     public static ObservableList<Cooperativa> listar(boolean somenteAtivos) throws Exception {
         String sql = ""
                 + " select *"
-                + " from tbcooperativa as co"
-                + " inner join tbcidade as ci on ci.codcidade = co.codcidade";
+                + " from tbcooperativa as coo"
+                + " inner join tbcidade as ci on ci.codcidade = coo.codcidade";
         if (somenteAtivos) {
             sql += " where status='A' ";
         }
-        sql += " order by co.status, co.nomecooperativa ";
+        sql += " order by coo.status, coo.nomecooperativa ";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);

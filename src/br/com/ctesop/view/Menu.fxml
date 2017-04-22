@@ -18,10 +18,10 @@
               <MenuItem mnemonicParsing="false" onAction="#cidade" text="Cidade" />
                   <MenuItem mnemonicParsing="false" onAction="#estado" text="Estado" />
                   <MenuItem mnemonicParsing="false" onAction="#produto" text="Produto" />
-                  <MenuItem mnemonicParsing="false" onAction="#produto" text="Cooperativa" />
-                  <MenuItem mnemonicParsing="false" onAction="#produto" text="Terra" />
-                  <MenuItem mnemonicParsing="false" onAction="#produto" text="Tipo Safra" />
-                  <MenuItem mnemonicParsing="false" onAction="#produto" text="Tipo Manejo" />
+                  <MenuItem mnemonicParsing="false" onAction="#cooperativa" text="Cooperativa" />
+                  <MenuItem mnemonicParsing="false" onAction="#terra" text="Terra" />
+                  <MenuItem mnemonicParsing="false" onAction="#tipoSafra" text="Tipo Safra" />
+                  <MenuItem mnemonicParsing="false" onAction="#tipoManejo" text="Tipo Manejo" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Movimentações" />
