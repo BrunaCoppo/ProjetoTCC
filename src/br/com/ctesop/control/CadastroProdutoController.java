@@ -30,7 +30,7 @@ public class CadastroProdutoController implements Initializable {
     private TextField tfNome;
 
     @FXML
-    private TextField tfMarca;
+    private TextField tfDescricao;
 
     @FXML
     private RadioButton rbAtivo;
@@ -68,11 +68,12 @@ public class CadastroProdutoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tcMarca.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tcMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         atualizarTabela();
         habilitar(false);
+        
     }
 
     @FXML
@@ -92,7 +93,7 @@ public class CadastroProdutoController implements Initializable {
         Produto selecionado = tbProduto.getSelectionModel().getSelectedItem();
         codigo = selecionado.getCodigo();
         tfNome.setText(selecionado.getNome());
-        tfMarca.setText(selecionado.getMarca());
+        tfDescricao.setText(selecionado.getDescricao());
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
@@ -107,7 +108,7 @@ public class CadastroProdutoController implements Initializable {
             Produto produto = new Produto();
             produto.setCodigo(codigo);
             produto.setNome(tfNome.getText());
-            produto.setMarca(tfMarca.getText());
+            produto.setMarca(tfDescricao.getText());
 
             if (rbAtivo.isSelected()) {
                 produto.setStatus("A");
@@ -126,6 +127,7 @@ public class CadastroProdutoController implements Initializable {
             Alerta.alerta("Erro ao salvar.", e);
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
+            
         }
     }
 
@@ -141,12 +143,13 @@ public class CadastroProdutoController implements Initializable {
             tbProduto.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+           
         }
     }
 
     private void limpar() {
         tfNome.setText("");
-        tfMarca.setText("");
+        tfDescricao.setText("");
         rbAtivo.setSelected(true);
     }
 
@@ -156,7 +159,7 @@ public class CadastroProdutoController implements Initializable {
         btnSalvar.setDisable(!habilitar);
         btnCancelar.setDisable(!habilitar);
         tfNome.setDisable(!habilitar);
-        tfMarca.setDisable(!habilitar);
+        tfDescricao.setDisable(!habilitar);
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }

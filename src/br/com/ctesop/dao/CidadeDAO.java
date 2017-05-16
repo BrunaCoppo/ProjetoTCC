@@ -36,7 +36,7 @@ public class CidadeDAO {
                 + " from tbcidade as c"
                 + " inner join tbestado as e on e.codestado = c.codestado";
         if (somenteAtivos) {
-            sql += " where status='A' ";
+            sql += " where c.status='A' ";
         }
         sql += " order by c.status, c.nomecidade ";
 

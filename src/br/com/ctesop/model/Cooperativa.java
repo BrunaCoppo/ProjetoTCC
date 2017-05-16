@@ -11,7 +11,7 @@ public class Cooperativa {
     private int codigo;
     private Cidade cidade;
     private String nome;
-    private int unidade;
+    private String endereco;
     private String status;
 
     public Cooperativa() {
@@ -63,16 +63,26 @@ public class Cooperativa {
         this.nome = nome;
     }
 
-    public int getUnidade() {
-        return unidade;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setUnidade(int unidade) throws ExceptionValidacao{
-         if (nome.isEmpty()) {
-            throw new ExceptionValidacao("Unidade obrigatória.");
+    public void setEndereco(String endereco) throws ExceptionValidacao{
+        if (nome.isEmpty()) {
+            throw new ExceptionValidacao("Endereço obrigatório.");
         }
-        this.unidade = unidade;
+        if (nome.trim().length() < 2) {
+            throw new ExceptionValidacao("Endereço muito curto.");
+        }
+
+        if (nome.trim().length() > 50) {
+            throw new ExceptionValidacao("Endereço muito longo.");
+
+        }
+        this.endereco = endereco;
     }
+
+    
 
     public String getStatus() {
         return status;

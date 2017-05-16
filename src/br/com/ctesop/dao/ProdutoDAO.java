@@ -14,13 +14,13 @@ import javafx.collections.ObservableList;
 public class ProdutoDAO {
     public static void inserir(Produto produto) throws Exception {
 
-        String sql = "insert into tbproduto (nomeproduto, marca, status) values (?,?,?)";
+        String sql = "insert into tbproduto (nomeproduto, descricao, status) values (?,?,?)";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setString(1, produto.getNome());
-        ps.setString(2, produto.getMarca());
+        ps.setString(2, produto.getDescricao());
         ps.setString(3, produto.getStatus());
 
         ps.execute();
@@ -31,7 +31,7 @@ public class ProdutoDAO {
 
         String sql = "select * from tbproduto ";
         if (somenteAtivos) {
-            sql += " where status='A' ";
+            sql += " where tbproduto.status='A' ";
         }
         sql += " order by nomeproduto";
         Conexao con = new Conexao();
@@ -44,7 +44,7 @@ public class ProdutoDAO {
             Produto produto = new Produto();
             produto.setCodigo(rs.getInt("codproduto"));
             produto.setNome(rs.getString("nomeproduto"));
-            produto.setMarca(rs.getString("marca"));
+            produto.setMarca(rs.getString("descricao"));
             produto.setStatus(rs.getString("status"));
             lista.add(produto);
 
@@ -54,13 +54,13 @@ public class ProdutoDAO {
 
     public static void alterar(Produto produto) throws Exception {
 
-        String sql = "update tbproduto set nomeproduto=?, marca=?, status=? where codproduto=?";
+        String sql = "update tbproduto set nomeproduto=?, descricao=?, status=? where codproduto=?";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setString(1, produto.getNome());
-        ps.setString(2, produto.getMarca());
+        ps.setString(2, produto.getDescricao());
         ps.setString(3, produto.getStatus());
 
         ps.setInt(4, produto.getCodigo());
@@ -81,11 +81,11 @@ public class ProdutoDAO {
     }
 
     private static boolean existe(Produto produto) throws Exception {
-        String sql = "select count(codproduto) from tbproduto where nomeproduto=? or marca=?";
+        String sql = "select count(codproduto) from tbproduto where nomeproduto=? or descricao=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setString(1, produto.getNome());
-        ps.setString(2, produto.getMarca());
+        ps.setString(2, produto.getDescricao());
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);

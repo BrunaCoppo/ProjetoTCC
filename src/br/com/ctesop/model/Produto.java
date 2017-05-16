@@ -10,7 +10,7 @@ public class Produto {
 
     private int codigo;
     private String nome;
-    private String marca;
+    private String descricao;
     private String status;
 
     public Produto() {
@@ -53,23 +53,23 @@ public class Produto {
         this.nome = nome;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getDescricao() {
+        return descricao;
     }
 
     public void setMarca(String marca) throws ExceptionValidacao {
         if (nome.isEmpty()) {
-            throw new ExceptionValidacao("Marca obrigatória.");
+            throw new ExceptionValidacao("Descrição obrigatória.");
         }
         if (nome.trim().length() < 2) {
-            throw new ExceptionValidacao("Marca muito curta.");
+            throw new ExceptionValidacao("Descrição muito curta.");
         }
 
         if (nome.trim().length() > 200) {
-            throw new ExceptionValidacao("Marca muito longa.");
+            throw new ExceptionValidacao("Descrição muito longa.");
 
         }
-        this.marca = marca;
+        this.descricao = descricao;
     }
 
     public String getStatus() {

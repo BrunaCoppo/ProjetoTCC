@@ -2,7 +2,6 @@ package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.model.Cidade;
-import br.com.ctesop.model.Estado;
 import br.com.ctesop.model.Terra;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,11 +32,14 @@ public class TerraDAO {
 
     public static ObservableList<Terra> listar(boolean somenteAtivos) throws Exception {
 
-        String sql = "select * from tbterra ";
+         String sql = ""
+                + " select *"
+                + " from tbterra as t"
+                + " inner join tbcidade as c on c.codcidade = t.codcidade";
         if (somenteAtivos) {
-            sql += " where status='A' ";
+            sql += " where t.status='A' ";
         }
-        sql += " order by nometerra";
+        sql += " order by t.status, t.descricao ";
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
 
@@ -87,12 +89,11 @@ public class TerraDAO {
     }
 
     private static boolean existe(Terra terra) throws Exception {
-        String sql = "select count(codterra) from tbterra where codcidade=?, tamanho=? or descricao=?";
+        String sql = "select count(codterra) from tbterra where codcidade=? and descricao=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, terra.getCidade().getCodigo());
-        ps.setFloat(2, terra.getTamanho());
-        ps.setString(3, terra.getDescricao());
+        ps.setString(2, terra.getDescricao());
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);

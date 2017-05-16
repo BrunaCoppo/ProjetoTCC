@@ -1,6 +1,8 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 /**
  *
@@ -10,6 +12,8 @@ public class TipoManejo {
 
     private int codigo;
     private String nome;
+    private float valor;
+    private String descricao;
     private String status;
 
     public TipoManejo() {
@@ -60,4 +64,43 @@ public class TipoManejo {
         this.status = status;
     }
 
+    public float getValor() {
+        return valor;
+    }
+    public String getValorFormatado(){
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        return nf.format(this.valor);
+    }
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public void setValor(String valor) throws ExceptionValidacao{
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.valor = nf.parse(valor).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Valor inválido.");
+        }
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+        @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof TipoManejo) {
+            return ((TipoManejo) o).getCodigo() == getCodigo();
+        }
+        return false;
+    }
 }

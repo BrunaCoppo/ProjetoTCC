@@ -1,19 +1,20 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 /**
  *
  * @author Bruna
  */
 public class Terra {
-    
-    private int  codigo;
-    private  Cidade cidade;
+
+    private int codigo;
+    private Cidade cidade;
     private float tamanho;
     private String descricao;
     private String status;
-    
 
     public int getCodigo() {
         return codigo;
@@ -22,12 +23,13 @@ public class Terra {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+
     public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(Cidade cidade) throws ExceptionValidacao{
+        
         this.cidade = cidade;
     }
 
@@ -35,15 +37,31 @@ public class Terra {
         return tamanho;
     }
 
+    public String getTamanhoFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        return nf.format(this.tamanho);
+    }
+
     public void setTamanho(float tamanho) {
+       
         this.tamanho = tamanho;
+    }
+
+    public void setTamanho(String tamanho) throws ExceptionValidacao {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.tamanho = nf.parse(tamanho).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Tamanho inválido.");
+        }
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) throws ExceptionValidacao{
+    public void setDescricao(String descricao) throws ExceptionValidacao {
         if (descricao.isEmpty()) {
             throw new ExceptionValidacao("Descrição obrigatória.");
         }
@@ -65,7 +83,7 @@ public class Terra {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     @Override
     public String toString() {
         return getDescricao();
@@ -79,5 +97,5 @@ public class Terra {
         }
         return false;
     }
-    
+
 }

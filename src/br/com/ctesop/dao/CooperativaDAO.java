@@ -16,14 +16,14 @@ public class CooperativaDAO {
 
     public static void inserir(Cooperativa cooperativa) throws Exception {
 
-        String sql = "insert into tbcooperativa (codcidade, nomecooperativa, unidade, status) values (?,?,?,?)";
+        String sql = "insert into tbcooperativa (codcidade, nomecooperativa, endereco, status) values (?,?,?,?)";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setInt(1, cooperativa.getCidade().getCodigo());
         ps.setString(2, cooperativa.getNome());
-        ps.setInt(3, cooperativa.getUnidade());
+        ps.setString(3, cooperativa.getEndereco());
         ps.setString(4, cooperativa.getStatus());
 
         ps.execute();
@@ -37,7 +37,7 @@ public class CooperativaDAO {
                 + " from tbcooperativa as coo"
                 + " inner join tbcidade as ci on ci.codcidade = coo.codcidade";
         if (somenteAtivos) {
-            sql += " where status='A' ";
+            sql += " where coo.status='A' ";
         }
         sql += " order by coo.status, coo.nomecooperativa ";
 
@@ -47,25 +47,26 @@ public class CooperativaDAO {
         ObservableList<Cooperativa> lista = FXCollections.observableArrayList();
         while (rs.next()) {
             Cooperativa cooperativa = new Cooperativa();
-            cooperativa.setCodigo(rs.getInt("co.codcooperativa"));
-            cooperativa.setNome(rs.getString("co.nomecooperativa"));
+            cooperativa.setCodigo(rs.getInt("coo.codcooperativa"));
+            cooperativa.setNome(rs.getString("coo.nomecooperativa"));
             cooperativa.setCidade(new Cidade(rs.getInt("ci.codcidade"), rs.getString("ci.nomecidade")));
-            cooperativa.setStatus(rs.getString("co.status"));
+            cooperativa.setEndereco(rs.getString("coo.endereco"));
+            cooperativa.setStatus(rs.getString("coo.status"));
             lista.add(cooperativa);
-        }
+           }
         return lista;
     }
 
     public static void alterar(Cooperativa cooperativa) throws Exception {
 
-        String sql = "update tbcooperativa set codcidade=?, nomecooperativa=?, unidade=?, status=? where codcooperativa=?";
+        String sql = "update tbcooperativa set codcidade=?, nomecooperativa=?, endereco=?, status=? where codcooperativa=?";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setInt(1, cooperativa.getCidade().getCodigo());
         ps.setString(2, cooperativa.getNome());
-        ps.setInt(3, cooperativa.getUnidade());
+        ps.setString (3, cooperativa.getEndereco());
         ps.setString(4, cooperativa.getStatus());
 
         ps.setInt(5, cooperativa.getCodigo());

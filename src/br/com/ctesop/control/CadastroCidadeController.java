@@ -27,7 +27,7 @@ import javafx.stage.WindowEvent;
 
 public class CadastroCidadeController implements Initializable {
 
-    private int codigo;
+    private int codigo=0;
 
     @FXML
     private Button btnNovo;

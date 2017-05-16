@@ -18,50 +18,7 @@
    <children>
       <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Nome *">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="tfNome">
-               <VBox.margin>
-                  <Insets right="10.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <Label text="Estado *">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <HBox spacing="5.0">
-               <children>
-                  <ComboBox fx:id="cbEstado" prefWidth="250.0" />
-                  <Button fx:id="btnCadastroEstado" mnemonicParsing="false" onAction="#cadastroEstado" text="•••" />
-               </children>
-            </HBox>
-            <Label text="Status *">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="25.0" prefWidth="600.0">
-               <children>
-                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
-                     <HBox.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </HBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tgStatus" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$tgStatus">
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </RadioButton>
-               </children>
-            </HBox>
-            <HBox prefHeight="44.0" prefWidth="600.0" spacing="5.0">
+            <HBox minHeight="34.0" prefWidth="600.0" spacing="5.0">
                <children>
                   <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
@@ -85,7 +42,46 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
+                  <Insets bottom="15.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Nome *" />
+             
+            <TextField fx:id="tfNome" />
+            <HBox>
+               <children>
+                  <Label text="Estado *">
+                     <HBox.margin>
+                        <Insets right="270.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Status *">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox fx:id="cbEstado" prefWidth="250.0" />
+                  <Button fx:id="btnCadastroEstado" mnemonicParsing="false" onAction="#cadastroEstado" text="•••" />
+                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgStatus" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$tgStatus">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
                </VBox.margin>
             </HBox>
             <TableView fx:id="tbCidade">

@@ -32,7 +32,7 @@ import javafx.stage.WindowEvent;
  */
 public class CadastroCooperativaController implements Initializable {
 
-    private int codigo;
+    private int codigo=0;
     @FXML
     private TextField tfNome;
 
@@ -40,7 +40,7 @@ public class CadastroCooperativaController implements Initializable {
     private ComboBox<Cidade> cbCidade;
 
     @FXML
-    private TextField tfUnidade;
+    private TextField tfEndereco;
 
     @FXML
     private RadioButton rbAtivo;
@@ -72,8 +72,6 @@ public class CadastroCooperativaController implements Initializable {
     @FXML
     private TableColumn<Cooperativa, String> tcCidade;
 
-    @FXML
-    private TableColumn<Cooperativa, String> tcUnidade;
 
     @FXML
     private TableColumn<Cooperativa, String> tcStatus;
@@ -85,7 +83,6 @@ public class CadastroCooperativaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
-        tcUnidade.setCellValueFactory(new PropertyValueFactory<>("unidade"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         carregarComboCidade();
         atualizarTabela();
@@ -109,7 +106,7 @@ public class CadastroCooperativaController implements Initializable {
         codigo = selecionado.getCodigo();
         tfNome.setText(selecionado.getNome());
         cbCidade.getSelectionModel().select(selecionado.getCidade());
-        tfUnidade.setText(selecionado.getNome());
+        tfEndereco.setText(selecionado.getNome());
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
@@ -126,7 +123,7 @@ public class CadastroCooperativaController implements Initializable {
             cooperativa.setCodigo(codigo);
             cooperativa.setNome(tfNome.getText());
             cooperativa.setCidade(cbCidade.getSelectionModel().getSelectedItem());
-            //cooperativa.setUnidade(tfUnidade.);
+            cooperativa.setEndereco(tfEndereco.getText());
 
             if (rbAtivo.isSelected()) {
                 cooperativa.setStatus("A");
@@ -136,13 +133,14 @@ public class CadastroCooperativaController implements Initializable {
 
             CooperativaDAO.salvar(cooperativa);
 
-            Alerta.sucesso("Cidade salva com sucesso.");
+            Alerta.sucesso("Cooperativa salva com sucesso.");
 
             atualizarTabela();
             limpar();
             habilitar(false);
         } catch (ExceptionValidacao e) {
             Alerta.alerta("Erro ao salvar.", e);
+            
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
         }
@@ -173,6 +171,7 @@ public class CadastroCooperativaController implements Initializable {
             });
         } catch (Exception e) {
             Alerta.erro("Erro ao abrir cadastro de cidade.", e);
+            
         }
     }
 
@@ -182,6 +181,7 @@ public class CadastroCooperativaController implements Initializable {
             tbCooperativa.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+            e.printStackTrace();
         }
 
     }
@@ -189,7 +189,7 @@ public class CadastroCooperativaController implements Initializable {
     private void limpar() {
         tfNome.setText("");
         cbCidade.getSelectionModel().select(0);
-        tfUnidade.setText("");
+        tfEndereco.setText("");
         rbAtivo.setSelected(true);
 
     }
@@ -202,7 +202,7 @@ public class CadastroCooperativaController implements Initializable {
         tfNome.setDisable(!habilitar);
         cbCidade.setDisable(!habilitar);
         btnCadastrarCidade.setDisable(!habilitar);
-        tfUnidade.setDisable(!habilitar);
+        tfEndereco.setDisable(!habilitar);
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
@@ -212,6 +212,7 @@ public class CadastroCooperativaController implements Initializable {
             cbCidade.setItems(CidadeDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+            
         }
     }
 

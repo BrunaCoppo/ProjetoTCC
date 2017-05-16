@@ -10,8 +10,6 @@ public class TipoSafra {
 
     private int codigo;
     private String nome;
-    private float valor;
-    private String descricao;
     private String status;
 
     public TipoSafra() {
@@ -51,25 +49,6 @@ public class TipoSafra {
 
         }
         this.nome = nome;
-    }
-
-    public float getValor() {
-        return valor;
-    }
-
-    public void setValor(float valor) throws ExceptionValidacao{
-         if (nome.isEmpty()) {
-            throw new ExceptionValidacao("Nome obrigatório.");
-        }
-        this.valor = valor;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getStatus() {
