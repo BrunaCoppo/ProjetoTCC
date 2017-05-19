@@ -16,40 +16,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroTerraController">
    <children>
-      <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fillWidth="false" layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label text="Cidade *" />
-            <HBox spacing="5.0">
-               <children>
-                  <ComboBox fx:id="cbCidade" prefWidth="150.0" />
-                  <Button fx:id="btnCadastroCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
-               </children>
-            </HBox>
-            <Label text="Tamanho *" />
-            <TextField fx:id="tfTamanho" />
-            <Label text="Descrição *" />
-            <TextField fx:id="tfDescricao" />
-            <Label text="Status *" />
-            <HBox prefHeight="25.0" prefWidth="600.0">
-               <children>
-                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="status" />
-                     </toggleGroup>
-                     <HBox.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </RadioButton>
-                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status" />
-               </children>
-            </HBox>
-            <HBox prefHeight="44.0" prefWidth="600.0" spacing="5.0">
+            <HBox prefHeight="35.0" prefWidth="576.0" spacing="5.0">
                <children>
                   <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
@@ -73,7 +45,46 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
+                  <Insets bottom="15.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Cidade *" />
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+                  <Button fx:id="btnCadastroCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
+               </children>
+            </HBox>
+            <Label text="Tamanho *" />
+            <TextField fx:id="tfTamanho" prefHeight="25.0" prefWidth="76.0" />
+            <HBox>
+               <children>
+                  <Label text="Descrição *" />
+                  <Label text="Status *">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="192.0" />
+                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="status" />
+                     </toggleGroup>
+                     <HBox.margin>
+                        <Insets left="30.0" right="20.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </RadioButton>
+                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </HBox>
             <TableView fx:id="tbTerra" prefHeight="232.0" prefWidth="576.0">

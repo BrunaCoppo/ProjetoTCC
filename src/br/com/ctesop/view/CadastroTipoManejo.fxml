@@ -20,30 +20,6 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label text="Tipo Manejo *" />
-            <TextField fx:id="tfTipoManejo" prefHeight="25.0" prefWidth="300.0" />
-            <Label text="Valor *" />
-            <TextField fx:id="tfValor" prefHeight="25.0" prefWidth="139.0" />
-            <Label text="Descrição *" />
-            <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="450.0" />
-            <Label text="Status *" />
-            <HBox>
-               <children>
-                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="status" />
-                     </toggleGroup>
-                     <HBox.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </HBox.margin>
-                  </RadioButton>
-                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </RadioButton>
-               </children>
-            </HBox>
             <HBox minHeight="34.0" prefWidth="600.0" spacing="5.0">
                <children>
                   <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
@@ -66,6 +42,41 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Tipo Manejo *" />
+            <TextField fx:id="tfTipoManejo" prefHeight="25.0" prefWidth="300.0" />
+            <Label text="Valor *" />
+            <TextField fx:id="tfValor" prefHeight="25.0" prefWidth="139.0" />
+            <HBox>
+               <children>
+                  <Label text="Descrição *" />
+                  <Label text="Status *">
+                     <HBox.margin>
+                        <Insets left="210.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="251.0" />
+                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="status" />
+                     </toggleGroup>
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="30.0" right="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
                </children>
             </HBox>
             <TableView fx:id="tbTipoManejo" prefWidth="600.0">
