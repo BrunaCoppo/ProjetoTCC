@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroCidadeController">
    <children>
-      <VBox layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fillWidth="false" layoutX="16.0" layoutY="16.0" prefHeight="87.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox minHeight="34.0" prefWidth="600.0" spacing="5.0">
                <children>
@@ -47,7 +47,7 @@
             </HBox>
             <Label text="Nome *" />
              
-            <TextField fx:id="tfNome" />
+            <TextField fx:id="tfNome" prefHeight="25.0" prefWidth="270.0" />
             <HBox>
                <children>
                   <Label text="Estado *">
@@ -62,7 +62,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <ComboBox fx:id="cbEstado" prefWidth="250.0" />
                   <Button fx:id="btnCadastroEstado" mnemonicParsing="false" onAction="#cadastroEstado" text="•••" />

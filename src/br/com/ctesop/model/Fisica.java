@@ -1,7 +1,7 @@
 
 package br.com.ctesop.model;
 
-import com.mysql.fabric.xmlrpc.base.Data;
+import java.sql.Date;
 
 /**
  *
@@ -9,42 +9,53 @@ import com.mysql.fabric.xmlrpc.base.Data;
  */
 public class Fisica {
     
-    private int cpf;
-    private int rg;
-    private int ei;
-    private Data dataNascimento;
+    private int codigoFisica;
+    private String cpf;
+    private String rg;
+    private String ei;
+    private Date dataNascimento;
 
-    public int getCpf() {
+    public int getCodigoFisica() {
+        return codigoFisica;
+    }
+
+    public void setCodigoFisica(int codigoFisica) {
+        this.codigoFisica = codigoFisica;
+    }
+
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public int getRg() {
+    public String getRg() {
         return rg;
     }
 
-    public void setRg(int rg) {
+    public void setRg(String rg) {
         this.rg = rg;
     }
 
-    public int getEi() {
+    public String getEi() {
         return ei;
     }
 
-    public void setEi(int ei) {
+    public void setEi(String ei) {
         this.ei = ei;
     }
 
-    public Data getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Data dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+    
+      
     
     
 }

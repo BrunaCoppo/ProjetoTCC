@@ -68,6 +68,7 @@ public class MenuController implements Initializable {
             stage.show();
         } catch (Exception e) {
             Alerta.erro("Erro ao abrir " + titulo + ".", e);
+            e.printStackTrace();
         }
     }
 }

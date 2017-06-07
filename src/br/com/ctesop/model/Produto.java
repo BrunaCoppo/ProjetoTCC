@@ -57,7 +57,7 @@ public class Produto {
         return descricao;
     }
 
-    public void setMarca(String marca) throws ExceptionValidacao {
+    public void setDescricao(String descricao) throws ExceptionValidacao {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Descrição obrigatória.");
         }

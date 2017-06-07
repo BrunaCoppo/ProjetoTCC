@@ -44,7 +44,7 @@ public class ProdutoDAO {
             Produto produto = new Produto();
             produto.setCodigo(rs.getInt("codproduto"));
             produto.setNome(rs.getString("nomeproduto"));
-            produto.setMarca(rs.getString("descricao"));
+            produto.setDescricao(rs.getString("descricao"));
             produto.setStatus(rs.getString("status"));
             lista.add(produto);
 

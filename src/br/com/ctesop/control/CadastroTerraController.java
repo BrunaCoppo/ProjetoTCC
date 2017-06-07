@@ -80,7 +80,7 @@ public class CadastroTerraController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
-        tcTamanho.setCellValueFactory(new PropertyValueFactory<>("tamanhoformatado"));
+        tcTamanho.setCellValueFactory(new PropertyValueFactory<>("tamanhoFormatado"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         carregarComboCidade();

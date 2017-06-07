@@ -60,7 +60,7 @@ public class CadastroProdutoController implements Initializable {
     private TableColumn<Produto, String> tcNome;
 
     @FXML
-    private TableColumn<Produto, String> tcMarca;
+    private TableColumn<Produto, String> tcDescricao;
 
     @FXML
     private TableColumn<Produto, String> tcStatus;
@@ -68,7 +68,7 @@ public class CadastroProdutoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tcMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         atualizarTabela();
@@ -108,7 +108,7 @@ public class CadastroProdutoController implements Initializable {
             Produto produto = new Produto();
             produto.setCodigo(codigo);
             produto.setNome(tfNome.getText());
-            produto.setMarca(tfDescricao.getText());
+            produto.setDescricao(tfDescricao.getText());
 
             if (rbAtivo.isSelected()) {
                 produto.setStatus("A");

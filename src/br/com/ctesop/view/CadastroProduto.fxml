@@ -51,7 +51,7 @@
             <TextField fx:id="tfNome" prefHeight="25.0" prefWidth="242.0" />
             <HBox>
                <children>
-                  <Label text="Marca *" />
+                  <Label text="Descrição *" />
                   <Label text="Status *">
                      <HBox.margin>
                         <Insets left="180.0" />
@@ -61,7 +61,7 @@
             </HBox>
             <HBox prefHeight="25.0" prefWidth="600.0">
                <children>
-                  <TextField fx:id="tfMarca" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="200.0" />
                   <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
                      <toggleGroup>
                         <ToggleGroup fx:id="status" />
@@ -83,7 +83,7 @@
             <TableView fx:id="tbProduto" prefHeight="289.0" prefWidth="576.0">
               <columns>
                 <TableColumn fx:id="tcNome" prefWidth="269.0" text="Nome" />
-                <TableColumn fx:id="tcMarca" prefWidth="203.0" text="Marca" />
+                <TableColumn fx:id="tcDescricao" prefWidth="203.0" text="Descrição" />
                   <TableColumn fx:id="tcStatus" prefWidth="101.0" text="Status" />
               </columns>
             </TableView>

@@ -28,8 +28,10 @@ public class Terra {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) throws ExceptionValidacao{
-        
+    public void setCidade(Cidade cidade) throws ExceptionValidacao {
+        if (cidade==null) {
+            throw new ExceptionValidacao("Cidade obrigatória.");
+        }
         this.cidade = cidade;
     }
 
@@ -44,7 +46,7 @@ public class Terra {
     }
 
     public void setTamanho(float tamanho) {
-       
+
         this.tamanho = tamanho;
     }
 
