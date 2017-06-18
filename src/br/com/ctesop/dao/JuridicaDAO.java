@@ -11,7 +11,7 @@ import java.sql.ResultSet;
  */
 public class JuridicaDAO {
 
-    public static void inserir(Juridica juridica) throws Exception {
+    public static int inserir(Juridica juridica) throws Exception {
 
         String sql = "insert into tbjuridica (cnpj, ei) values (?,?)";
 
@@ -23,6 +23,9 @@ public class JuridicaDAO {
 
         ps.execute();
         con.confirmar();
+        
+        ResultSet rs = ps.executeQuery();
+        return rs.getInt(1);
 
     }
 
@@ -36,7 +39,7 @@ public class JuridicaDAO {
         ps.setString(1, juridica.getCnpj());
         ps.setString(2, juridica.getEi());
 
-        ps.setInt(3, juridica.getCodigoJuridica());
+        ps.setInt(3, juridica.getCodigo());
 
         ps.execute();
         con.confirmar();
@@ -52,14 +55,17 @@ public class JuridicaDAO {
         return (rs.getInt(1) > 0);
     }
 
-    public static void salvar(Juridica juridica) throws Exception {
-        if (juridica.getCodigoJuridica()== 0) {
+    public static int salvar(Juridica juridica) throws Exception {
+        if (juridica.getCodigo() == 0) {
             if (existe(juridica)) {
                 throw new ExceptionValidacao("Situação juridica já está cadastrada.");
             }
-            inserir(juridica);
+            return inserir(juridica);
         } else {
             alterar(juridica);
+            return juridica.getCodigo();
+
         }
+
     }
 }

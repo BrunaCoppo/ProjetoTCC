@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
@@ -124,12 +125,36 @@
                 </Tab>
                 <Tab fx:id="tbFisica" disable="true" text="Pessoa Física">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                        <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <children>
+                              <Label text="CPF" />
+                              <TextField fx:id="tfCPF" prefHeight="25.0" prefWidth="163.0" />
+                              <Label text="RG" />
+                              <TextField fx:id="tfRG" prefHeight="25.0" prefWidth="159.0" />
+                              <Label text="EI" />
+                              <TextField fx:id="tfEI" />
+                              <Label text="Data de Nascimento" />
+                              <DatePicker fx:id="dpDataNascimento" />
+                           </children></VBox>
                      </content>
                 </Tab>
                   <Tab fx:id="tbJuridica" disable="true" text="Pessoa Jurídica">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="CNPJ" />
+                              <TextField fx:id="tfCNPJ" />
+                              <Label text="EI" />
+                              <TextField fx:id="tfEI" />
+                              <Label text="Razão Social" />
+                              <TextField fx:id="tfRazaoSocial" />
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding></VBox>
                      </content>
                   </Tab>
               </tabs>

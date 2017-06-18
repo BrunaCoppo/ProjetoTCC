@@ -19,8 +19,8 @@ public class PessoaDAO {
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, pessoa.getJuridica().getCodigoJuridica());
-        ps.setInt(2, pessoa.getFisica().getCodigoFisica());
+        ps.setInt(1, pessoa.getJuridica().getCodigo());
+        ps.setInt(2, pessoa.getFisica().getCodigo());
         ps.setInt(3, pessoa.getCidade().getCodigo());
         ps.setString(4, pessoa.getNome());
         ps.setString(5, pessoa.getEndereco());
@@ -45,8 +45,8 @@ public class PessoaDAO {
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, pessoa.getJuridica().getCodigoJuridica());
-        ps.setInt(2, pessoa.getFisica().getCodigoFisica());
+        ps.setInt(1, pessoa.getJuridica().getCodigo());
+        ps.setInt(2, pessoa.getFisica().getCodigo());
         ps.setInt(3, pessoa.getCidade().getCodigo());
         ps.setString(4, pessoa.getNome());
         ps.setString(5, pessoa.getEndereco());

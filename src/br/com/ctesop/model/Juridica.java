@@ -8,18 +8,20 @@ package br.com.ctesop.model;
 public class Juridica {
 
   
-    private int codigoJuridica;
+    private int codigo;
     private String cnpj;
     private String ei;
     private String razaoSocial;
 
-    public int getCodigoJuridica() {
-        return codigoJuridica;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoJuridica(int codigoJuridica) {
-        this.codigoJuridica = codigoJuridica;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
+
+    
 
     public String getCnpj() {
         return cnpj;

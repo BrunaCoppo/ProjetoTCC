@@ -1,4 +1,3 @@
-
 package br.com.ctesop.model;
 
 import java.sql.Date;
@@ -8,19 +7,19 @@ import java.sql.Date;
  * @author Bruna
  */
 public class Fisica {
-    
-    private int codigoFisica;
+
     private String cpf;
     private String rg;
     private String ei;
     private Date dataNascimento;
+    private int codigo;
 
-    public int getCodigoFisica() {
-        return codigoFisica;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoFisica(int codigoFisica) {
-        this.codigoFisica = codigoFisica;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getCpf() {
@@ -54,8 +53,5 @@ public class Fisica {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-    
-      
-    
-    
+
 }

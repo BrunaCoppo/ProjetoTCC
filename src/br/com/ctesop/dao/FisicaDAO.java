@@ -43,7 +43,7 @@ public class FisicaDAO {
         ps.setString(3, fisica.getEi());
         ps.setDate(4, new java.sql.Date(fisica.getDataNascimento().getTime()));
 
-        ps.setInt(5, fisica.getCodigoFisica());
+        ps.setInt(5, fisica.getCodigo());
 
         ps.execute();
         con.confirmar();
@@ -61,14 +61,14 @@ public class FisicaDAO {
     }
 
     public static int salvar(Fisica fisica) throws Exception {
-        if (fisica.getCodigoFisica()== 0) {
+        if (fisica.getCodigo()== 0) {
             if (existe(fisica)) {
                 throw new ExceptionValidacao("Situação fisica já está cadastrada.");
             }
             return inserir(fisica);
         } else {
             alterar(fisica);
-            return fisica.getCodigoFisica();
+            return fisica.getCodigo();
         }
         
     }

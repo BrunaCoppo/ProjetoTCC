@@ -2,7 +2,6 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
-import br.com.ctesop.model.Juridica;
 import br.com.ctesop.model.Proprietario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +19,7 @@ public class ProprietarioDAO {
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, proprietario.getPessoa().getCodigo());
+        ps.setInt(1, proprietario.getCodigo());
 
         ps.execute();
         con.confirmar();
@@ -34,7 +33,7 @@ public class ProprietarioDAO {
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, proprietario.getPessoa().getCodigo());
+        ps.setInt(1, proprietario.getCodigo());
         
 
         ps.execute();
@@ -45,14 +44,14 @@ public class ProprietarioDAO {
         String sql = "select count(codpessoa) from tbproprietario";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
-        ps.setInt(1, proprietario.getPessoa().getCodigo());
+        ps.setInt(1, proprietario.getCodigo());
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);
     }
 
     public static void salvar(Proprietario proprietario) throws Exception {
-        if (proprietario.getPessoa().getCodigo()== 0) {
+        if (proprietario.getCodigo()== 0) {
             if (existe(proprietario)) {
                 throw new ExceptionValidacao("Situação Proprietario já está cadastrada.");
             }

@@ -8,8 +8,10 @@ import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.dao.FisicaDAO;
 import br.com.ctesop.dao.FornecedorDAO;
+import br.com.ctesop.dao.FuncionarioDAO;
 import br.com.ctesop.dao.JuridicaDAO;
 import br.com.ctesop.dao.PessoaDAO;
+import br.com.ctesop.dao.ProprietarioDAO;
 import br.com.ctesop.model.Fisica;
 import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.Funcionario;
@@ -20,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -29,6 +32,8 @@ import javafx.scene.control.ToggleGroup;
 public class CadastroPessoaController {
     
     private int codigo;
+    private int codigoFisica;
+    private int codigoJuridica;
 
     @FXML
     private Button btnNovo;
@@ -54,6 +59,25 @@ public class CadastroPessoaController {
     @FXML
     private TextField tfEmail;
 
+    
+    @FXML
+    private TextField tfCPF;
+
+    @FXML
+    private TextField tfRG;
+
+    @FXML
+    private TextField tfEI;
+
+    @FXML
+    private DatePicker dpDataNascimento;
+
+    @FXML
+    private TextField tfCNPJ;
+
+    @FXML
+    private TextField tfRazaoSocial;  
+    
     @FXML
     private RadioButton rbAtivo;
 
@@ -125,6 +149,10 @@ public class CadastroPessoaController {
             if (rbFisica.isSelected()) {
                 Fisica fisica = new Fisica();
                 fisica.setCodigo(codigoFisica);
+                fisica.setCpf(tfCPF.getText());
+                fisica.setEi(tfEI.getText());
+                fisica.setRg(tfRG.getText());
+                //fisica.getDataNascimento(dpDataNascimento);
                 //Demais dados da pessoa fisica
                 //Mudar tipo de dado para String e no banco para VARCHAR(20)
 
@@ -135,11 +163,14 @@ public class CadastroPessoaController {
                 pessoa.setJuridica(null);
             } else {
                 Juridica juridica = new Juridica();
-                juridica.setCodigo(codigoJuridico);
+                juridica.setCodigo(codigoJuridica);
+                juridica.setCnpj(tfCNPJ.getText());
+                juridica.setEi(tfEI.getText());
+                juridica.setRazaoSocial(tfRazaoSocial.getText());
                 //Demais dados da pessoa juridica
 
-                codigoJuridico = JuridicaDAO.salvar(juridica);
-                juridica.setCodigo(codigoJuridico);
+                codigoJuridica = JuridicaDAO.salvar(juridica);
+                juridica.setCodigo(codigoJuridica);
                 
                 pessoa.setJuridica(juridica);
                 pessoa.setFisica(null);
@@ -176,6 +207,7 @@ public class CadastroPessoaController {
             atualizarTabela();
             limpar();
             habilitar(false);
+            
         } catch (ExceptionValidacao e) {
             Alerta.alerta("Erro ao salvar.", e);
         } catch (Exception e) {
