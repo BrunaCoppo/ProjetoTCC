@@ -70,7 +70,7 @@ public class CadastroTipoManejoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcTipoManejo.setCellValueFactory(new PropertyValueFactory<>("tipoManejo"));
+        tcTipoManejo.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valorFormatado"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         atualizarTabela();

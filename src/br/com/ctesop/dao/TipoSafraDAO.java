@@ -15,13 +15,13 @@ import javafx.collections.ObservableList;
 public class TipoSafraDAO {
        public static void inserir(TipoSafra tipoSafra) throws Exception {
 
-        String sql = "insert into tbtiposafra (tiposafra,status) values (?,?)";
+        String sql = "insert into tbtiposafra (tiposafra, status) values (?,?)";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setString(1, tipoSafra.getNome());
-        ps.setString(4, tipoSafra.getStatus());
+        ps.setString(2, tipoSafra.getStatus());
 
         ps.execute();
         con.confirmar();

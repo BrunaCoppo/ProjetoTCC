@@ -38,23 +38,28 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void cooperativa(ActionEvent event) {
+    public void cooperativa(ActionEvent event) {
         abrir("CadastroCooperativa", "Cadastro de Cooperativa");
     }
 
     @FXML
-    void terra(ActionEvent event) {
+    public void terra(ActionEvent event) {
         abrir("CadastroTerra", "Cadastro de Terra");
     }
 
     @FXML
-    void tipoManejo(ActionEvent event) {
+    public void tipoManejo(ActionEvent event) {
         abrir("CadastroTipoManejo", "Cadastro Tipo de Manejo");
     }
 
     @FXML
-    void tipoSafra(ActionEvent event) {
+    public void tipoSafra(ActionEvent event) {
         abrir("CadastroTipoSafra", "Cadastro tipo de Safra");
+    }
+
+    @FXML
+    public void pessoa(ActionEvent event) {
+        abrir("CadastroPessoa", "Cadastro Pessoa");
     }
 
     @SuppressWarnings("UseSpecificCatch")

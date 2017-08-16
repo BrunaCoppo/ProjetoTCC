@@ -22,6 +22,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#terra" text="Terra" />
                   <MenuItem mnemonicParsing="false" onAction="#tipoSafra" text="Tipo Safra" />
                   <MenuItem mnemonicParsing="false" onAction="#tipoManejo" text="Tipo Manejo" />
+                  <MenuItem mnemonicParsing="false" onAction="#pessoa" text="Pessoa" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Movimentações" />

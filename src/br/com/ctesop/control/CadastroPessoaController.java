@@ -18,6 +18,7 @@ import br.com.ctesop.model.Funcionario;
 import br.com.ctesop.model.Juridica;
 import br.com.ctesop.model.Pessoa;
 import br.com.ctesop.model.Proprietario;
+import com.mysql.jdbc.Util;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -152,7 +153,7 @@ public class CadastroPessoaController {
                 fisica.setCpf(tfCPF.getText());
                 fisica.setEi(tfEI.getText());
                 fisica.setRg(tfRG.getText());
-                //fisica.getDataNascimento(dpDataNascimento);
+                //fisica.getDataNascimento(Util.);
                 //Demais dados da pessoa fisica
                 //Mudar tipo de dado para String e no banco para VARCHAR(20)
 
@@ -177,25 +178,30 @@ public class CadastroPessoaController {
             }
 
             codigo = PessoaDAO.salvar(pessoa);
-
+            
+            Fornecedor fornecedor = new Fornecedor();
+            
             if (cbFornecedor.isSelected()) {
-                Fornecedor fornecedor = new Fornecedor();
+                
                 fornecedor.setCodigo(codigo);
                 FornecedorDAO.salvar(fornecedor);
             } else {
                 FornecedorDAO.excluir(fornecedor);
             }
-
+            
+            Proprietario proprietario = new Proprietario();
+            
             if (cbProprietario.isSelected()) {
-                Proprietario proprietario = new Proprietario();
+                
                 proprietario.setCodigo(codigo);
                 ProprietarioDAO.salvar(proprietario);
             } else {
                 ProprietarioDAO.excluir(proprietario);
             }
-
+            
+            Funcionario funcionario = new Funcionario();
             if (cbFuncionario.isSelected()) {
-                Funcionario funcionario = new Funcionario();
+                
                 funcionario.setCodigo(codigo);
                 FuncionarioDAO.salvar(funcionario);
             } else {
@@ -204,7 +210,7 @@ public class CadastroPessoaController {
 
             Alerta.sucesso("Pessoa salva com sucesso.");
 
-            atualizarTabela();
+           // atualizarTabela();
             limpar();
             habilitar(false);
             
@@ -217,7 +223,45 @@ public class CadastroPessoaController {
 
     @FXML
     void Cancelar(ActionEvent event) {
+        
+    }
+    
+       
+    
+    private void limpar() {
+        tfCNPJ.setText("");
+        tfCPF.setText("");
+        tfEI.setText("");
+        tfEmail.setText("");
+        tfEndereco.setText("");
+        tfNome.setText("");
+        tfRG.setText("");
+        tfRazaoSocial.setText(""); 
+        tfTelefone.setText("");
+        rbAtivo.setSelected(true);
+    }
 
+    private void habilitar(boolean habilitar) {
+        btnNovo.setDisable(habilitar);
+        btnEditar.setDisable(habilitar);
+        btnSalvar.setDisable(!habilitar);
+        btnCancelar.setDisable(!habilitar);
+        tfCNPJ.setDisable(!habilitar);
+        tfCPF.setDisable(!habilitar);
+        tfEI.setDisable(!habilitar);
+        tfEndereco.setDisable(!habilitar);
+        tfNome.setDisable(!habilitar);
+        tfRG.setDisable(!habilitar);
+        tfRazaoSocial.setDisable(!habilitar);
+        tfTelefone.setDisable(!habilitar);
+        
+        cbFornecedor.setDisable(!habilitar);
+        cbFuncionario.setDisable(!habilitar);
+        cbProprietario.setDisable(!habilitar);
+        
+        dpDataNascimento.setDisable(!habilitar);
+        rbAtivo.setDisable(!habilitar);
+        rbInativo.setDisable(!habilitar);
     }
     
     @FXML

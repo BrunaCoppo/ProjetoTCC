@@ -63,7 +63,7 @@ public class CadastroTipoSafraController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tipoManejo"));
+        tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         atualizarTabela();
         habilitar(false);
