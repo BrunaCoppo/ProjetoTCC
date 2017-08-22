@@ -31,17 +31,17 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#Editar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
+                  <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#Salvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
+                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#ealvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#Cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -159,7 +159,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <TableView prefHeight="168.0" prefWidth="592.0">
+            <TableView fx:id="tbPessoa" prefHeight="168.0" prefWidth="592.0">
               <columns>
                 <TableColumn fx:id="tcNome" prefWidth="310.0" text="Nome" />
                 <TableColumn fx:id="tcTelefone" minWidth="9.0" prefWidth="147.0" text="Telefone" />

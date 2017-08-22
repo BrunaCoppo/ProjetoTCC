@@ -20,22 +20,22 @@
          <children>
             <HBox prefHeight="29.0" prefWidth="576.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
+                  <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
+                  <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
+                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-excluir" text="Excluir">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -93,10 +93,10 @@
                   </RadioButton>
                </children>
             </HBox>
-            <TableView prefHeight="211.0" prefWidth="576.0">
+            <TableView fx:id="tbSafra" prefHeight="211.0" prefWidth="576.0">
               <columns>
-                <TableColumn prefWidth="461.0" text="Tipo de Safra" />
-                <TableColumn prefWidth="112.0" text="Status" />
+                <TableColumn fx:id="tbTipoSafra" prefWidth="461.0" text="Tipo de Safra" />
+                <TableColumn fx:id="tcStatus" prefWidth="112.0" text="Status" />
               </columns>
             </TableView>
             <Label text="* Campos obrigatórios">

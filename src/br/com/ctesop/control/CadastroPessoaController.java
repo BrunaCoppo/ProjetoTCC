@@ -17,6 +17,7 @@ import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.Funcionario;
 import br.com.ctesop.model.Juridica;
 import br.com.ctesop.model.Pessoa;
+import br.com.ctesop.model.Produto;
 import br.com.ctesop.model.Proprietario;
 import com.mysql.jdbc.Util;
 import javafx.event.ActionEvent;
@@ -27,11 +28,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
 public class CadastroPessoaController {
-    
+
     private int codigo;
     private int codigoFisica;
     private int codigoJuridica;
@@ -60,7 +62,6 @@ public class CadastroPessoaController {
     @FXML
     private TextField tfEmail;
 
-    
     @FXML
     private TextField tfCPF;
 
@@ -77,8 +78,8 @@ public class CadastroPessoaController {
     private TextField tfCNPJ;
 
     @FXML
-    private TextField tfRazaoSocial;  
-    
+    private TextField tfRazaoSocial;
+
     @FXML
     private RadioButton rbAtivo;
 
@@ -105,7 +106,7 @@ public class CadastroPessoaController {
 
     @FXML
     private RadioButton rbJuridica;
-        
+
     @FXML
     private Tab tbFisica;
 
@@ -113,28 +114,47 @@ public class CadastroPessoaController {
     private Tab tbJuridica;
 
     @FXML
-    private TableColumn<?, ?> tcNome;
+    private TableView<Pessoa> tbPessoa;
 
     @FXML
-    private TableColumn<?, ?> tcTelefone;
+    private TableColumn<Pessoa, String> tcNome;
 
     @FXML
-    private TableColumn<?, ?> tcStatus;
+    private TableColumn<Pessoa, String> tcTelefone;
 
+    @FXML
+    private TableColumn<Pessoa, String> tcStatus;
 
-    
     @FXML
     void novo(ActionEvent event) {
-
+        codigo = 0;
+        limpar();
+        habilitar(true);
     }
 
     @FXML
-    void Editar(ActionEvent event) {
+    void editar(ActionEvent event) {
+        if (tbPessoa.getSelectionModel().isEmpty()) {
+            return;
+        }
 
+        Pessoa selecionado = tbPessoa.getSelectionModel().getSelectedItem();
+        codigo = selecionado.getCodigo();
+        tfNome.setText(selecionado.getNome());
+        tfEmail.setText(selecionado.getEmail());
+        tfEndereco.setText(selecionado.getEndereco());
+        tfNome.setText(selecionado.getNome());
+        tfTelefone.setText(selecionado.getTelefone());
+        if (selecionado.getStatus().equalsIgnoreCase("A")) {
+            rbAtivo.setSelected(true);
+        } else {
+            rbInativo.setSelected(true);
+        }
+        habilitar(true);
     }
 
     @FXML
-    void Salvar(ActionEvent event) {
+    void salvar(ActionEvent event) {
         try {
             Pessoa pessoa = new Pessoa();
             pessoa.setCodigo(codigo);
@@ -159,7 +179,7 @@ public class CadastroPessoaController {
 
                 codigoFisica = FisicaDAO.salvar(fisica);
                 fisica.setCodigo(codigoFisica);
-                
+
                 pessoa.setFisica(fisica);
                 pessoa.setJuridica(null);
             } else {
@@ -172,36 +192,36 @@ public class CadastroPessoaController {
 
                 codigoJuridica = JuridicaDAO.salvar(juridica);
                 juridica.setCodigo(codigoJuridica);
-                
+
                 pessoa.setJuridica(juridica);
                 pessoa.setFisica(null);
             }
 
             codigo = PessoaDAO.salvar(pessoa);
-            
+
             Fornecedor fornecedor = new Fornecedor();
-            
+
             if (cbFornecedor.isSelected()) {
-                
+
                 fornecedor.setCodigo(codigo);
                 FornecedorDAO.salvar(fornecedor);
             } else {
                 FornecedorDAO.excluir(fornecedor);
             }
-            
+
             Proprietario proprietario = new Proprietario();
-            
+
             if (cbProprietario.isSelected()) {
-                
+
                 proprietario.setCodigo(codigo);
                 ProprietarioDAO.salvar(proprietario);
             } else {
                 ProprietarioDAO.excluir(proprietario);
             }
-            
+
             Funcionario funcionario = new Funcionario();
             if (cbFuncionario.isSelected()) {
-                
+
                 funcionario.setCodigo(codigo);
                 FuncionarioDAO.salvar(funcionario);
             } else {
@@ -210,10 +230,10 @@ public class CadastroPessoaController {
 
             Alerta.sucesso("Pessoa salva com sucesso.");
 
-           // atualizarTabela();
+            // atualizarTabela();
             limpar();
             habilitar(false);
-            
+
         } catch (ExceptionValidacao e) {
             Alerta.alerta("Erro ao salvar.", e);
         } catch (Exception e) {
@@ -222,12 +242,10 @@ public class CadastroPessoaController {
     }
 
     @FXML
-    void Cancelar(ActionEvent event) {
-        
+    void cancelar(ActionEvent event) {
+
     }
-    
-       
-    
+
     private void limpar() {
         tfCNPJ.setText("");
         tfCPF.setText("");
@@ -236,7 +254,7 @@ public class CadastroPessoaController {
         tfEndereco.setText("");
         tfNome.setText("");
         tfRG.setText("");
-        tfRazaoSocial.setText(""); 
+        tfRazaoSocial.setText("");
         tfTelefone.setText("");
         rbAtivo.setSelected(true);
     }
@@ -254,26 +272,25 @@ public class CadastroPessoaController {
         tfRG.setDisable(!habilitar);
         tfRazaoSocial.setDisable(!habilitar);
         tfTelefone.setDisable(!habilitar);
-        
+
         cbFornecedor.setDisable(!habilitar);
         cbFuncionario.setDisable(!habilitar);
         cbProprietario.setDisable(!habilitar);
-        
+
         dpDataNascimento.setDisable(!habilitar);
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
-    
+
     @FXML
     void mudarTipo(ActionEvent event) {
         if (rbFisica.isSelected()) {
             tbFisica.setDisable(false);
             tbJuridica.setDisable(true);
-        }else{
+        } else {
             tbFisica.setDisable(true);
             tbJuridica.setDisable(false);
         }
     }
-    
-    
+
 }
