@@ -17,14 +17,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroFornecedorController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroPessoaController">
    <children>
       <VBox fillWidth="false" prefHeight="593.0" prefWidth="616.0" spacing="5.0" stylesheets="@css/Geral.css" AnchorPane.bottomAnchor="-62.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <HBox prefHeight="44.0" prefWidth="600.0" spacing="5.0">
+            <HBox prefHeight="38.0" prefWidth="576.0" spacing="5.0">
                <children>
                   <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
@@ -36,7 +36,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#ealvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
+                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -134,8 +134,6 @@
                               <TextField fx:id="tfCPF" prefHeight="25.0" prefWidth="163.0" />
                               <Label text="RG" />
                               <TextField fx:id="tfRG" prefHeight="25.0" prefWidth="159.0" />
-                              <Label text="EI" />
-                              <TextField fx:id="tfEI" />
                               <Label text="Data de Nascimento" />
                               <DatePicker fx:id="dpDataNascimento" />
                            </children></VBox>

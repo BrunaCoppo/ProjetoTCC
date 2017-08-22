@@ -58,7 +58,7 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void pessoa(ActionEvent event) {
+    public void pessoa(ActionEvent event) {
         abrir("CadastroPessoa", "Cadastro Pessoa");
     }
 

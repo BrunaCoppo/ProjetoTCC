@@ -20,6 +20,8 @@ import br.com.ctesop.model.Pessoa;
 import br.com.ctesop.model.Produto;
 import br.com.ctesop.model.Proprietario;
 import com.mysql.jdbc.Util;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -125,6 +127,11 @@ public class CadastroPessoaController {
     @FXML
     private TableColumn<Pessoa, String> tcStatus;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        habilitar(true);
+    }
+    
     @FXML
     void novo(ActionEvent event) {
         codigo = 0;
