@@ -2,6 +2,7 @@ package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.model.Fisica;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -13,7 +14,7 @@ public class FisicaDAO {
 
     public static int inserir(Fisica fisica) throws Exception {
 
-        String sql = "insert into tbfisica (cpf, rg, ei, datanascimento) values (?,?,?,?)";
+        String sql = "insert into tbfisica (cpf, rg, ie, datanascimento) values (?,?,?,?)";
 
         Conexao con = new Conexao();
 
@@ -21,14 +22,18 @@ public class FisicaDAO {
 
         ps.setString(1, fisica.getCpf());
         ps.setString(2, fisica.getRg());
-        ps.setString(3, fisica.getEi());
-         ps.setDate(4,new java.sql.Date(fisica.getDataNascimento().getTime()));
+        ps.setString(3, fisica.getIe());
+        ps.setDate(4, new Date(fisica.getDataNascimento().getTime()));
 
+      
         ps.execute();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        int codigoGerado = rs.getInt(1);
         con.confirmar();
-        
-        ResultSet rs = ps.executeQuery();
-        return rs.getInt(1);
+
+        return codigoGerado;
     }
 
     public static void alterar(Fisica fisica) throws Exception {
@@ -40,7 +45,7 @@ public class FisicaDAO {
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setString(1, fisica.getCpf());
         ps.setString(2, fisica.getRg());
-        ps.setString(3, fisica.getEi());
+        ps.setString(3, fisica.getIe());
         ps.setDate(4, new java.sql.Date(fisica.getDataNascimento().getTime()));
 
         ps.setInt(5, fisica.getCodigo());
@@ -61,7 +66,7 @@ public class FisicaDAO {
     }
 
     public static int salvar(Fisica fisica) throws Exception {
-        if (fisica.getCodigo()== 0) {
+        if (fisica.getCodigo() == 0) {
             if (existe(fisica)) {
                 throw new ExceptionValidacao("Situação fisica já está cadastrada.");
             }
@@ -70,6 +75,6 @@ public class FisicaDAO {
             alterar(fisica);
             return fisica.getCodigo();
         }
-        
+
     }
 }

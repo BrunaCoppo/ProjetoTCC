@@ -1,6 +1,8 @@
-
 package br.com.ctesop.control;
 
+import br.com.ctesop.model.Produto;
+import br.com.ctesop.model.Safra;
+import br.com.ctesop.model.TipoSafra;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,8 +22,10 @@ import javafx.scene.control.ToggleGroup;
  * @author Bruna
  */
 public class CadastroSafraController implements Initializable {
-    
-  @FXML
+
+    private int codigo = 0;
+
+    @FXML
     private Button btnNovo;
 
     @FXML
@@ -34,10 +38,10 @@ public class CadastroSafraController implements Initializable {
     private Button btnCancelar;
 
     @FXML
-    private ChoiceBox<?> cbProduto;
+    private ChoiceBox<Produto> cbProduto;
 
     @FXML
-    private ChoiceBox<?> cbTipoSafra;
+    private ChoiceBox<TipoSafra> cbTipoSafra;
 
     @FXML
     private DatePicker dpDataInicio;
@@ -55,17 +59,17 @@ public class CadastroSafraController implements Initializable {
     private RadioButton rbInativo;
 
     @FXML
-    private TableView<?> tbSafra;
+    private TableView<Safra> tbSafra;
 
     @FXML
-    private TableColumn<?, ?> tbTipoSafra;
+    private TableColumn<Safra, TipoSafra> tbTipoSafra;
 
     @FXML
-    private TableColumn<?, ?> tcStatus;
+    private TableColumn<Safra, TipoSafra> tcStatus;
 
     @FXML
-    void cancelar(ActionEvent event) {
-
+    void novo(ActionEvent event) {
+        
     }
 
     @FXML
@@ -74,7 +78,7 @@ public class CadastroSafraController implements Initializable {
     }
 
     @FXML
-    void novo(ActionEvent event) {
+    void cancelar(ActionEvent event) {
 
     }
 
@@ -82,9 +86,9 @@ public class CadastroSafraController implements Initializable {
     void salvar(ActionEvent event) {
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
 }

@@ -13,33 +13,40 @@ public class JuridicaDAO {
 
     public static int inserir(Juridica juridica) throws Exception {
 
-        String sql = "insert into tbjuridica (cnpj, ei) values (?,?)";
+        String sql = "insert into tbjuridica (cnpj, ie, razaosocial) values (?,?,?)";
 
         Conexao con = new Conexao();
 
-        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        PreparedStatement ps = con.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        
         ps.setString(1, juridica.getCnpj());
-        ps.setString(2, juridica.getEi());
+        ps.setString(2, juridica.getIe());
+        ps.setString(3, juridica.getRazaoSocial());
 
         ps.execute();
-        con.confirmar();
         
-        ResultSet rs = ps.executeQuery();
-        return rs.getInt(1);
+        
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        int codigoGerado = rs.getInt(1);
+        
+        
+        return codigoGerado;
 
     }
 
     public static void alterar(Juridica juridica) throws Exception {
 
-        String sql = "update tbjuridica set cnpj=?, ei=? where codjuridica=?";
+        String sql = "update tbjuridica set cnpj=?, ei=?, razaosocial where codjuridica=?";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setString(1, juridica.getCnpj());
-        ps.setString(2, juridica.getEi());
-
-        ps.setInt(3, juridica.getCodigo());
+        ps.setString(2, juridica.getIe());
+        ps.setString(3, juridica.getRazaoSocial());
+        
+        ps.setInt(4, juridica.getCodigo());
 
         ps.execute();
         con.confirmar();

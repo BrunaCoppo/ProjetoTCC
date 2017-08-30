@@ -3,8 +3,11 @@ package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.model.Pessoa;
+import br.com.ctesop.model.Produto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -14,20 +17,25 @@ public class PessoaDAO {
     
     public static int inserir(Pessoa pessoa) throws Exception {
 
-        String sql = "insert into tbpessoa (codjuridica, codfisica, codcidade, nomepessoa, endereco, telefone, datacadastro, email, status) values (?,?,?,?,?,?,?,?,9)";
+        String sql = "insert into tbpessoa (" + (pessoa.getFisica() != null ? "codpessoafisica" : "codpessoajuridica") + "codcidade, nomepessoa, endereco, telefone, datacadastro, email, status) values (?,?,?,?,?,?,?,?)";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, pessoa.getJuridica().getCodigo());
-        ps.setInt(2, pessoa.getFisica().getCodigo());
-        ps.setInt(3, pessoa.getCidade().getCodigo());
-        ps.setString(4, pessoa.getNome());
-        ps.setString(5, pessoa.getEndereco());
-        ps.setString(6, pessoa.getTelefone());
-        ps.setDate(7, new java.sql.Date(pessoa.getDatacadastro().getTime()));
-        ps.setString(8, pessoa.getEmail());
-        ps.setString(9, pessoa.getStatus());
+        
+        if (pessoa.getFisica() != null) {
+            ps.setInt(1, pessoa.getFisica().getCodigo());
+        } else {
+            ps.setInt(1, pessoa.getJuridica().getCodigo());
+        }
+        
+        ps.setInt(2, pessoa.getCidade().getCodigo());
+        ps.setString(3, pessoa.getNome());
+        ps.setString(4, pessoa.getEndereco());
+        ps.setString(5, pessoa.getTelefone());
+        ps.setDate(6, new java.sql.Date(pessoa.getDatacadastro().getTime()));
+        ps.setString(7, pessoa.getEmail());
+        ps.setString(8, pessoa.getStatus());
        
 
         ps.execute();
@@ -75,7 +83,7 @@ public class PessoaDAO {
     }
       
         private static boolean existe(Pessoa pessoa) throws Exception {
-        String sql = "select count(codpessoa) from tbpessoa where nome=? or endereco=?";
+        String sql = "select count(codpessoa) from tbpessoa where nomepessoa=? or endereco=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setString(1, pessoa.getNome());
@@ -83,5 +91,29 @@ public class PessoaDAO {
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);
+    }
+        
+        public static ObservableList<Pessoa> listar(boolean somenteAtivos) throws Exception {
+
+        String sql = "select * from tbpessoa ";
+        if (somenteAtivos) {
+            sql += " where tbpessoa.status='A' ";
+        }
+        sql += " order by nomepessoa";
+        Conexao con = new Conexao();
+        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Pessoa> lista = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            Pessoa pessoa = new Pessoa();
+            pessoa.setCodigo(rs.getInt("codppessoa"));
+            pessoa.setNome(rs.getString("nomepessoa"));
+            pessoa.setStatus(rs.getString("status"));
+            lista.add(pessoa);
+
+        }
+        return lista;
     }
 }

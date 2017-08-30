@@ -1,16 +1,17 @@
 package br.com.ctesop.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author Bruna
  */
 public class Fisica {
-
+    
+    
     private String cpf;
     private String rg;
-    private String ei;
+    private String ie;
     private Date dataNascimento;
     private int codigo;
 
@@ -38,12 +39,12 @@ public class Fisica {
         this.rg = rg;
     }
 
-    public String getEi() {
-        return ei;
+    public String getIe() {
+        return ie;
     }
 
-    public void setEi(String ei) {
-        this.ei = ei;
+    public void setIe(String ei) {
+        this.ie = ei;
     }
 
     public Date getDataNascimento() {

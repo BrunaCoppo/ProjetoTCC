@@ -10,7 +10,7 @@ public class Juridica {
   
     private int codigo;
     private String cnpj;
-    private String ei;
+    private String ie;
     private String razaoSocial;
 
     public int getCodigo() {
@@ -31,12 +31,12 @@ public class Juridica {
         this.cnpj = cnpj;
     }
 
-    public String getEi() {
-        return ei;
+    public String getIe() {
+        return ie;
     }
 
-    public void setEi(String ei) {
-        this.ei = ei;
+    public void setIe(String ei) {
+        this.ie = ei;
     }
     
     public String getRazaoSocial() {
