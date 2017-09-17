@@ -1,6 +1,8 @@
 
 package br.com.ctesop.model;
 
+import java.security.InvalidParameterException;
+
 /**
  *
  * @author Bruna
@@ -18,6 +20,9 @@ public class Juridica {
     }
 
     public void setCodigo(int codigo) {
+        if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

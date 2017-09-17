@@ -1,6 +1,7 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.security.InvalidParameterException;
 
 /**
  *
@@ -18,6 +19,9 @@ public class Produto {
     }
 
     public Produto(int codigo) {
+        if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

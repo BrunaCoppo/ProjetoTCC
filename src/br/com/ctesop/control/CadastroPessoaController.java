@@ -7,12 +7,14 @@ package br.com.ctesop.control;
 import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.dao.CidadeDAO;
 import br.com.ctesop.dao.FisicaDAO;
 import br.com.ctesop.dao.FornecedorDAO;
 import br.com.ctesop.dao.FuncionarioDAO;
 import br.com.ctesop.dao.JuridicaDAO;
 import br.com.ctesop.dao.PessoaDAO;
 import br.com.ctesop.dao.ProprietarioDAO;
+import br.com.ctesop.model.Cidade;
 import br.com.ctesop.model.Fisica;
 import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.Funcionario;
@@ -28,6 +30,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -104,6 +108,9 @@ public class CadastroPessoaController implements Initializable {
     private CheckBox cbProprietario;
 
     @FXML
+    private ComboBox<Cidade> cbCidade;
+
+    @FXML
     private RadioButton rbFisica;
 
     @FXML
@@ -133,21 +140,24 @@ public class CadastroPessoaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-       
+        tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
+       
+        carregarComboCidade();
         atualizarTabela();
         habilitar(false);
     }
-     private void atualizarTabela() {
+
+    private void atualizarTabela() {
         try {
             tbPessoa.setItems(PessoaDAO.listar(false));
             tbPessoa.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
-           
+
         }
     }
+
     @FXML
     void novo(ActionEvent event) {
         codigo = 0;
@@ -168,6 +178,7 @@ public class CadastroPessoaController implements Initializable {
         tfEndereco.setText(selecionado.getEndereco());
         tfNome.setText(selecionado.getNome());
         tfTelefone.setText(selecionado.getTelefone());
+        cbCidade.getSelectionModel().select(selecionado.getCidade());
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
@@ -180,10 +191,15 @@ public class CadastroPessoaController implements Initializable {
     void salvar(ActionEvent event) {
         try {
             Pessoa pessoa = new Pessoa();
-            pessoa.setCodigo(codigo);
+            pessoa.setCodigo(codigo); 
             pessoa.setNome(tfNome.getText());
-            //Todos os demais dados de pessoa
+            pessoa.setEmail(tfEmail.getText());
+            pessoa.setTelefone(tfTelefone.getText());
+            pessoa.setEndereco(tfEndereco.getText());
+            pessoa.setCidade(cbCidade.getSelectionModel().getSelectedItem());
+            
 
+            //Todos os demais dados de pessoa
             if (rbAtivo.isSelected()) {
                 pessoa.setStatus("A");
             } else {
@@ -197,12 +213,11 @@ public class CadastroPessoaController implements Initializable {
                 fisica.setIe(tfIE.getText());
                 fisica.setRg(tfRG.getText());
                 fisica.setDataNascimento(Converter.converterData(dpDataNascimento.getValue()));
-               
-                //Mudar tipo de dado para String e no banco para VARCHAR(20)
 
+                //Mudar tipo de dado para String e no banco para VARCHAR(20)
                 codigoFisica = FisicaDAO.salvar(fisica);
                 fisica.setCodigo(codigoFisica);
-                
+
                 pessoa.setFisica(fisica);
                 pessoa.setJuridica(null);
             } else {
@@ -211,7 +226,6 @@ public class CadastroPessoaController implements Initializable {
                 juridica.setCnpj(tfCNPJ.getText());
                 juridica.setIe(tfIE.getText());
                 juridica.setRazaoSocial(tfRazaoSocial.getText());
-                
 
                 codigoJuridica = JuridicaDAO.salvar(juridica);
                 juridica.setCodigo(codigoJuridica);
@@ -262,7 +276,7 @@ public class CadastroPessoaController implements Initializable {
             e.printStackTrace();
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -299,7 +313,7 @@ public class CadastroPessoaController implements Initializable {
         tfRG.setDisable(!habilitar);
         tfRazaoSocial.setDisable(!habilitar);
         tfTelefone.setDisable(!habilitar);
-        
+
         tbFisica.setDisable(!habilitar);
 
         cbFornecedor.setDisable(!habilitar);
@@ -319,6 +333,14 @@ public class CadastroPessoaController implements Initializable {
         } else {
             tbFisica.setDisable(true);
             tbJuridica.setDisable(false);
+        }
+    }
+    
+    private void carregarComboCidade() {
+        try {
+            cbCidade.setItems(CidadeDAO.listar(true));
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
         }
     }
 

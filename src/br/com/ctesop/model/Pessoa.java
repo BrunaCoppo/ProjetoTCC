@@ -1,8 +1,8 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
-import java.sql.Date;
-import java.text.NumberFormat;
+import java.security.InvalidParameterException;
+import java.util.Date;
 
 /**
  *
@@ -26,6 +26,9 @@ public class Pessoa {
     }
 
     public void setCodigo(int codigo) {
+        if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 
@@ -126,4 +129,6 @@ public class Pessoa {
         }
         return false;
     }
+
+
 }

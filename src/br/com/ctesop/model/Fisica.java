@@ -1,5 +1,6 @@
 package br.com.ctesop.model;
 
+import java.security.InvalidParameterException;
 import java.util.Date;
 
 /**
@@ -20,6 +21,9 @@ public class Fisica {
     }
 
     public void setCodigo(int codigo) {
+        if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

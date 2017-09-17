@@ -1,6 +1,7 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -21,6 +22,9 @@ public class TipoManejo {
     }
 
     public TipoManejo(int codigo) {
+        if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 
