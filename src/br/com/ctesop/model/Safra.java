@@ -6,7 +6,8 @@
 package br.com.ctesop.model;
 
 import java.security.InvalidParameterException;
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  *

@@ -1,5 +1,11 @@
 package br.com.ctesop.control;
 
+import br.com.ctesop.controller.util.Alerta;
+import br.com.ctesop.controller.util.Converter;
+import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.dao.ProdutoDAO;
+import br.com.ctesop.dao.SafraDAO;
+import br.com.ctesop.dao.TipoSafraDAO;
 import br.com.ctesop.model.Produto;
 import br.com.ctesop.model.Safra;
 import br.com.ctesop.model.TipoSafra;
@@ -10,11 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -38,10 +46,10 @@ public class CadastroSafraController implements Initializable {
     private Button btnCancelar;
 
     @FXML
-    private ChoiceBox<Produto> cbProduto;
+    private ComboBox<Produto> cbProduto;
 
     @FXML
-    private ChoiceBox<TipoSafra> cbTipoSafra;
+    private ComboBox<TipoSafra> cbTipoSafra;
 
     @FXML
     private DatePicker dpDataInicio;
@@ -62,33 +70,125 @@ public class CadastroSafraController implements Initializable {
     private TableView<Safra> tbSafra;
 
     @FXML
-    private TableColumn<Safra, TipoSafra> tbTipoSafra;
+    private TableColumn<Safra, TipoSafra> tcTipoSafra;
 
     @FXML
-    private TableColumn<Safra, TipoSafra> tcStatus;
+    private TableColumn<Safra, String> tcStatus;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tiposafra"));
+        tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+    }
 
     @FXML
     void novo(ActionEvent event) {
-        
+        codigo = 0;
+        limpar();
+        habilitar(true);
+
     }
 
     @FXML
     void editar(ActionEvent event) {
+        if (tbSafra.getSelectionModel().isEmpty()) {
+            return;
+        }
 
+        Safra selecionado = tbSafra.getSelectionModel().getSelectedItem();
+        codigo = selecionado.getCodigo();
+        cbProduto.getSelectionModel().select(selecionado.getProduto());
+        cbTipoSafra.getSelectionModel().select(selecionado.getTipoSafra());
+        dpDataInicio.setValue(Converter.toLocalDate(selecionado.getDataInicio()));
+        dpDataTermino.setValue(Converter.toLocalDate(selecionado.getDataTermino()));
+        if (selecionado.getStatus().equalsIgnoreCase("A")) {
+            rbAtivo.setSelected(true);
+        } else {
+            rbInativo.setSelected(true);
+        }
+        habilitar(true);
     }
 
     @FXML
     void cancelar(ActionEvent event) {
-
+        habilitar(false);
+        limpar();
     }
 
     @FXML
     void salvar(ActionEvent event) {
+        try {
+            Safra safra = new Safra();
+            safra.setCodigo(codigo);
+            safra.setProduto(cbProduto.getSelectionModel().getSelectedItem());
+            safra.setTipoSafra(cbTipoSafra.getSelectionModel().getSelectedItem());
+            safra.setDataInicio(Converter.converterData(dpDataInicio.getValue()));
+
+            if (rbAtivo.isSelected()) {
+                safra.setStatus("A");
+            } else {
+                safra.setStatus("I");
+            }
+
+            SafraDAO.salvar(safra);
+
+            Alerta.sucesso("Safra salva com sucesso.");
+
+            atualizarTabela();
+            limpar();
+            habilitar(false);
+        } catch (ExceptionValidacao e) {
+            Alerta.alerta("Erro ao salvar.", e);
+        } catch (Exception e) {
+            Alerta.erro("Erro ao salvar.", e);
+        }
+    }
+
+    private void atualizarTabela() {
+        try {
+            tbSafra.setItems(SafraDAO.listar(false));
+            tbSafra.refresh();
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
+        }
+    }
+
+    private void limpar() {
+        cbProduto.getSelectionModel().select(0);
+        cbTipoSafra.getSelectionModel().select(0);
+        dpDataInicio.setValue(null);
+        dpDataTermino.setValue(null);
+        rbAtivo.setSelected(true);
+    }
+
+    private void habilitar(boolean habilitar) {
+        btnNovo.setDisable(habilitar);
+        btnEditar.setDisable(habilitar);
+        btnSalvar.setDisable(!habilitar);
+        btnCancelar.setDisable(!habilitar);
+        cbProduto.setDisable(!habilitar);
+        cbTipoSafra.setDisable(!habilitar);
+        dpDataInicio.setDisable(!habilitar);
+        dpDataTermino.setDisable(!habilitar);
+        rbAtivo.setDisable(!habilitar);
+        rbInativo.setDisable(!habilitar);
+    }
+
+    private void carregarComboProduto() {
+        try {
+            cbProduto.setItems(ProdutoDAO.listar(true));
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
+        }
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    private void carregarComboTipoSafra() {
+        try {
+            cbTipoSafra.setItems(TipoSafraDAO.listar(true));
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
+        }
+
     }
 }

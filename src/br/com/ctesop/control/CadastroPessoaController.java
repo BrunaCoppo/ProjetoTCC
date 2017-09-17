@@ -20,9 +20,7 @@ import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.Funcionario;
 import br.com.ctesop.model.Juridica;
 import br.com.ctesop.model.Pessoa;
-import br.com.ctesop.model.Produto;
 import br.com.ctesop.model.Proprietario;
-import com.mysql.jdbc.Util;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,7 +28,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -179,6 +176,7 @@ public class CadastroPessoaController implements Initializable {
         tfNome.setText(selecionado.getNome());
         tfTelefone.setText(selecionado.getTelefone());
         cbCidade.getSelectionModel().select(selecionado.getCidade());
+        dpDataNascimento.setValue(Converter.toLocalDate(selecionado.getDatacadastro()));
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
@@ -297,7 +295,10 @@ public class CadastroPessoaController implements Initializable {
         tfIE.setText("");
         tfRazaoSocial.setText("");
         tfTelefone.setText("");
+        cbCidade.getSelectionModel().select(0);
+        dpDataNascimento.setValue(null);
         rbAtivo.setSelected(true);
+        
     }
 
     private void habilitar(boolean habilitar) {

@@ -18,19 +18,18 @@ public class JuridicaDAO {
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        
+
         ps.setString(1, juridica.getCnpj());
         ps.setString(2, juridica.getIe());
         ps.setString(3, juridica.getRazaoSocial());
 
         ps.execute();
-        
-        
+
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
         int codigoGerado = rs.getInt(1);
-        
-        
+        con.confirmar();
+
         return codigoGerado;
 
     }
@@ -45,7 +44,7 @@ public class JuridicaDAO {
         ps.setString(1, juridica.getCnpj());
         ps.setString(2, juridica.getIe());
         ps.setString(3, juridica.getRazaoSocial());
-        
+
         ps.setInt(4, juridica.getCodigo());
 
         ps.execute();

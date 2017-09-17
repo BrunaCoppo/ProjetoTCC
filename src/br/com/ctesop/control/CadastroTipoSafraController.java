@@ -2,9 +2,7 @@ package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.ExceptionValidacao;
-import br.com.ctesop.dao.TipoManejoDAO;
 import br.com.ctesop.dao.TipoSafraDAO;
-import br.com.ctesop.model.TipoManejo;
 import br.com.ctesop.model.TipoSafra;
 import java.net.URL;
 import java.util.ResourceBundle;

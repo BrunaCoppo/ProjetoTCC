@@ -9,6 +9,7 @@ package br.com.ctesop.controller.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -16,6 +17,14 @@ import java.util.Date;
  * @author Bruna
  */
 public class Converter {
+    public static final LocalDate toLocalDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        return LocalDate.parse(sdf.format(date), dtf);
+    }
     
     public static Date converterData(LocalDate data) throws ParseException{
          if (data == null) {

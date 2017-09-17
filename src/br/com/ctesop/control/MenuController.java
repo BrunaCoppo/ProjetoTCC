@@ -58,8 +58,22 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    public void pessoa(ActionEvent event) {
-        abrir("CadastroPessoa", "Cadastro Pessoa");
+    public void funcionario(ActionEvent event) {
+        abrir("CadastroPessoa", "Cadastro Funcionario");
+    }
+    
+    @FXML
+    public void fornecedor(ActionEvent event) {
+        abrir("CadastroPessoa", "Cadastro Fornecedor");
+    }
+    
+    @FXML
+    public void proprietario(ActionEvent event) {
+        abrir("CadastroPessoa", "Cadastro Proprietario");
+    }
+    @FXML
+    public void safra(ActionEvent event) {
+        abrir("CadastroSafra", "Cadastro Safra");
     }
 
     @SuppressWarnings("UseSpecificCatch")
