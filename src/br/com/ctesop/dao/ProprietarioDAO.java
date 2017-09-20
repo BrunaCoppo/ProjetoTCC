@@ -1,4 +1,3 @@
-
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
@@ -11,10 +10,10 @@ import java.sql.ResultSet;
  * @author Bruna
  */
 public class ProprietarioDAO {
-    
+
     public static void inserir(Proprietario proprietario) throws Exception {
 
-        String sql = "insert into tbproprirtsrio (codpessoa) values (?)";
+        String sql = "insert into tbproprietario (codpessoa) values (?)";
 
         Conexao con = new Conexao();
 
@@ -26,8 +25,8 @@ public class ProprietarioDAO {
 
     }
 
-    private static boolean existe(Proprietario proprietario) throws Exception {
-        String sql = "select count(codpessoa) from tbproprietario";
+    public static boolean existe(Proprietario proprietario) throws Exception {
+        String sql = "select count(codpessoa) from tbproprietario where codpessoa=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, proprietario.getCodigo());
@@ -35,8 +34,7 @@ public class ProprietarioDAO {
         rs.next();
         return (rs.getInt(1) > 0);
     }
-    
-        
+
     public static void excluir(Proprietario proprietario) throws Exception {
         String sql = "delete from tbproprietario where codpessoa=?";
         Conexao conexao = new Conexao();
@@ -47,12 +45,9 @@ public class ProprietarioDAO {
     }
 
     public static void salvar(Proprietario proprietario) throws Exception {
-        if (proprietario.getCodigo()== 0) {
-            if (existe(proprietario)) {
-                throw new ExceptionValidacao("Situação Proprietario já está cadastrada.");
-            }
+        if (!existe(proprietario)) {
             inserir(proprietario);
-        } 
+        }
     }
-    
+
 }

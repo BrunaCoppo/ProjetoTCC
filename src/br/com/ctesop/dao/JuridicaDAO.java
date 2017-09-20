@@ -1,6 +1,7 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.model.Fisica;
 import br.com.ctesop.model.Juridica;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ public class JuridicaDAO {
 
     public static void alterar(Juridica juridica) throws Exception {
 
-        String sql = "update tbjuridica set cnpj=?, ei=?, razaosocial where codjuridica=?";
+        String sql = "update tbjuridica set cnpj=?, ie=?, razaosocial=? where codjuridica=?";
 
         Conexao con = new Conexao();
 
@@ -44,7 +45,6 @@ public class JuridicaDAO {
         ps.setString(1, juridica.getCnpj());
         ps.setString(2, juridica.getIe());
         ps.setString(3, juridica.getRazaoSocial());
-
         ps.setInt(4, juridica.getCodigo());
 
         ps.execute();
@@ -73,5 +73,23 @@ public class JuridicaDAO {
 
         }
 
+    }
+
+    public static Juridica get(int codigo) throws Exception {       
+        String sql = "select * from tbjuridica where codjuridica=? ";
+        Conexao con = new Conexao();
+        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        ps.setInt(1, codigo);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            Juridica juridica = new Juridica();
+            juridica.setCodigo(rs.getInt("codjuridica"));
+            juridica.setRazaoSocial(rs.getString("razaosocial"));
+            juridica.setCnpj(rs.getString("cnpj"));
+            juridica.setIe(rs.getString("ie"));
+            return juridica;
+        }   
+        return null;    
     }
 }

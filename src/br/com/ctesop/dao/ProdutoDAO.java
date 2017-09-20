@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 public class ProdutoDAO {
     public static void inserir(Produto produto) throws Exception {
 
-        String sql = "insert into tbproduto (nomeproduto, descricao, status) values (?,?,?)";
+        String sql = "insert into tbproduto (nomeproduto, descricao, status, produzido, quantidade) values (?,?,?,?,?)";
 
         Conexao con = new Conexao();
 
@@ -22,6 +22,8 @@ public class ProdutoDAO {
         ps.setString(1, produto.getNome());
         ps.setString(2, produto.getDescricao());
         ps.setString(3, produto.getStatus());
+        ps.setString(4, produto.getProduzido());
+        ps.setFloat(5, produto.getQuantidade());
 
         ps.execute();
         con.confirmar();
@@ -46,6 +48,8 @@ public class ProdutoDAO {
             produto.setNome(rs.getString("nomeproduto"));
             produto.setDescricao(rs.getString("descricao"));
             produto.setStatus(rs.getString("status"));
+            produto.setProduzido(rs.getString("produzido"));
+            produto.setQuantidade(rs.getFloat("quantidade"));
             lista.add(produto);
 
         }
@@ -54,7 +58,7 @@ public class ProdutoDAO {
 
     public static void alterar(Produto produto) throws Exception {
 
-        String sql = "update tbproduto set nomeproduto=?, descricao=?, status=? where codproduto=?";
+        String sql = "update tbproduto set nomeproduto=?, descricao=?, status=?, produzido=? where codproduto=?";
 
         Conexao con = new Conexao();
 
@@ -62,8 +66,9 @@ public class ProdutoDAO {
         ps.setString(1, produto.getNome());
         ps.setString(2, produto.getDescricao());
         ps.setString(3, produto.getStatus());
+        ps.setString(4, produto.getProduzido());
 
-        ps.setInt(4, produto.getCodigo());
+        ps.setInt(5, produto.getCodigo());
 
         ps.execute();
         con.confirmar();
@@ -81,11 +86,10 @@ public class ProdutoDAO {
     }
 
     private static boolean existe(Produto produto) throws Exception {
-        String sql = "select count(codproduto) from tbproduto where nomeproduto=? or descricao=?";
+        String sql = "select count(codproduto) from tbproduto where nomeproduto=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setString(1, produto.getNome());
-        ps.setString(2, produto.getDescricao());
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);

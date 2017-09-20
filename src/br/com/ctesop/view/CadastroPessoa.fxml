@@ -17,11 +17,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroPessoaController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="616.0" stylesheets="@css/Geral.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CadastroPessoaController">
    <children>
-      <VBox fillWidth="false" prefHeight="531.0" prefWidth="616.0" spacing="5.0" stylesheets="@css/Geral.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fillWidth="false" spacing="5.0" stylesheets="@css/Geral.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
@@ -57,58 +56,94 @@
               <tabs>
                 <Tab text="Pessoa">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox fillWidth="false" spacing="5.0">
                            <children>
-                              <Label text="Nome *" />
-                              <TextField fx:id="tfNome" prefHeight="25.0" prefWidth="262.0" />
-                              <HBox spacing="10.0" />
-                              <VBox>
-                                 <children>
-                                    <Label text="Cidade*" />
-                                    <ComboBox fx:id="cbCidade" prefHeight="25.0" prefWidth="182.0" />
-                                    <Label text="Endereço *" />
-                                    <TextField fx:id="tfEndereco" prefHeight="25.0" prefWidth="229.0" />
-                                 </children>
-                              </VBox>
-                              <VBox>
-                                 <children>
-                                    <Label text="Telefone *" />
-                                    <TextField fx:id="tfTelefone" prefHeight="25.0" prefWidth="138.0" />
-                                 </children>
-                              </VBox>
                               <HBox>
                                  <children>
-                                    <Label text="E-mail *" />
+                                    <Label prefWidth="250.0" text="Nome *" />
                                     <Label text="Status *">
                                        <HBox.margin>
-                                          <Insets left="180.0" />
+                                          <Insets left="20.0" />
                                        </HBox.margin>
                                     </Label>
                                  </children>
                               </HBox>
                               <HBox>
                                  <children>
-                                    <TextField fx:id="tfEmail" prefHeight="25.0" prefWidth="182.0" />
-                                    <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                                    <TextField fx:id="tfNome" prefHeight="25.0" prefWidth="250.0" />
+                                    <HBox spacing="5.0">
+                                       <children>
+                                          <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="status" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
                                        <HBox.margin>
-                                          <Insets left="50.0" right="20.0" />
+                                          <Insets left="20.0" />
                                        </HBox.margin>
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="status" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
-                                       <HBox.margin>
-                                          <Insets right="20.0" />
-                                       </HBox.margin>
-                                    </RadioButton>
+                                    </HBox>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
                               </HBox>
-                              <Label text="Tipo" />
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                              <VBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label prefWidth="250.0" text="Endereço *" />
+                                          <Label text="Cidade*">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <TextField fx:id="tfEndereco" prefHeight="25.0" prefWidth="250.0" />
+                                          <ComboBox fx:id="cbCidade" prefHeight="25.0" prefWidth="250.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </ComboBox>
+                                          <Button fx:id="btnCadastrarCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label prefWidth="250.0" text="E-mail" />
+                                          <Label text="Telefone">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <TextField fx:id="tfEmail" prefHeight="25.0" prefWidth="250.0" />
+                                          <TextField fx:id="tfTelefone" prefHeight="25.0" prefWidth="182.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Label text="Tipo *" />
+                              <HBox spacing="5.0">
                                  <children>
                                     <CheckBox fx:id="cbFornecedor" mnemonicParsing="false" text="Fornecedor" />
                                     <CheckBox fx:id="cbFuncionario" mnemonicParsing="false" text="Funcionário" />
@@ -129,32 +164,80 @@
                 </Tab>
                 <Tab fx:id="tbFisica" disable="true" text="Pessoa Física">
                      <content>
-                        <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0">
+                        <VBox fillWidth="false" spacing="5.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                            <children>
-                              <Label text="CPF" />
-                              <TextField fx:id="tfCPF" prefHeight="25.0" prefWidth="163.0" />
-                              <Label text="RG" />
-                              <TextField fx:id="tfRG" prefHeight="25.0" prefWidth="159.0" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IE" />
-                              <TextField fx:id="tfIE" />
-                              <Label text="Data de Nascimento" />
-                              <DatePicker fx:id="dpDataNascimento" />
+                              <HBox>
+                                 <children>
+                                    <Label prefWidth="170.0" text="CPF" />
+                                    <Label prefWidth="170.0" text="RG">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="tfCPF" prefWidth="170.0" />
+                                    <TextField fx:id="tfRG" prefHeight="25.0" prefWidth="170.0">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefWidth="170.0" text="Incrição Estadual" />
+                                    <Label prefWidth="170.0" text="Data de Nascimento">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="tfIE" prefWidth="170.0" />
+                                    <DatePicker fx:id="dpDataNascimento" prefWidth="170.0">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
                            </children></VBox>
                      </content>
                 </Tab>
                   <Tab fx:id="tbJuridica" disable="true" text="Pessoa Jurídica">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox fillWidth="false" spacing="5.0">
                            <children>
-                              <Label text="CNPJ" />
-                              <TextField fx:id="tfCNPJ" />
-                              <Label text="IE" />
-                              <TextField fx:id="tfIE" />
                               <Label text="Razão Social" />
-                              <TextField fx:id="tfRazaoSocial" />
+                              <TextField fx:id="tfRazaoSocial" prefWidth="250.0" />
+                              <HBox>
+                                 <children>
+                                    <Label prefWidth="170.0" text="CNPJ" />
+                                    <Label prefWidth="170.0" text="Incrição Estadual">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="tfCNPJ" prefWidth="170.0" />
+                                    <TextField fx:id="tfIE" prefWidth="170.0">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -163,7 +246,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <TableView fx:id="tbPessoa" prefHeight="113.0" prefWidth="570.0">
+            <TableView fx:id="tbPessoa" maxHeight="240.0">
               <columns>
                 <TableColumn fx:id="tcNome" prefWidth="310.0" text="Nome" />
                 <TableColumn fx:id="tcTelefone" minWidth="9.0" prefWidth="147.0" text="Telefone" />

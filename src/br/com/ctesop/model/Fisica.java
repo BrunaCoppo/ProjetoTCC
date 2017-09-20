@@ -1,5 +1,6 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
@@ -8,8 +9,7 @@ import java.util.Date;
  * @author Bruna
  */
 public class Fisica {
-    
-    
+
     private String cpf;
     private String rg;
     private String ie;
@@ -31,7 +31,10 @@ public class Fisica {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(String cpf) throws ExceptionValidacao {
+        if (cpf.trim().length() != 14) {
+            throw new ExceptionValidacao("CPF inválido!");
+        }
         this.cpf = cpf;
     }
 
@@ -55,7 +58,10 @@ public class Fisica {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) throws ExceptionValidacao {
+        if (dataNascimento == null) {
+            throw new ExceptionValidacao("Data de nascimento inválida!");
+        }
         this.dataNascimento = dataNascimento;
     }
 

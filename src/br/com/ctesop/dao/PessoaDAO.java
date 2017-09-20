@@ -1,9 +1,12 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.model.Cidade;
+import br.com.ctesop.model.Fisica;
 import br.com.ctesop.model.Pessoa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,28 +42,33 @@ public class PessoaDAO {
         ps.setString(8, pessoa.getStatus());
 
         ps.execute();
-       
 
         int codGerado = 0;
 
         ResultSet rs = ps.getGeneratedKeys();
         if (rs.next()) {
-            codGerado=rs.getInt(1);
+            codGerado = rs.getInt(1);
         }
-         con.confirmar();
+        con.confirmar();
         return codGerado;
     }
 
     public static void alterar(Pessoa pessoa) throws Exception {
 
-        String sql = "update tbpessoa set codjuridica=?, codfisica=?, codcidade=?, nomepessoa=?, ";
+        String sql = "update tbpessoa set codfisica=?, codjuridica=?, codcidade=?, nomepessoa=?, ";
         sql += "endereco=?, telefone=?, email=?, status=? where codpessoa=?";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, pessoa.getJuridica().getCodigo());
-        ps.setInt(2, pessoa.getFisica().getCodigo());
+        if (pessoa.getFisica() != null) {
+            ps.setInt(1, pessoa.getFisica().getCodigo());
+            ps.setNull(2, Types.INTEGER);
+        } else {
+            ps.setNull(1, Types.INTEGER);
+            ps.setInt(2, pessoa.getJuridica().getCodigo());
+        }
+
         ps.setInt(3, pessoa.getCidade().getCodigo());
         ps.setString(4, pessoa.getNome());
         ps.setString(5, pessoa.getEndereco());
@@ -114,7 +122,14 @@ public class PessoaDAO {
             Pessoa pessoa = new Pessoa();
             pessoa.setCodigo(rs.getInt("codpessoa"));
             pessoa.setNome(rs.getString("nomepessoa"));
+            pessoa.setCidade(new Cidade(rs.getInt("codcidade")));
+            pessoa.setEndereco(rs.getString("endereco"));
+            pessoa.setTelefone(rs.getString("telefone"));
+            pessoa.setEmail(rs.getString("email"));            
             pessoa.setStatus(rs.getString("status"));
+            pessoa.setFisica(FisicaDAO.get(rs.getInt("codfisica")));
+            pessoa.setJuridica(JuridicaDAO.get(rs.getInt("codjuridica")));
+                                    
             lista.add(pessoa);
 
         }

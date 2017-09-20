@@ -37,7 +37,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-excluir" text="Cancelar">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -53,7 +53,7 @@
             <TextField fx:id="tfValor" prefHeight="25.0" prefWidth="139.0" />
             <HBox>
                <children>
-                  <Label text="Descrição *" />
+                  <Label text="Descrição" />
                   <Label text="Status *">
                      <HBox.margin>
                         <Insets left="210.0" />

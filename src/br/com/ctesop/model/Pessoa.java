@@ -52,7 +52,10 @@ public class Pessoa {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(Cidade cidade) throws ExceptionValidacao {
+        if(cidade == null){
+            throw new ExceptionValidacao("Cidade inválida!");
+        }
         this.cidade = cidade;
     }
 
@@ -60,7 +63,10 @@ public class Pessoa {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws ExceptionValidacao {
+        if(nome.trim().length() < 3){
+            throw new ExceptionValidacao("Nome inválido!");
+        }        
         this.nome = nome;
     }
 
@@ -92,19 +98,7 @@ public class Pessoa {
         return email;
     }
 
-    public void setEmail(String email) throws ExceptionValidacao {
-
-        if (email.isEmpty()) {
-            throw new ExceptionValidacao("E-mail obrigatório.");
-        }
-        if (email.trim().length() < 2) {
-            throw new ExceptionValidacao("E-mail muito curto.");
-        }
-
-        if (email.trim().length() > 50) {
-            throw new ExceptionValidacao("Nome muito longo.");
-
-        }
+    public void setEmail(String email) {        
         this.email = email;
     }
 

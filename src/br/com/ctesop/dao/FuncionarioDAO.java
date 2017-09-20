@@ -1,4 +1,3 @@
-
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
@@ -12,8 +11,8 @@ import java.sql.ResultSet;
  * @author Bruna
  */
 public class FuncionarioDAO {
-    
-        public static void inserir(Funcionario funcionario) throws Exception {
+
+    public static void inserir(Funcionario funcionario) throws Exception {
 
         String sql = "insert into tbfuncionario (codpessoa) values (?)";
 
@@ -27,9 +26,8 @@ public class FuncionarioDAO {
 
     }
 
-
-    private static boolean existe(Funcionario funcionario) throws Exception {
-        String sql = "select count(codpessoa) from tbfuncionario";
+    public static boolean existe(Funcionario funcionario) throws Exception {
+        String sql = "select count(codpessoa) from tbfuncionario where codpessoa=?";
         Conexao conexao = new Conexao();
         PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
         ps.setInt(1, funcionario.getCodigo());
@@ -37,23 +35,19 @@ public class FuncionarioDAO {
         rs.next();
         return (rs.getInt(1) > 0);
     }
-    
-    
-     public static void excluir(Funcionario funcionario) throws Exception {
+
+    public static void excluir(Funcionario funcionario) throws Exception {
         String sql = "delete from tbfornecedor where codpessoa=?";
         Conexao conexao = new Conexao();
-        
+
         PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
         ps.setInt(1, funcionario.getCodigo());
         ps.execute();
         conexao.confirmar();
     }
-    
+
     public static void salvar(Funcionario funcionario) throws Exception {
-        if (funcionario.getCodigo()== 0) {
-            if (existe(funcionario)) {
-                throw new ExceptionValidacao("Situação Funcionario já está cadastrada.");
-            }
+        if (!existe(funcionario)) {
             inserir(funcionario);
         }
     }

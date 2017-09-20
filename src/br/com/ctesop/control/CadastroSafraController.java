@@ -12,8 +12,11 @@ import br.com.ctesop.model.TipoSafra;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -23,6 +26,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -44,6 +49,10 @@ public class CadastroSafraController implements Initializable {
 
     @FXML
     private Button btnCancelar;
+    
+    
+    @FXML
+    private Button btnCadastroProduto;
 
     @FXML
     private ComboBox<Produto> cbProduto;
@@ -79,6 +88,10 @@ public class CadastroSafraController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tiposafra"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        carregarComboProduto();
+        carregarComboTipoSafra();
+        habilitar(false);
+        atualizarTabela();
     }
 
     @FXML
@@ -190,5 +203,26 @@ public class CadastroSafraController implements Initializable {
             Alerta.erro("Erro ao consultar dados.", e);
         }
 
+    }
+    
+     @FXML
+    public void cadastroProduto(ActionEvent event) {
+        try {
+            String url = "/br/com/ctesop/view/CadastrProduto.fxml";
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Produto");
+            stage.setScene(scene);
+            stage.show();
+            //Carregar o estado na cidade alterado
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    carregarComboProduto();
+                }
+            });
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir Cadastro de Produto.", e);
+        }
     }
 }

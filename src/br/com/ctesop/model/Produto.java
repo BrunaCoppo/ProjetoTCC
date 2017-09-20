@@ -13,6 +13,8 @@ public class Produto {
     private String nome;
     private String descricao;
     private String status;
+    private String produzido;
+    private float quantidade = 0;
 
     public Produto() {
         this.codigo = 0;
@@ -83,8 +85,24 @@ public class Produto {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-        @Override
+
+    public String getProduzido() {
+        return produzido;
+    }
+
+    public void setProduzido(String produzido) {
+        this.produzido = produzido;
+    }
+
+    public float getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(float quantidade) {
+        this.quantidade = quantidade;
+    }
+        
+    @Override
     public String toString() {
         return getNome();
     }

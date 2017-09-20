@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -34,53 +35,73 @@ public class MenuController implements Initializable {
 
     @FXML
     public void produto(ActionEvent event) {
-        abrir("CadastroProduto", "Cadastro de Produto");
+        abrir("CadastroProduto", "Cadastro de Produtos");
     }
 
     @FXML
     public void cooperativa(ActionEvent event) {
-        abrir("CadastroCooperativa", "Cadastro de Cooperativa");
+        abrir("CadastroCooperativa", "Cadastro de Cooperativas");
     }
 
     @FXML
     public void terra(ActionEvent event) {
-        abrir("CadastroTerra", "Cadastro de Terra");
+        abrir("CadastroTerra", "Cadastro de Terras");
     }
 
     @FXML
     public void tipoManejo(ActionEvent event) {
-        abrir("CadastroTipoManejo", "Cadastro Tipo de Manejo");
+        abrir("CadastroTipoManejo", "Cadastro de Tipos de Manejo");
     }
 
     @FXML
     public void tipoSafra(ActionEvent event) {
-        abrir("CadastroTipoSafra", "Cadastro tipo de Safra");
+        abrir("CadastroTipoSafra", "Cadastro de Tipos de Safra");
     }
 
     @FXML
     public void funcionario(ActionEvent event) {
-        abrir("CadastroPessoa", "Cadastro Funcionario");
-    }
-    
-    @FXML
-    public void fornecedor(ActionEvent event) {
-        abrir("CadastroPessoa", "Cadastro Fornecedor");
-    }
-    
-    @FXML
-    public void proprietario(ActionEvent event) {
-        abrir("CadastroPessoa", "Cadastro Proprietario");
-    }
-    @FXML
-    public void safra(ActionEvent event) {
-        abrir("CadastroSafra", "Cadastro Safra");
+        abrirPessoa("CadastroPessoa", "Cadastro de Funcionários", "Funcionario");
     }
 
-    @SuppressWarnings("UseSpecificCatch")
+    @FXML
+    public void fornecedor(ActionEvent event) {
+        abrirPessoa("CadastroPessoa", "Cadastro de Fornecedores", "Fornecedor");
+    }
+
+    @FXML
+    public void proprietario(ActionEvent event) {
+        abrirPessoa("CadastroPessoa", "Cadastro de Proprietários", "Proprietario");
+    }
+
+    @FXML
+    public void safra(ActionEvent event) {
+        abrir("CadastroSafra", "Cadastro de Safras");
+    }
+
     private void abrir(String arquivo, String titulo) {
         try {
             String url = "/br/com/ctesop/view/" + arquivo + ".fxml";
             Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir " + titulo + ".", e);
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirPessoa(String arquivo, String titulo, String tipo) {
+        try {
+            String url = "/br/com/ctesop/view/" + arquivo + ".fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
+            Parent root = loader.load();
+
+            CadastroPessoaController controller = loader.getController();
+            controller.setTipo(tipo);
+
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(scene);

@@ -1,6 +1,7 @@
 
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 
 /**
@@ -32,7 +33,10 @@ public class Juridica {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
+    public void setCnpj(String cnpj) throws ExceptionValidacao {
+        if(cnpj.trim().length() != 18){
+            throw new ExceptionValidacao("CNPJ inválido!");
+        }
         this.cnpj = cnpj;
     }
 
@@ -48,7 +52,10 @@ public class Juridica {
         return razaoSocial;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
+    public void setRazaoSocial(String razaoSocial) throws ExceptionValidacao {
+        if(razaoSocial.trim().length() < 3){
+            throw new ExceptionValidacao("Razão Social inválida!");
+        }
         this.razaoSocial = razaoSocial;
     }
     

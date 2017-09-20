@@ -1,4 +1,3 @@
-
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
@@ -11,8 +10,8 @@ import java.sql.ResultSet;
  * @author Bruna
  */
 public class FornecedorDAO {
-        
-        public static void inserir(Fornecedor fornecedor) throws Exception {
+
+    public static void inserir(Fornecedor fornecedor) throws Exception {
 
         String sql = "insert into tbfornecedor (codpessoa) values (?)";
 
@@ -26,9 +25,8 @@ public class FornecedorDAO {
 
     }
 
-
-    private static boolean existe(Fornecedor fornecedor) throws Exception {
-        String sql = "select count(codpessoa) from tbfornecedor";
+    public static boolean existe(Fornecedor fornecedor) throws Exception {
+        String sql = "select count(codpessoa) from tbfornecedor where codpessoa=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, fornecedor.getCodigo());
@@ -36,8 +34,8 @@ public class FornecedorDAO {
         rs.next();
         return (rs.getInt(1) > 0);
     }
-    
-     public static void excluir(Fornecedor fornecedor) throws Exception {
+
+    public static void excluir(Fornecedor fornecedor) throws Exception {
         String sql = "delete from tbfornecedor where codpessoa=?";
         Conexao conexao = new Conexao();
         PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
@@ -45,12 +43,9 @@ public class FornecedorDAO {
         ps.execute();
         conexao.confirmar();
     }
-    
+
     public static void salvar(Fornecedor fornecedor) throws Exception {
-        if (fornecedor.getCodigo()== 0) {
-            if (existe(fornecedor)) {
-                throw new ExceptionValidacao("Situação Fornecedor já está cadastrada.");
-            }
+        if (!existe(fornecedor)) {
             inserir(fornecedor);
         }
     }

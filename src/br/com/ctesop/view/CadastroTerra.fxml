@@ -48,34 +48,37 @@
                   <Insets bottom="15.0" top="5.0" />
                </VBox.margin>
             </HBox>
+            <Label text="Descrição *" />
+            <TextField fx:id="tfDescricao" prefWidth="250.0" />
             <Label text="Cidade *" />
-            <HBox spacing="5.0">
+            <HBox>
                <children>
-                  <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+                  <ComboBox fx:id="cbCidade" prefWidth="250.0" />
                   <Button fx:id="btnCadastroCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
                </children>
             </HBox>
-            <Label text="Tamanho *" />
-            <TextField fx:id="tfTamanho" prefHeight="25.0" prefWidth="76.0" />
             <HBox>
                <children>
-                  <Label text="Descrição *" />
+                  <Label prefWidth="300.0" text="Tamanho *" />
                   <Label text="Status *">
                      <HBox.margin>
-                        <Insets left="150.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="600.0">
                <children>
-                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="192.0" />
+                  <TextField fx:id="tfTamanho" prefWidth="180.0">
+                     <HBox.margin>
+                        <Insets right="120.0" />
+                     </HBox.margin></TextField>
                   <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
                      <toggleGroup>
                         <ToggleGroup fx:id="status" />
                      </toggleGroup>
                      <HBox.margin>
-                        <Insets left="30.0" right="20.0" />
+                        <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                      <padding>
                         <Insets right="20.0" />
@@ -89,9 +92,9 @@
             </HBox>
             <TableView fx:id="tbTerra" prefHeight="232.0" prefWidth="576.0">
               <columns>
+                  <TableColumn fx:id="tcDescricao" prefWidth="205.0" text="Descrição" />
                 <TableColumn fx:id="tcCidade" prefWidth="231.0" text="Cidade" />
                 <TableColumn fx:id="tcTamanho" prefWidth="61.0" text="Tamanho" />
-                  <TableColumn fx:id="tcDescricao" prefWidth="205.0" text="Descrição" />
                   <TableColumn fx:id="tcStatus" prefWidth="76.0" text="Status" />
               </columns>
             </TableView>

@@ -5,11 +5,13 @@ import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.dao.ProdutoDAO;
 import br.com.ctesop.model.Produto;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,7 +33,13 @@ public class CadastroProdutoController implements Initializable {
 
     @FXML
     private TextField tfDescricao;
+   
+    @FXML
+    private TextField tfQuantidade;
 
+    @FXML 
+    private CheckBox cbProduzido;
+    
     @FXML
     private RadioButton rbAtivo;
 
@@ -89,15 +97,21 @@ public class CadastroProdutoController implements Initializable {
         if (tbProduto.getSelectionModel().isEmpty()) {
             return;
         }
-
+        NumberFormat nf = NumberFormat.getNumberInstance();
         Produto selecionado = tbProduto.getSelectionModel().getSelectedItem();
         codigo = selecionado.getCodigo();
         tfNome.setText(selecionado.getNome());
+        tfQuantidade.setText(nf.format(selecionado.getQuantidade()));
         tfDescricao.setText(selecionado.getDescricao());
         if (selecionado.getStatus().equalsIgnoreCase("A")) {
             rbAtivo.setSelected(true);
         } else {
             rbInativo.setSelected(true);
+        }
+        if(selecionado.getProduzido().equalsIgnoreCase("S")){
+            cbProduzido.setSelected(true);
+        } else {
+            cbProduzido.setSelected(false);
         }
         habilitar(true);
     }
@@ -115,10 +129,16 @@ public class CadastroProdutoController implements Initializable {
             } else {
                 produto.setStatus("I");
             }
+            
+            if(cbProduzido.isSelected()){
+                produto.setProduzido("S");
+            } else {
+                produto.setProduzido("N");
+            }
 
             ProdutoDAO.salvar(produto);
 
-            Alerta.sucesso("Estado salvo com sucesso.");
+            Alerta.sucesso("Produto salvo com sucesso.");
 
             atualizarTabela();
             limpar();
@@ -149,8 +169,10 @@ public class CadastroProdutoController implements Initializable {
 
     private void limpar() {
         tfNome.setText("");
+        tfQuantidade.setText("");
         tfDescricao.setText("");
         rbAtivo.setSelected(true);
+        cbProduzido.setSelected(false);
     }
 
     private void habilitar(boolean habilitar) {
@@ -159,8 +181,10 @@ public class CadastroProdutoController implements Initializable {
         btnSalvar.setDisable(!habilitar);
         btnCancelar.setDisable(!habilitar);
         tfNome.setDisable(!habilitar);
+        tfQuantidade.setDisable(!habilitar);
         tfDescricao.setDisable(!habilitar);
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
+        cbProduzido.setDisable(!habilitar);
     }
 }

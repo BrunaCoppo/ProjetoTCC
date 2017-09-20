@@ -1,10 +1,15 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.model.Cidade;
 import br.com.ctesop.model.Fisica;
+import br.com.ctesop.model.Pessoa;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -38,7 +43,7 @@ public class FisicaDAO {
 
     public static void alterar(Fisica fisica) throws Exception {
 
-        String sql = "update tbfisica set cpf=?, rg=?, ei=?, datanascimento=? where codfisica=?";
+        String sql = "update tbfisica set cpf=?, rg=?, ie=?, datanascimento=? where codfisica=?";
 
         Conexao con = new Conexao();
 
@@ -76,5 +81,24 @@ public class FisicaDAO {
             return fisica.getCodigo();
         }
 
+    }
+
+    public static Fisica get(int codigo) throws Exception {       
+        String sql = "select * from tbfisica where codfisica=? ";
+        Conexao con = new Conexao();
+        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        ps.setInt(1, codigo);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            Fisica fisica = new Fisica();
+            fisica.setCodigo(rs.getInt("codfisica"));
+            fisica.setDataNascimento(rs.getDate("datanascimento"));
+            fisica.setCpf(rs.getString("cpf"));
+            fisica.setRg(rs.getString("rg"));
+            fisica.setIe(rs.getString("ie"));
+            return fisica;
+        }   
+        return null;    
     }
 }

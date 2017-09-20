@@ -24,8 +24,11 @@ import br.com.ctesop.model.Proprietario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -37,6 +40,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class CadastroPessoaController implements Initializable {
 
@@ -108,6 +113,9 @@ public class CadastroPessoaController implements Initializable {
     private ComboBox<Cidade> cbCidade;
 
     @FXML
+    private Button btnCadastrarCidade;
+
+    @FXML
     private RadioButton rbFisica;
 
     @FXML
@@ -139,7 +147,7 @@ public class CadastroPessoaController implements Initializable {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-       
+
         carregarComboCidade();
         atualizarTabela();
         habilitar(false);
@@ -167,37 +175,80 @@ public class CadastroPessoaController implements Initializable {
         if (tbPessoa.getSelectionModel().isEmpty()) {
             return;
         }
+        try {
+            Pessoa selecionado = tbPessoa.getSelectionModel().getSelectedItem();
+            codigo = selecionado.getCodigo();
+            tfNome.setText(selecionado.getNome());
+            tfEmail.setText(selecionado.getEmail());
+            tfEndereco.setText(selecionado.getEndereco());
+            tfNome.setText(selecionado.getNome());
+            tfTelefone.setText(selecionado.getTelefone());
+            cbCidade.getSelectionModel().select(selecionado.getCidade());
+            dpDataNascimento.setValue(Converter.toLocalDate(selecionado.getDatacadastro()));
+            if (selecionado.getStatus().equalsIgnoreCase("A")) {
+                rbAtivo.setSelected(true);
+            } else {
+                rbInativo.setSelected(true);
+            }
 
-        Pessoa selecionado = tbPessoa.getSelectionModel().getSelectedItem();
-        codigo = selecionado.getCodigo();
-        tfNome.setText(selecionado.getNome());
-        tfEmail.setText(selecionado.getEmail());
-        tfEndereco.setText(selecionado.getEndereco());
-        tfNome.setText(selecionado.getNome());
-        tfTelefone.setText(selecionado.getTelefone());
-        cbCidade.getSelectionModel().select(selecionado.getCidade());
-        dpDataNascimento.setValue(Converter.toLocalDate(selecionado.getDatacadastro()));
-        if (selecionado.getStatus().equalsIgnoreCase("A")) {
-            rbAtivo.setSelected(true);
-        } else {
-            rbInativo.setSelected(true);
+            if (selecionado.getFisica() != null) {
+                codigoJuridica = 0;
+                codigoFisica = selecionado.getFisica().getCodigo();
+                tfCPF.setText(selecionado.getFisica().getCpf());
+                tfRG.setText(selecionado.getFisica().getRg());
+                tfIE.setText(selecionado.getFisica().getIe());
+                dpDataNascimento.setValue(Converter.toLocalDate(selecionado.getFisica().getDataNascimento()));
+                rbFisica.setSelected(true);
+                mudarTipo(null);
+            }
+            if (selecionado.getJuridica() != null) {
+                codigoFisica = 0;
+                codigoJuridica = selecionado.getJuridica().getCodigo();
+                tfCNPJ.setText(selecionado.getJuridica().getCnpj());
+                tfIE.setText(selecionado.getJuridica().getIe());
+                tfRazaoSocial.setText(selecionado.getJuridica().getRazaoSocial());
+                rbJuridica.setSelected(true);
+                mudarTipo(null);
+            }
+
+            if (ProprietarioDAO.existe(new Proprietario(selecionado.getCodigo()))) {
+                cbProprietario.setSelected(true);
+            } else {
+                cbProprietario.setSelected(false);
+            }
+            
+            if (FuncionarioDAO.existe(new Funcionario(selecionado.getCodigo()))) {
+                cbFuncionario.setSelected(true);
+            } else {
+                cbFuncionario.setSelected(false);
+            }
+            
+            if (FornecedorDAO.existe(new Fornecedor(selecionado.getCodigo()))) {
+                cbFornecedor.setSelected(true);
+            } else {
+                cbFornecedor.setSelected(false);
+            }
+
+            habilitar(true);
+            
+        } catch (Exception e) {
+            Alerta.erro("Erro ao carregar dados para edição.", e);
+            e.printStackTrace();
         }
-        habilitar(true);
     }
 
     @FXML
     void salvar(ActionEvent event) {
+
         try {
             Pessoa pessoa = new Pessoa();
-            pessoa.setCodigo(codigo); 
+            pessoa.setCodigo(codigo);
             pessoa.setNome(tfNome.getText());
             pessoa.setEmail(tfEmail.getText());
             pessoa.setTelefone(tfTelefone.getText());
             pessoa.setEndereco(tfEndereco.getText());
             pessoa.setCidade(cbCidade.getSelectionModel().getSelectedItem());
-            
 
-            //Todos os demais dados de pessoa
             if (rbAtivo.isSelected()) {
                 pessoa.setStatus("A");
             } else {
@@ -212,7 +263,6 @@ public class CadastroPessoaController implements Initializable {
                 fisica.setRg(tfRG.getText());
                 fisica.setDataNascimento(Converter.converterData(dpDataNascimento.getValue()));
 
-                //Mudar tipo de dado para String e no banco para VARCHAR(20)
                 codigoFisica = FisicaDAO.salvar(fisica);
                 fisica.setCodigo(codigoFisica);
 
@@ -235,29 +285,24 @@ public class CadastroPessoaController implements Initializable {
             codigo = PessoaDAO.salvar(pessoa);
 
             Fornecedor fornecedor = new Fornecedor();
-
+            fornecedor.setCodigo(codigo);
             if (cbFornecedor.isSelected()) {
-
-                fornecedor.setCodigo(codigo);
                 FornecedorDAO.salvar(fornecedor);
             } else {
                 FornecedorDAO.excluir(fornecedor);
             }
 
             Proprietario proprietario = new Proprietario();
-
+            proprietario.setCodigo(codigo);
             if (cbProprietario.isSelected()) {
-
-                proprietario.setCodigo(codigo);
                 ProprietarioDAO.salvar(proprietario);
             } else {
                 ProprietarioDAO.excluir(proprietario);
             }
 
             Funcionario funcionario = new Funcionario();
+            funcionario.setCodigo(codigo);
             if (cbFuncionario.isSelected()) {
-
-                funcionario.setCodigo(codigo);
                 FuncionarioDAO.salvar(funcionario);
             } else {
                 FuncionarioDAO.excluir(funcionario);
@@ -271,7 +316,6 @@ public class CadastroPessoaController implements Initializable {
 
         } catch (ExceptionValidacao e) {
             Alerta.alerta("Erro ao salvar.", e);
-            e.printStackTrace();
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
             e.printStackTrace();
@@ -292,13 +336,13 @@ public class CadastroPessoaController implements Initializable {
         tfEndereco.setText("");
         tfNome.setText("");
         tfRG.setText("");
-        tfIE.setText("");
         tfRazaoSocial.setText("");
         tfTelefone.setText("");
         cbCidade.getSelectionModel().select(0);
         dpDataNascimento.setValue(null);
         rbAtivo.setSelected(true);
-        
+        rbFisica.setSelected(true);
+        mudarTipo(null);
     }
 
     private void habilitar(boolean habilitar) {
@@ -309,21 +353,24 @@ public class CadastroPessoaController implements Initializable {
         tfCNPJ.setDisable(!habilitar);
         tfCPF.setDisable(!habilitar);
         tfIE.setDisable(!habilitar);
+        dpDataNascimento.setDisable(!habilitar);
         tfEndereco.setDisable(!habilitar);
         tfNome.setDisable(!habilitar);
         tfRG.setDisable(!habilitar);
         tfRazaoSocial.setDisable(!habilitar);
         tfTelefone.setDisable(!habilitar);
-
-        tbFisica.setDisable(!habilitar);
+        tfEmail.setDisable(!habilitar);
+        cbCidade.setDisable(!habilitar);
+        btnCadastrarCidade.setDisable(!habilitar);
+        rbAtivo.setDisable(!habilitar);
+        rbInativo.setDisable(!habilitar);
 
         cbFornecedor.setDisable(!habilitar);
         cbFuncionario.setDisable(!habilitar);
         cbProprietario.setDisable(!habilitar);
 
-        dpDataNascimento.setDisable(!habilitar);
-        rbAtivo.setDisable(!habilitar);
-        rbInativo.setDisable(!habilitar);
+        rbFisica.setDisable(!habilitar);
+        rbJuridica.setDisable(!habilitar);
     }
 
     @FXML
@@ -336,12 +383,44 @@ public class CadastroPessoaController implements Initializable {
             tbJuridica.setDisable(false);
         }
     }
-    
+
     private void carregarComboCidade() {
         try {
             cbCidade.setItems(CidadeDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+        }
+    }
+
+    @FXML
+    void cadastroCidade(ActionEvent event) {
+        try {
+            String url = "/br/com/ctesop/view/CadastroCidade.fxml";
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Cidade");
+            stage.setScene(scene);
+            stage.show();
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    carregarComboCidade();
+                }
+            });
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir cadastro de cidade.", e);
+        }
+    }
+
+    public void setTipo(String tipo) {
+        if (tipo.equalsIgnoreCase("Funcionario")) {
+            cbFuncionario.setSelected(true);
+        }
+        if (tipo.equalsIgnoreCase("Fornecedor")) {
+            cbFornecedor.setSelected(true);
+        }
+        if (tipo.equalsIgnoreCase("Proprietario")) {
+            cbProprietario.setSelected(true);
         }
     }
 

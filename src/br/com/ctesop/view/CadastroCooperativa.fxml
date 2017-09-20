@@ -49,29 +49,32 @@
                </VBox.margin>
             </HBox>
             <Label text="Nome *" />
-            <TextField fx:id="tfNome" prefHeight="25.0" prefWidth="268.0" />
+            <TextField fx:id="tfNome" prefWidth="285.0" />
             <Label text="Cidade *" />
-            <HBox spacing="5.0">
+            <HBox>
                <children>
-                  <ComboBox fx:id="cbCidade" prefWidth="150.0" />
+                  <ComboBox fx:id="cbCidade" prefWidth="250.0" />
                   <Button fx:id="btnCadastrarCidade" mnemonicParsing="false" onAction="#cadastroCidade" text="..." />
                </children>
             </HBox>
             <HBox>
                <children>
-                  <Label text="Endereço *">
+                  <Label prefWidth="285.0" text="Endereço *">
                      <HBox.margin>
-                        <Insets right="270.0" />
+                        <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label text="Status *" />
+                  <Label text="Status *">
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin></Label>
                </children>
             </HBox>
             <HBox>
                <children>
                   <HBox>
                      <children>
-                        <TextField fx:id="tfEndereco" prefHeight="25.0" prefWidth="238.0">
+                        <TextField fx:id="tfEndereco" prefWidth="285.0">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

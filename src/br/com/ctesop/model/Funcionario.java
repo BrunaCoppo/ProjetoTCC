@@ -7,4 +7,11 @@ package br.com.ctesop.model;
  */
 public class Funcionario extends Pessoa{
     
+    public Funcionario() {
+    }
+     
+    public Funcionario(int codigo){
+        setCodigo(codigo);
+    }
+    
 }
