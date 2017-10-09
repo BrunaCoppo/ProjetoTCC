@@ -1,15 +1,10 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
-import br.com.ctesop.model.Cidade;
 import br.com.ctesop.model.Fisica;
-import br.com.ctesop.model.Pessoa;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *

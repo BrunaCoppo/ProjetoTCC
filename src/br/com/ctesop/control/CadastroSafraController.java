@@ -18,8 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBox; 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -53,6 +52,9 @@ public class CadastroSafraController implements Initializable {
     
     @FXML
     private Button btnCadastroProduto;
+    
+    @FXML
+    private Button btnCadastroTipoSafra;
 
     @FXML
     private ComboBox<Produto> cbProduto;
@@ -136,6 +138,7 @@ public class CadastroSafraController implements Initializable {
             safra.setProduto(cbProduto.getSelectionModel().getSelectedItem());
             safra.setTipoSafra(cbTipoSafra.getSelectionModel().getSelectedItem());
             safra.setDataInicio(Converter.converterData(dpDataInicio.getValue()));
+            safra.setDataTermino(Converter.converterData(dpDataTermino.getValue()));
 
             if (rbAtivo.isSelected()) {
                 safra.setStatus("A");
@@ -155,7 +158,7 @@ public class CadastroSafraController implements Initializable {
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
         }
-    }
+    } 
 
     private void atualizarTabela() {
         try {
@@ -167,8 +170,8 @@ public class CadastroSafraController implements Initializable {
     }
 
     private void limpar() {
-        cbProduto.getSelectionModel().select(0);
-        cbTipoSafra.getSelectionModel().select(0);
+        cbProduto.getSelectionModel().select(null);
+        cbTipoSafra.getSelectionModel().select(null);
         dpDataInicio.setValue(null);
         dpDataTermino.setValue(null);
         rbAtivo.setSelected(true);
@@ -183,6 +186,7 @@ public class CadastroSafraController implements Initializable {
         cbTipoSafra.setDisable(!habilitar);
         dpDataInicio.setDisable(!habilitar);
         dpDataTermino.setDisable(!habilitar);
+        
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
@@ -201,6 +205,7 @@ public class CadastroSafraController implements Initializable {
             cbTipoSafra.setItems(TipoSafraDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+            
         }
 
     }
@@ -208,13 +213,13 @@ public class CadastroSafraController implements Initializable {
      @FXML
     public void cadastroProduto(ActionEvent event) {
         try {
-            String url = "/br/com/ctesop/view/CadastrProduto.fxml";
+            String url = "/br/com/ctesop/view/CadastroProduto.fxml";
             Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
             Stage stage = new Stage();
             stage.setTitle("Cadastro de Produto");
             stage.setScene(scene);
             stage.show();
-            //Carregar o estado na cidade alterado
+            
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -223,6 +228,27 @@ public class CadastroSafraController implements Initializable {
             });
         } catch (Exception e) {
             Alerta.erro("Erro ao abrir Cadastro de Produto.", e);
+        }
+    }
+    
+      @FXML
+    void cadastrarTipoSafra(ActionEvent event) {
+        try {
+            String url = "/br/com/ctesop/view/CadastroTipoSafra.fxml";
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro Tipo de Safra");
+            stage.setScene(scene);
+            stage.show();
+            
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    carregarComboProduto();
+                }
+            });
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir Cadastro de Tipo Safra.", e);
         }
     }
 }

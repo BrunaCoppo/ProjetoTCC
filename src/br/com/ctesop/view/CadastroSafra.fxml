@@ -56,7 +56,7 @@
             <HBox spacing="5.0">
                <children>
                   <ComboBox fx:id="cbTipoSafra" prefHeight="25.0" prefWidth="183.0" />
-                  <Button mnemonicParsing="false" text="..." />
+                  <Button fx:id="btnCadastroTipoSafra" mnemonicParsing="false" onAction="#cadastrarTipoSafra" text="..." />
                </children>
             </HBox>
             <Label text="Data de Inicio *" />

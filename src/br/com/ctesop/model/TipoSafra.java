@@ -41,7 +41,7 @@ public class TipoSafra {
         return nome;
     }
 
-    public void setNome(String nome) throws ExceptionValidacao{
+    public void setNome(String nome) throws ExceptionValidacao {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Nome obrigatório.");
         }
@@ -63,4 +63,17 @@ public class TipoSafra {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return getNome();
+    }
+    
+     @Override
+    public boolean equals(Object o) {
+        if (o instanceof TipoSafra) {
+            return ((TipoSafra) o).getCodigo() == getCodigo();
+
+        }
+        return false;
+    }
 }

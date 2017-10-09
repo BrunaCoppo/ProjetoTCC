@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.Date;
 
 
 /**
@@ -95,7 +94,7 @@ public class SafraDAO {
         String sql = "select count(codsafra) from tbsafra where datainicio=? and status=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
-//        ps.setDate(1, safra.getDataInicio());
+        //ps.setDate(1, safra.getDataInicio());
        // ps.setString(2, safra.getStatus());
         ResultSet rs = ps.executeQuery();
         rs.next();

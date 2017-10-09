@@ -35,4 +35,18 @@ public class Converter {
     
     }
     
+    public static Date converterData(String data) throws ParseException{
+         if (data == null || data.isEmpty()) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.parse(data);
+    
+    }
+
+    public static String formatarData(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(date);
+    }
+    
 }
