@@ -182,6 +182,8 @@ public class CadastroSafraController implements Initializable {
         btnEditar.setDisable(habilitar);
         btnSalvar.setDisable(!habilitar);
         btnCancelar.setDisable(!habilitar);
+        btnCadastroProduto.setDisable(!habilitar);
+        btnCadastroTipoSafra.setDisable(!habilitar);
         cbProduto.setDisable(!habilitar);
         cbTipoSafra.setDisable(!habilitar);
         dpDataInicio.setDisable(!habilitar);

@@ -34,6 +34,8 @@
           <Menu mnemonicParsing="false" text="Financeiro">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#caixa" text="Caixa" />
+                  <MenuItem mnemonicParsing="false" onAction="#compra" text="Compra" />
+                  <MenuItem mnemonicParsing="false" onAction="#contaPagar" text="Conta á Pagar" />
                </items></Menu>
             <Menu mnemonicParsing="false" text="Sistema">
                <items>

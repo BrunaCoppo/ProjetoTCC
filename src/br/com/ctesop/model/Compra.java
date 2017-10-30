@@ -1,19 +1,21 @@
-
 package br.com.ctesop.model;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author Bruna
  */
 public class Compra {
-    
+
     private int codigo;
     private Date data;
-    private float total;
     private String status;
+    private ArrayList<ItensCompra> itens = new ArrayList<>();
+    private ObservableList<ItensCompra> itensRemover;
 
     public int getCodigo() {
         return codigo;
@@ -34,12 +36,12 @@ public class Compra {
         this.data = data;
     }
 
-    public float getTotal() {
+    public double getValorTotal() {
+        double total = 0;
+        for (ItensCompra iv : itens) {
+            total += (iv.getValorUnitario() * iv.getQuantidade());
+        }
         return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
     }
 
     public String getStatus() {
@@ -49,6 +51,26 @@ public class Compra {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public ArrayList<ItensCompra> getItens() {
+        return itens;
+    }
+
+    public void setItens(ArrayList<ItensCompra> itens) {
+        this.itens = itens;
+    }
+
+    public void adicionarItem(ItensCompra item) {
+        itens.add(item);
+    }
+
+    public ObservableList<ItensCompra> getItensRemover() {
+        return itensRemover;
+    }
     
-    
+    @Override
+    public String toString() {
+        return String.valueOf(this.codigo);
+    }
+
 }

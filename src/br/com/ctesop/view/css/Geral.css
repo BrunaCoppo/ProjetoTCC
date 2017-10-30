@@ -21,5 +21,5 @@
 }
 
 .botao-cancelar {
-    -fx-background-image: url('../img/garbage-1.png');
+    -fx-background-image: url('../img/error.png');
 }

@@ -1,8 +1,8 @@
- package br.com.ctesop.dao;
+
+package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.model.Cidade;
-import br.com.ctesop.model.Fisica;
 import br.com.ctesop.model.Pessoa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

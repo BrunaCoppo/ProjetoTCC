@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.ContaPagarController">
+   <children>
+      <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="44.0" prefWidth="600.0" spacing="5.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-excluir" text="Excluir">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox spacing="90.0">
+               <children>
+                  <Label text="Arrendamendo *">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Data Vencimento *">
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox prefWidth="150.0" />
+                  <Button mnemonicParsing="false" text="...." />
+                  <DatePicker>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </DatePicker>
+               </children>
+            </HBox>
+            <HBox spacing="110.0">
+               <children>
+                  <Label text="Manejo *" />
+                  <Label text="Valor * ">
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox prefWidth="150.0" />
+                  <Button mnemonicParsing="false" text="..." />
+                  <TextField>
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox spacing="100.0">
+               <children>
+                  <Label text="Compra *" />
+                  <Label text="Descrição ">
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <ComboBox prefWidth="150.0" />
+                  <Button mnemonicParsing="false" text="...">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <TextField prefHeight="25.0" prefWidth="203.0">
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <Label text="Status *" />
+            <HBox>
+               <children>
+                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="A pagar">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="status" />
+                     </toggleGroup>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Paga">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="status1" />
+                     </toggleGroup>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <TableView prefHeight="130.0" prefWidth="602.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Compra" />
+                <TableColumn prefWidth="75.0" text="Valor" />
+                  <TableColumn prefWidth="75.0" text="Valor" />
+                  <TableColumn prefWidth="75.0" text="Status" />
+              </columns>
+            </TableView>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

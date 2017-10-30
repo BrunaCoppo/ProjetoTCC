@@ -84,6 +84,7 @@ public class CadastroCooperativaController implements Initializable {
         tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tcCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
         carregarComboCidade();
         atualizarTabela();
         habilitar(false);

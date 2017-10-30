@@ -1,6 +1,9 @@
 package br.com.ctesop.control;
 
+import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.model.Compra;
+import br.com.ctesop.model.ItensCompra;
+import br.com.ctesop.model.Produto;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,6 +26,8 @@ import javafx.scene.control.ToggleGroup;
  */
 public class CompraController implements Initializable {
 
+    private int codigo = 0;
+
     @FXML
     private Button btnNovo;
 
@@ -42,34 +47,34 @@ public class CompraController implements Initializable {
     private DatePicker dpData;
 
     @FXML
-    private TextField tfValor;
+    private TextField tfValorTotal;
 
     @FXML
-    private RadioButton rbAtivo;
+    private RadioButton rbPendente;
 
     @FXML
     private ToggleGroup status;
 
     @FXML
-    private RadioButton rbInativo;
+    private RadioButton rbConfirmado;
 
     @FXML
-    private RadioButton rbInativo1;
+    private RadioButton rbCancelado;
 
     @FXML
     private ToggleGroup status1;
 
     @FXML
-    private TableView<?> tbCompra;
+    private TableView<Compra> tbCompra;
 
     @FXML
-    private TableColumn<?, ?> tcData;
+    private TableColumn<Compra, String> tcData;
 
     @FXML
-    private TableColumn<?, ?> tcValor;
+    private TableColumn<Compra, String> tcValor;
 
     @FXML
-    private TableColumn<?, ?> tcStatus;
+    private TableColumn<Compra, String> tcStatus;
 
     @FXML
     private Tab tpItemCompra;
@@ -81,46 +86,95 @@ public class CompraController implements Initializable {
     private Button btnItemCompra;
 
     @FXML
-    private ComboBox<?> cbProduto;
+    private ComboBox<Produto> cbProduto;
 
     @FXML
     private TextField tfQuantidade;
 
     @FXML
-    private TableView<?> tbItemCompre;
+    private TextField tfValor;
 
     @FXML
-    private TableColumn<?, ?> tcProduto;
+    private TableView<ItensCompra> tbItemCompra;
 
     @FXML
-    private TableColumn<?, ?> tbQuantidade;
+    private TableColumn<ItensCompra, String> tcProduto;
 
     @FXML
-    private TableColumn<?, ?> tbValor;
+    private TableColumn<ItensCompra, String> tbQuantidade;
+
+    @FXML
+    private TableColumn<ItensCompra, String> tbValor;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+       
+        habilitar(false);
+        limpar();
     }
 
     @FXML
     void novo(ActionEvent event) {
-        
+        codigo = 0;
+        limpar();
+        habilitar(true);
     }
 
     @FXML
     void editar(ActionEvent event) {
+        if (tbCompra.getSelectionModel().isEmpty()) {
+            return;
+        }
+        try {
+            Compra selecionado = tbCompra.getSelectionModel().getSelectedItem();
+            codigo = selecionado.getCodigo();
+            // tfValorTotal.setText(selecionado.getValorTotal());
+
+        } catch (Exception e) {
+        }
 
     }
 
     @FXML
     void salvar(ActionEvent event) {
 
+        try {
+            Compra compra = new Compra();
+            compra.setCodigo(codigo);
+            //compra.setData(Converter.converterData(dpData.getValue()));
+
+            if (rbPendente.isSelected()) {
+                compra.setStatus("P");
+            } else if (rbCancelado.isSelected()) {
+                compra.setStatus("C");
+            } else {
+                compra.setStatus("F");
+            }
+
+            ItensCompra itens = new ItensCompra();
+            itens.setProduto(cbProduto.getValue());
+            itens.setQuantidade(tfValor.getLength());
+            itens.setValorUnitario(tfValorTotal.getLength());
+            
+            Alerta.sucesso("Compra realizada com sucesso.");
+
+            
+            limpar();
+            habilitar(false);
+
+        
+        } catch (Exception e) {
+            Alerta.erro("Erro ao salvar.", e);
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
     void cancelar(ActionEvent event) {
-
+        habilitar(false);
+        limpar();
     }
 
     @FXML
@@ -130,6 +184,34 @@ public class CompraController implements Initializable {
 
     @FXML
     void adicionalItem(ActionEvent event) {
+
+    }
+
+    private void limpar() {
+        tfValorTotal.setText("");
+        tfQuantidade.setText("");
+        tfValor.setText("");
+        dpData.setValue(null);
+        rbPendente.setSelected(true);
+        rbConfirmado.setSelected(true);
+        rbCancelado.setSelected(true);
+    }
+
+    private void habilitar(boolean habilitar) {
+        btnNovo.setDisable(habilitar);
+        btnEditar.setDisable(habilitar);
+        btnSalvar.setDisable(!habilitar);
+        btnCancelar.setDisable(!habilitar);
+        tpItemCompra.setDisable(!habilitar);
+        tpCompra.setDisable(!habilitar);
+        tfValorTotal.setDisable(!habilitar);
+        tfQuantidade.setDisable(!habilitar);
+        tfValor.setDisable(!habilitar);
+        dpData.setDisable(!habilitar);
+        rbCancelado.setDisable(!habilitar);
+        rbConfirmado.setDisable(!habilitar);
+        rbPendente.setDisable(!habilitar);
+        
 
     }
 
