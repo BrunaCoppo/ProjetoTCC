@@ -58,7 +58,7 @@ public class ProdutoDAO {
 
     public static void alterar(Produto produto) throws Exception {
 
-        String sql = "update tbproduto set nomeproduto=?, descricao=?, status=?, produzido=? where codproduto=?";
+        String sql = "update tbproduto set nomeproduto=?, descricao=?, status=?, produzido=?, quantidade=? where codproduto=?";
 
         Conexao con = new Conexao();
 
@@ -67,13 +67,31 @@ public class ProdutoDAO {
         ps.setString(2, produto.getDescricao());
         ps.setString(3, produto.getStatus());
         ps.setString(4, produto.getProduzido());
+        ps.setFloat(5, produto.getQuantidade());
 
-        ps.setInt(5, produto.getCodigo());
+        ps.setInt(6, produto.getCodigo());
 
         ps.execute();
         con.confirmar();
     }
 
+     public static void alterarQuantidade(Produto produto) throws Exception {
+
+        String sql = "update tbproduto set quantidade=quantidade+ where codproduto=?";
+
+        Conexao con = new Conexao();
+
+        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+       
+        ps.setFloat(1, produto.getQuantidade());
+
+        ps.setInt(2, produto.getCodigo());
+
+        ps.execute();
+        con.confirmar();
+    }
+
+    
     public static void salvar(Produto produto) throws Exception {
         if (produto.getCodigo() == 0) {
             if (existe(produto)) {

@@ -68,9 +68,5 @@ public class Compra {
         return itensRemover;
     }
     
-    @Override
-    public String toString() {
-        return String.valueOf(this.codigo);
-    }
 
 }

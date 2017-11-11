@@ -1,3 +1,4 @@
+ 
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;

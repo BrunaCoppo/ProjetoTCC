@@ -1,10 +1,14 @@
 package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
+import br.com.ctesop.controller.util.Converter;
+import br.com.ctesop.dao.CompraDAO;
+import br.com.ctesop.dao.ProdutoDAO;
 import br.com.ctesop.model.Compra;
 import br.com.ctesop.model.ItensCompra;
 import br.com.ctesop.model.Produto;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,102 +29,101 @@ import javafx.scene.control.ToggleGroup;
  * @author Bruna
  */
 public class CompraController implements Initializable {
-
+    
     private int codigo = 0;
-
+    
     @FXML
     private Button btnNovo;
-
+    
     @FXML
     private Button btnEditar;
-
+    
     @FXML
     private Button btnSalvar;
-
+    
     @FXML
     private Button btnCancelar;
-
+    
     @FXML
     private Tab tpCompra;
-
+    
     @FXML
     private DatePicker dpData;
-
+    
     @FXML
     private TextField tfValorTotal;
-
+    
     @FXML
     private RadioButton rbPendente;
-
+    
     @FXML
     private ToggleGroup status;
-
+    
     @FXML
     private RadioButton rbConfirmado;
-
+    
     @FXML
     private RadioButton rbCancelado;
-
+    
     @FXML
     private ToggleGroup status1;
-
+    
     @FXML
     private TableView<Compra> tbCompra;
-
+    
     @FXML
     private TableColumn<Compra, String> tcData;
-
+    
     @FXML
     private TableColumn<Compra, String> tcValor;
-
+    
     @FXML
     private TableColumn<Compra, String> tcStatus;
-
+    
     @FXML
     private Tab tpItemCompra;
-
+    
     @FXML
     private Button btnAdicionarItem;
-
+    
     @FXML
     private Button btnItemCompra;
-
+    
     @FXML
     private ComboBox<Produto> cbProduto;
-
+    
     @FXML
     private TextField tfQuantidade;
-
+    
     @FXML
     private TextField tfValor;
-
+    
     @FXML
     private TableView<ItensCompra> tbItemCompra;
-
+    
     @FXML
     private TableColumn<ItensCompra, String> tcProduto;
-
+    
     @FXML
     private TableColumn<ItensCompra, String> tbQuantidade;
-
+    
     @FXML
     private TableColumn<ItensCompra, String> tbValor;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-       
         habilitar(false);
         limpar();
     }
-
+    
     @FXML
     void novo(ActionEvent event) {
         codigo = 0;
         limpar();
         habilitar(true);
     }
-
+    
     @FXML
     void editar(ActionEvent event) {
         if (tbCompra.getSelectionModel().isEmpty()) {
@@ -133,17 +136,17 @@ public class CompraController implements Initializable {
 
         } catch (Exception e) {
         }
-
+        
     }
-
+    
     @FXML
     void salvar(ActionEvent event) {
-
+        
         try {
             Compra compra = new Compra();
             compra.setCodigo(codigo);
-            //compra.setData(Converter.converterData(dpData.getValue()));
-
+            compra.setData(Converter.converterData(dpData.getValue()));
+            
             if (rbPendente.isSelected()) {
                 compra.setStatus("P");
             } else if (rbCancelado.isSelected()) {
@@ -151,42 +154,60 @@ public class CompraController implements Initializable {
             } else {
                 compra.setStatus("F");
             }
-
-            ItensCompra itens = new ItensCompra();
-            itens.setProduto(cbProduto.getValue());
-            itens.setQuantidade(tfValor.getLength());
-            itens.setValorUnitario(tfValorTotal.getLength());
+            
+            ArrayList<ItensCompra> itens = new ArrayList<>();
+            for (ItensCompra ic : tbItemCompra.getItems()) {
+                ic.setCompra(compra);
+                itens.add(ic);
+                
+            }
+            
+            compra.setItens(itens);
+            
+            CompraDAO.inserir(compra);
+            
+            if (compra.getStatus().equalsIgnoreCase("F")) {
+                
+                for (ItensCompra ic : tbItemCompra.getItems()) {
+                    Produto produto = ic.getProduto();
+                    produto.setQuantidade(ic.getQuantidade());
+                    ProdutoDAO.alterarQuantidade(produto);                    
+                    
+                }
+                
+            }
             
             Alerta.sucesso("Compra realizada com sucesso.");
-
             
             limpar();
             habilitar(false);
-
-        
+            
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
             e.printStackTrace();
         }
-
+        
     }
-
+    
     @FXML
     void cancelar(ActionEvent event) {
         habilitar(false);
         limpar();
     }
-
+    
     @FXML
     void removerItem(ActionEvent event) {
-
+        
     }
-
+    
     @FXML
     void adicionalItem(ActionEvent event) {
-
+        ItensCompra ic = new ItensCompra();
+        ic.setProduto(cbProduto.getSelectionModel().getSelectedItem());
+        //ic.setQuantidade(tfQuantidade.setText(value));
+        
     }
-
+    
     private void limpar() {
         tfValorTotal.setText("");
         tfQuantidade.setText("");
@@ -196,7 +217,7 @@ public class CompraController implements Initializable {
         rbConfirmado.setSelected(true);
         rbCancelado.setSelected(true);
     }
-
+    
     private void habilitar(boolean habilitar) {
         btnNovo.setDisable(habilitar);
         btnEditar.setDisable(habilitar);
@@ -212,7 +233,6 @@ public class CompraController implements Initializable {
         rbConfirmado.setDisable(!habilitar);
         rbPendente.setDisable(!habilitar);
         
-
     }
-
+    
 }

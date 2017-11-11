@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class CompraDAO {
 
-    private static void inserir(Compra compra) throws Exception {
+    public static void inserir(Compra compra) throws Exception {
         Conexao c = new Conexao();
         String sql = "insert into tbcompra (data, total, status) values (?, ?, ?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
