@@ -1,7 +1,9 @@
 package br.com.ctesop.control;
 
 import br.com.ctesop.model.ContaPagar;
+import br.com.ctesop.model.Produto;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -69,6 +72,9 @@ public class ContaPagarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tcCompra.setCellValueFactory(new PropertyValueFactory<>("compra"));
+        tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tcFormaPagamento.setCellValueFactory(new PropertyValueFactory<>("compra"));
         limpar();
         habilitar(false);
     }
@@ -76,49 +82,59 @@ public class ContaPagarController implements Initializable {
     @FXML
     void novo(ActionEvent event) {
         codigo = 0;
-        
+        limpar();
         habilitar(true);
+
     }
 
     @FXML
     void editar(ActionEvent event) {
         habilitar(true);
         
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        ContaPagar selecionado = tbContaPagar.getSelectionModel().getSelectedItem();
+        codigo = selecionado.getCodigo();
+        tfDescricao.setText(selecionado.getDescricao());
+        tfValor.setText(nf.format(selecionado.getValor()));
+        tfDescricao.setText(selecionado.getDescricao());
         
+        if (selecionado.getFormaPagamento().equalsIgnoreCase("P")) {
+            rbPrazo.setSelected(true);
+            tfQuantParcelas.setDisable(true);
+        } else {
+            rbVista.setSelected(true);
+        }
+
     }
 
     @FXML
     void salvar(ActionEvent event) {
-       
+
     }
 
     @FXML
     void cancelar(ActionEvent event) {
-        limpar();
-        
 
     }
 
     private void limpar() {
         tfDescricao.setText("");
-        tfValor.setText("");
         tfQuantParcelas.setText("");
+        tfValor.setText("");
         dpData.setValue(null);
-        rbPrazo.setSelected(true);
-      
+        rbVista.setSelected(true);
     }
 
     private void habilitar(boolean habilitar) {
         btnNovo.setDisable(habilitar);
         btnEditar.setDisable(habilitar);
-        btnCancelar.setDisable(!habilitar);
         btnSalvar.setDisable(!habilitar);
-        tfValor.setDisable(!habilitar);
+        btnCancelar.setDisable(!habilitar);
         tfDescricao.setDisable(!habilitar);
         tfQuantParcelas.setDisable(!habilitar);
+        tfValor.setDisable(!habilitar);
         dpData.setDisable(!habilitar);
-        rbVista.setDisable(!habilitar);
         rbPrazo.setDisable(!habilitar);
+        rbVista.setDisable(!habilitar);
     }
-
 }

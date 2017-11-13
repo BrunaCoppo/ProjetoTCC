@@ -14,8 +14,26 @@ public class ContaPagar {
     private Compra compra;
     private Date data;
     private String descricao;
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
     private float valor;
     private String status;
+    private String formaPagamento;
+    private int quantidadeParcelas;
+
+    public int getQuantidadeParcelas() {
+        return quantidadeParcelas;
+    }
+
+    public void setQuantidadeParcelas(int quantidadeParcelas) {
+        this.quantidadeParcelas = quantidadeParcelas;
+    }
 
     public int getCodigo() {
         return codigo;

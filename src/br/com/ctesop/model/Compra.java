@@ -1,6 +1,9 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.collections.ObservableList;
@@ -67,6 +70,5 @@ public class Compra {
     public ObservableList<ItensCompra> getItensRemover() {
         return itensRemover;
     }
-    
 
 }

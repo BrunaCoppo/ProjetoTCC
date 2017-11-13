@@ -19,7 +19,7 @@
          <children>
             <HBox prefHeight="32.0" prefWidth="560.0" spacing="5.0" stylesheets="@css/Geral.css">
                <children>
-                  <Button fx:id="btnNovo" mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
+                  <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#novo" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -95,17 +95,17 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" selected="true" text="Á Prazo">
+                  <RadioButton fx:id="rbVista" mnemonicParsing="false" selected="true" text="Á Vista">
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="25.0" />
                      </HBox.margin>
                      <toggleGroup>
                         <ToggleGroup fx:id="FormaPagamento" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbVista" mnemonicParsing="false" text="Á Vista" toggleGroup="$FormaPagamento">
+                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" text="Á Prazo" toggleGroup="$FormaPagamento">
                      <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </RadioButton>
                   <TextField fx:id="tfQuantParcelas" editable="false">

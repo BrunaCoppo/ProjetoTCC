@@ -94,26 +94,26 @@
                            <children>
                               <HBox spacing="5.0">
                                  <children>
-                                    <Button fx:id="btnAdicionarItem" mnemonicParsing="false" onAction="#adicionalItem" text="Adicionar Item" />
+                                    <Button fx:id="btnAdicionarItem" mnemonicParsing="false" onAction="#adicionarItem" text="Adicionar Item" />
                                     <Button fx:id="btnItemCompra" mnemonicParsing="false" onAction="#removerItem" text="Remover Item" />
                                  </children>
                               </HBox>
-                              <Label text="Produto" />
+                              <Label text="Produto *" />
                               <HBox>
                                  <children>
                                     <ComboBox fx:id="cbProduto" prefWidth="388.0" />
-                                    <Button mnemonicParsing="false" text="..." />
+                                    <Button fx:id="btnCadastroProduto" mnemonicParsing="false" onAction="#cadastroProduto" text="..." />
                                  </children>
                               </HBox>
-                              <Label text="Quantidade" />
+                              <Label text="Quantidade *" />
                               <TextField fx:id="tfQuantidade" />
-                              <Label text="Valor" />
-                              <TextField fx:id="tfValor" />
+                              <Label text="Valo Unitário *" />
+                              <TextField fx:id="tfValorUnitario" />
                               <TableView fx:id="tbItemCompra" prefHeight="136.0" prefWidth="535.0">
                                 <columns>
                                   <TableColumn fx:id="tcProduto" minWidth="200.0" prefWidth="200.0" text="Produto" />
-                                  <TableColumn fx:id="tbQuantidade" prefWidth="75.0" text="Quantidade" />
-                                    <TableColumn fx:id="tbValor" prefWidth="75.0" text="Valor" />
+                                  <TableColumn fx:id="tcQuantidade" prefWidth="75.0" text="Quantidade" />
+                                    <TableColumn fx:id="tcValorUnitario" prefWidth="75.0" text="Valor" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
