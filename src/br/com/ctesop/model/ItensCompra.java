@@ -1,12 +1,13 @@
-
 package br.com.ctesop.model;
+
+import java.text.NumberFormat;
 
 /**
  *
  * @author Bruna
  */
 public class ItensCompra {
-    
+
     private int codigo;
     private Produto produto;
     private Compra compra;
@@ -44,6 +45,13 @@ public class ItensCompra {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+    
+    public String getQuantidadeFormataad(){
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(2);
+        return nf.format(quantidade);
+    }
 
     public float getValorUnitario() {
         return valorUnitario;
@@ -52,12 +60,17 @@ public class ItensCompra {
     public void setValorUnitario(float valor) {
         this.valorUnitario = valor;
     }
-    
-    public double getSubtotal() {
-            return valorUnitario* quantidade;
-        }
 
-  
+    public String getValorUnitarioFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valorUnitario);
+    }
+
+    public double getSubtotal() {
+        return valorUnitario * quantidade;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -66,6 +79,5 @@ public class ItensCompra {
         }
         return false;
     }
-    
-    
+
 }

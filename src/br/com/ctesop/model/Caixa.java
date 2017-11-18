@@ -51,16 +51,16 @@ public class Caixa {
         this.dataFechamento = dataFechamento;
     }
 
+    public String getDataFechamentoFormatada() {
+         return Converter.formatarData(dataFechamento);
+    }
+
     public float getValorAbertura() {
         return valorAbertura;
     }
 
     public void setValorAbertura(float valorAbertura) {
         this.valorAbertura = valorAbertura;
-    }
-
-    public String getDataFechamentoFormatada() {
-        return Converter.formatarData(dataFechamento);
     }
 
     public void setValorAbertura(String valorAbertura) throws ExceptionValidacao {
@@ -90,14 +90,14 @@ public class Caixa {
     }
 
     public String getValorAberturaFormatado() {
-        NumberFormat nfReal = NumberFormat.getCurrencyInstance();
+        NumberFormat nfReal = NumberFormat.getNumberInstance();
         nfReal.setMinimumFractionDigits(2);
         nfReal.setMaximumFractionDigits(2);
         return nfReal.format(this.valorAbertura);
     }
 
     public String getValorFechamentoFormatado() {
-        NumberFormat nfReal = NumberFormat.getCurrencyInstance();
+        NumberFormat nfReal = NumberFormat.getNumberInstance();
         nfReal.setMinimumFractionDigits(2);
         nfReal.setMaximumFractionDigits(2);
         return nfReal.format(this.valorFechamento);

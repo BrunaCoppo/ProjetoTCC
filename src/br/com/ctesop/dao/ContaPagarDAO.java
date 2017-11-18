@@ -1,7 +1,5 @@
 package br.com.ctesop.dao;
 
-import br.com.ctesop.controller.util.ExceptionValidacao;
-import br.com.ctesop.model.Compra;
 import br.com.ctesop.model.ContaPagar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,24 +78,12 @@ public class ContaPagarDAO {
 
     public static void salvar(ContaPagar contaPagar) throws Exception {
         if (contaPagar.getCodigo() == 0) {
-            if (existe(contaPagar)) {
-                throw new ExceptionValidacao("A conta á pagar já está cadastrada.");
-            }
+            
             inserir(contaPagar);
         } else {
             alterar(contaPagar);
         }
     }
 
-    private static boolean existe(ContaPagar contaPagar) throws Exception {
-        String sql = "select count(codcontapagar) from tbcontapagar where datavencimeno=? and codcompra=?";
-        Conexao c = new Conexao();
-        PreparedStatement ps = c.getConexao().prepareStatement(sql);
-        ps.setDate(1, new java.sql.Date(contaPagar.getData().getTime()));
-        ps.setInt(2, contaPagar.getCompra().getCodigo());
-        ResultSet rs = ps.executeQuery();
-        rs.next();
-        return (rs.getInt(1) > 0);
-    }
 
 }

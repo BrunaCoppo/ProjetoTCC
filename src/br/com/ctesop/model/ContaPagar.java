@@ -1,6 +1,7 @@
-
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.Converter;
+import java.text.NumberFormat;
 import java.util.Date;
 
 /**
@@ -8,20 +9,12 @@ import java.util.Date;
  * @author Bruna
  */
 public class ContaPagar {
-    
+
     private int codigo = 0;
-   
+
     private Compra compra;
     private Date data;
     private String descricao;
-
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
     private float valor;
     private String status;
     private String formaPagamento;
@@ -33,6 +26,13 @@ public class ContaPagar {
 
     public void setQuantidadeParcelas(int quantidadeParcelas) {
         this.quantidadeParcelas = quantidadeParcelas;
+    }
+
+    public String getQtdeParcelaFormatada() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.getQuantidadeParcelas());
     }
 
     public int getCodigo() {
@@ -59,6 +59,10 @@ public class ContaPagar {
         this.data = data;
     }
 
+    public String getDataaFormatada() {
+        return Converter.formatarData(data);
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -75,6 +79,13 @@ public class ContaPagar {
         this.valor = valor;
     }
 
+    public String getValorFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valor);
+    }
+
     public String getStatus() {
         return status;
     }
@@ -82,7 +93,13 @@ public class ContaPagar {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
-    
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
 }

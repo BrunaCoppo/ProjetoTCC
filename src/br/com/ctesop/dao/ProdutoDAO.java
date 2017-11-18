@@ -75,11 +75,10 @@ public class ProdutoDAO {
         con.confirmar();
     }
 
-     public static void alterarQuantidade(Produto produto) throws Exception {
+     public static void alterarQuantidade(Produto produto, Conexao con) throws Exception {
 
-        String sql = "update tbproduto set quantidade=quantidade+ where codproduto=?";
+        String sql = "update tbproduto set quantidade=quantidade+? where codproduto=?";
 
-        Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
        
@@ -88,7 +87,7 @@ public class ProdutoDAO {
         ps.setInt(2, produto.getCodigo());
 
         ps.execute();
-        con.confirmar();
+        
     }
 
     

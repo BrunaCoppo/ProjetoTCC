@@ -1,9 +1,8 @@
 package br.com.ctesop.model;
 
-import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.controller.util.Converter;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.collections.ObservableList;
@@ -39,12 +38,23 @@ public class Compra {
         this.data = data;
     }
 
+    public String getDataFormatada() {
+        return Converter.formatarData(data);
+    }
+
     public double getValorTotal() {
         double total = 0;
         for (ItensCompra iv : itens) {
             total += (iv.getValorUnitario() * iv.getQuantidade());
         }
         return total;
+    }
+
+    public String getValorTotalFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.getValorTotal());
     }
 
     public String getStatus() {

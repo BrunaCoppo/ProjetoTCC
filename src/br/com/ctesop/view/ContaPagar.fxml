@@ -24,11 +24,6 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
@@ -43,9 +38,9 @@
             </HBox>
             <HBox>
                <children>
-                  <Label text="Data Vencimento *">
+                  <Label text="Primeira Data Vencimento *">
                      <HBox.margin>
-                        <Insets right="65.0" />
+                        <Insets right="18.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="Valor * ">
@@ -62,7 +57,7 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </DatePicker>
-                  <TextField fx:id="tfValor" editable="false">
+                  <TextField fx:id="tfValor" editable="false" onAction="#gerarParcelas">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -95,7 +90,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <RadioButton fx:id="rbVista" mnemonicParsing="false" selected="true" text="Á Vista">
+                  <RadioButton fx:id="rbVista" mnemonicParsing="false" onAction="#trocaFormaPagamento" selected="true" text="Á Vista">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>
@@ -103,12 +98,12 @@
                         <ToggleGroup fx:id="FormaPagamento" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" text="Á Prazo" toggleGroup="$FormaPagamento">
+                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" onAction="#trocaFormaPagamento" text="Á Prazo" toggleGroup="$FormaPagamento">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <TextField fx:id="tfQuantParcelas" editable="false">
+                  <TextField fx:id="tfQuantParcelas" onAction="#gerarParcelas">
                      <HBox.margin>
                         <Insets left="22.0" />
                      </HBox.margin>
@@ -120,9 +115,9 @@
             </HBox>
             <TableView fx:id="tbContaPagar" prefHeight="195.0" prefWidth="560.0">
               <columns>
-                <TableColumn fx:id="tcCompra" prefWidth="281.0" text="Compra" />
-                <TableColumn fx:id="tcValor" prefWidth="145.0" text="Valor" />
-                  <TableColumn fx:id="tcFormaPagamento" prefWidth="132.0" text="Forma de Pagamento" />
+                <TableColumn fx:id="tcDatavencimento" prefWidth="185.0" text="Data Vencimento" />
+                <TableColumn fx:id="tcValorParcela" prefWidth="241.0" text="Valor da Parcela" />
+                  <TableColumn fx:id="tcStatus" prefWidth="132.0" text="Status" />
               </columns>
             </TableView>
          </children>
