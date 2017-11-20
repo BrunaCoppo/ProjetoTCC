@@ -1,10 +1,6 @@
 package br.com.ctesop.dao;
 
-import br.com.ctesop.controller.util.ExceptionValidacao;
-import static br.com.ctesop.dao.EstadoDAO.alterar;
-import static br.com.ctesop.dao.EstadoDAO.inserir;
 import br.com.ctesop.model.Compra;
-import br.com.ctesop.model.Estado;
 import br.com.ctesop.model.ItensCompra;
 import java.sql.Date;
 import java.sql.PreparedStatement;

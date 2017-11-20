@@ -61,17 +61,17 @@
                               <Label text="Status *" />
                               <HBox>
                                  <children>
-                                    <RadioButton fx:id="rbPendente" mnemonicParsing="false" selected="true" text="Pendente">
+                                    <RadioButton fx:id="rbConfirmado" mnemonicParsing="false" selected="true" text="Confirmado">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
                                        <toggleGroup>
                                           <ToggleGroup fx:id="status" />
                                        </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rbPendente" mnemonicParsing="false" text="Pendente" toggleGroup="$status">
                                        <HBox.margin>
                                           <Insets left="10.0" right="20.0" />
-                                       </HBox.margin>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rbConfirmado" mnemonicParsing="false" text="Confirmado" toggleGroup="$status">
-                                       <HBox.margin>
-                                          <Insets right="20.0" />
                                        </HBox.margin>
                                     </RadioButton>
                                     <RadioButton fx:id="rbCancelado" mnemonicParsing="false" text="Cancelado" toggleGroup="$status" />

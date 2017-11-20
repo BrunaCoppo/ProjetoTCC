@@ -1,5 +1,6 @@
 package br.com.ctesop.dao;
 
+import br.com.ctesop.model.Compra;
 import br.com.ctesop.model.ContaPagar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,13 +13,11 @@ import javafx.collections.ObservableList;
  */
 public class ContaPagarDAO {
 
-    public static void inserir(ContaPagar contaPagar) throws Exception {
+    public static void inserir(ContaPagar contaPagar, Conexao c) throws Exception {
 
         String sql = "insert into tbcontapagar (codcompra, datavencimento, descricao, valor, status) values (?,?,?,?,?)";
-
-        Conexao con = new Conexao();
-
-        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+       
+        PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, contaPagar.getCompra().getCodigo());
         ps.setDate(2, new java.sql.Date(contaPagar.getData().getTime()));
         ps.setString(3, contaPagar.getDescricao());
@@ -26,7 +25,7 @@ public class ContaPagarDAO {
         ps.setString(5, contaPagar.getStatus());
 
         ps.execute();
-        con.confirmar();
+        c.confirmar();
 
     }
 
@@ -57,13 +56,12 @@ public class ContaPagarDAO {
         return lista;
     }
 
-    public static void alterar(ContaPagar contaPagar) throws Exception {
+    public static void alterar(ContaPagar contaPagar, Conexao c) throws Exception {
 
         String sql = "update tbcontapagar set codcompra=?, datavencimento=?, descricao=?, valor=?, status=? where codcontapagar=?";
 
-        Conexao con = new Conexao();
 
-        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, contaPagar.getCompra().getCodigo());
         ps.setDate(2,new java.sql.Date(contaPagar.getData().getTime())) ;
         ps.setString(3, contaPagar.getDescricao());
@@ -73,15 +71,15 @@ public class ContaPagarDAO {
         ps.setInt(6, contaPagar.getCodigo());
 
         ps.execute();
-        con.confirmar();
+        c.confirmar();
     }
 
-    public static void salvar(ContaPagar contaPagar) throws Exception {
+    public static void salvar(ContaPagar contaPagar, Conexao c) throws Exception {
         if (contaPagar.getCodigo() == 0) {
             
-            inserir(contaPagar);
+            inserir(contaPagar, c);
         } else {
-            alterar(contaPagar);
+            alterar(contaPagar, c);
         }
     }
 

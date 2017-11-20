@@ -13,6 +13,8 @@ public class ContaPagar {
     private int codigo = 0;
 
     private Compra compra;
+    private Arrendamento arrendamento;
+    private Manejo manejo;
     private Date data;
     private String descricao;
     private float valor;
@@ -49,6 +51,22 @@ public class ContaPagar {
 
     public void setCompra(Compra compra) {
         this.compra = compra;
+    }
+
+    public Arrendamento getArrendamento() {
+        return arrendamento;
+    }
+
+    public void setArrendamento(Arrendamento arrendamento) {
+        this.arrendamento = arrendamento;
+    }
+
+    public Manejo getManejo() {
+        return manejo;
+    }
+
+    public void setManejo(Manejo manejo) {
+        this.manejo = manejo;
     }
 
     public Date getData() {

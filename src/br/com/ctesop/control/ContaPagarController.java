@@ -2,7 +2,6 @@ package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.Converter;
-import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.dao.Conexao;
 import br.com.ctesop.dao.ContaPagarDAO;
 import br.com.ctesop.model.Compra;
@@ -14,6 +13,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -90,6 +91,16 @@ public class ContaPagarController implements Initializable {
         tfQuantParcelas.setDisable(true);
         limpar();
         habilitar(false);
+        
+          tfQuantParcelas.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    gerarParcelas(null);
+                } catch (Exception ex) {
+                    Logger.getLogger(ContaPagarController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
 
     }
 
@@ -102,7 +113,7 @@ public class ContaPagarController implements Initializable {
     }
 
     @FXML
-    void salvar(ActionEvent event){
+    void salvar(ActionEvent event) {
         try {
 
             ContaPagar contaPagar = new ContaPagar();
@@ -112,22 +123,23 @@ public class ContaPagarController implements Initializable {
 
             if (rbPrazo.isSelected()) {
                 contaPagar.setFormaPagamento("P");
+                contaPagar.setStatus("A");
             } else {
                 contaPagar.setFormaPagamento("V");
+
             }
+            ContaPagarDAO.salvar(contaPagar, conexao);
             gerarParcelas(event);
-            ContaPagarDAO.salvar(contaPagar);
 
             Alerta.sucesso("Conta pagar salva com sucesso.");
 
             limpar();
             habilitar(false);
-            
-        
-        }catch (Exception e){
-        Alerta.erro("Erro ao salvar", e);
-        e.printStackTrace();
-    }
+
+        } catch (Exception e) {
+            Alerta.erro("Erro ao salvar", e);
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -177,7 +189,7 @@ public class ContaPagarController implements Initializable {
                 cal.setTime(dataVencimento);
                 cal.add(Calendar.MONTH, 1);
                 dataVencimento = cal.getTime();
-                
+
             }
             tbContaPagar.setItems(parcelas);
             tbContaPagar.refresh();

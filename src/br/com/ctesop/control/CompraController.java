@@ -307,8 +307,8 @@ public class CompraController implements Initializable {
         tfValorUnitario.setText("");
         cbProduto.setValue(null);
         dpData.setValue(null);
-        rbPendente.setSelected(true);
-        rbConfirmado.setSelected(false);
+        rbPendente.setSelected(false);
+        rbConfirmado.setSelected(true);
         rbCancelado.setSelected(false);
         tbItemCompra.getItems().clear();
     }
