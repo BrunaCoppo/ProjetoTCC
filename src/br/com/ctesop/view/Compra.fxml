@@ -54,6 +54,13 @@
                      <content>
                         <VBox fillWidth="false" spacing="5.0">
                            <children>
+                              <Label text="Fornecedor*" />
+                              <HBox>
+                                 <children>
+                                    <ComboBox fx:id="cbFornecedor" prefHeight="25.0" prefWidth="202.0" />
+                                    <Button fx:id="btnCadastroFornecedor" mnemonicParsing="false" onAction="#cadastroFornecedor" text="..." />
+                                 </children>
+                              </HBox>
                               <Label text="Data *" />
                               <DatePicker fx:id="dpData" />
                               <Label text="Valor" />
@@ -116,7 +123,7 @@
                                     <TableColumn fx:id="tcValorUnitario" prefWidth="75.0" text="Valor" />
                                 </columns>
                                  <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
                            </children>

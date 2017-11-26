@@ -12,6 +12,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,8 +92,8 @@ public class ContaPagarController implements Initializable {
         tfQuantParcelas.setDisable(true);
         limpar();
         habilitar(false);
-        
-          tfQuantParcelas.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+        tfQuantParcelas.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
                     gerarParcelas(null);
@@ -117,19 +118,34 @@ public class ContaPagarController implements Initializable {
         try {
 
             ContaPagar contaPagar = new ContaPagar();
+            
             contaPagar.setCodigo(codigo);
             contaPagar.setData(Converter.converterData(dpData.getValue()));
+            contaPagar.setValorFormatado(tfValor.getText());
             contaPagar.setDescricao(tfDescricao.getText());
+            contaPagar.setCompra(compra);
+            
 
             if (rbPrazo.isSelected()) {
                 contaPagar.setFormaPagamento("P");
                 contaPagar.setStatus("A");
             } else {
                 contaPagar.setFormaPagamento("V");
+                contaPagar.setStatus("P");
 
             }
-            ContaPagarDAO.salvar(contaPagar, conexao);
+
             gerarParcelas(event);
+            List parcelas = tbContaPagar.getItems();
+
+            if (conexao == null) {
+                conexao = new Conexao();
+            }
+            ContaPagarDAO.inserir(contaPagar, parcelas, conexao);
+
+            if (compra == null) {
+                conexao.confirmar();
+            }
 
             Alerta.sucesso("Conta pagar salva com sucesso.");
 
@@ -231,10 +247,12 @@ public class ContaPagarController implements Initializable {
         return compra;
     }
 
-    public void setCompra(Compra compra) {
+    public void setCompra(Compra compra) throws Exception {
 
         this.compra = compra;
         tfValor.setText(compra.getValorTotalFormatado());
+        gerarParcelas(null);
+        novo(null);
     }
 
 }

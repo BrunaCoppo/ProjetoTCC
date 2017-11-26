@@ -18,7 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox; 
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -48,8 +48,7 @@ public class CadastroSafraController implements Initializable {
 
     @FXML
     private Button btnCancelar;
-    
-    
+
     @FXML
     private Button btnCadastroProduto;
     
@@ -158,7 +157,7 @@ public class CadastroSafraController implements Initializable {
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
         }
-    } 
+    }
 
     private void atualizarTabela() {
         try {
@@ -188,7 +187,7 @@ public class CadastroSafraController implements Initializable {
         cbTipoSafra.setDisable(!habilitar);
         dpDataInicio.setDisable(!habilitar);
         dpDataTermino.setDisable(!habilitar);
-        
+
         rbAtivo.setDisable(!habilitar);
         rbInativo.setDisable(!habilitar);
     }
@@ -207,12 +206,12 @@ public class CadastroSafraController implements Initializable {
             cbTipoSafra.setItems(TipoSafraDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
-            
+
         }
 
     }
-    
-     @FXML
+
+    @FXML
     public void cadastroProduto(ActionEvent event) {
         try {
             String url = "/br/com/ctesop/view/CadastroProduto.fxml";
@@ -221,7 +220,7 @@ public class CadastroSafraController implements Initializable {
             stage.setTitle("Cadastro de Produto");
             stage.setScene(scene);
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -232,8 +231,9 @@ public class CadastroSafraController implements Initializable {
             Alerta.erro("Erro ao abrir Cadastro de Produto.", e);
         }
     }
-    
-      @FXML
+   
+
+    @FXML
     void cadastrarTipoSafra(ActionEvent event) {
         try {
             String url = "/br/com/ctesop/view/CadastroTipoSafra.fxml";
@@ -242,7 +242,7 @@ public class CadastroSafraController implements Initializable {
             stage.setTitle("Cadastro Tipo de Safra");
             stage.setScene(scene);
             stage.show();
-            
+
             stage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {

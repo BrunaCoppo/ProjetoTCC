@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class CompraDAO {
 
-    public static void inserir(Compra compra, Conexao c) throws Exception {
+    public static int inserir(Compra compra, Conexao c) throws Exception {
         
         String sql = "insert into tbcompra (data, total, status) values (?, ?, ?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -36,6 +36,8 @@ public class CompraDAO {
             ps.execute();
 
         }
+        
+        return codigo;
     }
 
     private static void alterar(Compra compra, Conexao c) throws Exception {
@@ -80,11 +82,12 @@ public class CompraDAO {
     }
 
 
-    public static void salvar(Compra compra, Conexao c) throws Exception {
+    public static int salvar(Compra compra, Conexao c) throws Exception {
         if (compra.getCodigo() == 0) {
-            inserir(compra, c);
+            return inserir(compra, c);
         } else {
             alterar(compra, c);
+            return compra.getCodigo();
         }
 
     }

@@ -4,9 +4,12 @@ import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.dao.CompraDAO;
 import br.com.ctesop.dao.Conexao;
+import br.com.ctesop.dao.PessoaDAO;
 import br.com.ctesop.dao.ProdutoDAO;
 import br.com.ctesop.model.Compra;
+import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.ItensCompra;
+import br.com.ctesop.model.Pessoa;
 import br.com.ctesop.model.Produto;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -57,6 +60,12 @@ public class CompraController implements Initializable {
     private Button btnCadastroProduto;
 
     @FXML
+    private Button btnCadastroFornecedor;
+
+    @FXML
+    private ComboBox<Pessoa> cbFornecedor;
+
+    @FXML
     private Tab tpCompra;
 
     @FXML
@@ -82,7 +91,7 @@ public class CompraController implements Initializable {
 
     @FXML
     private TableView<Compra> tbCompra;
-
+    
     @FXML
     private TableColumn<Compra, String> tcData;
 
@@ -134,6 +143,7 @@ public class CompraController implements Initializable {
         tcData.setCellValueFactory(new PropertyValueFactory<>("DataFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        carregarComboFornecedor();
         carregarComboProduto();
         habilitar(false);
         limpar();
@@ -169,11 +179,11 @@ public class CompraController implements Initializable {
             Compra compra = new Compra();
             compra.setCodigo(codigo);
             compra.setData(Converter.converterData(dpData.getValue()));
-
             if (compra.getData() == null) {
                 throw new Exception("Data inválida.");
-
             }
+
+            compra.setFornecedor(cbFornecedor.getSelectionModel().getSelectedItem());
 
             if (rbPendente.isSelected()) {
                 compra.setStatus("P");
@@ -198,20 +208,21 @@ public class CompraController implements Initializable {
 
             Conexao c = new Conexao();
 
-            CompraDAO.salvar(compra, c);
-
+            int codigo = CompraDAO.salvar(compra, c);
+            compra.setCodigo(codigo);
+            
             if (compra.getStatus().equalsIgnoreCase("F")) {
 
                 for (ItensCompra ic : tbItemCompra.getItems()) {
+
+                    ((Stage) tbItemCompra.getScene().getWindow()).close();
 
                     contaPagar(c, compra);
 
                     Produto produto = ic.getProduto();
                     produto.setQuantidade(ic.getQuantidade());
                     ProdutoDAO.alterarQuantidade(produto, c);
-
                 }
-
             }
 
             c.confirmar();
@@ -280,6 +291,14 @@ public class CompraController implements Initializable {
 
     }
 
+    private void atualizarTabela() {
+        try {
+            //tbCompra.setItems(CompraDAO.listar(false));
+            tbCompra.refresh();
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
+        }
+    }
     @FXML
     public void cadastroProduto(ActionEvent event) {
         try {
@@ -298,6 +317,27 @@ public class CompraController implements Initializable {
             });
         } catch (Exception e) {
             Alerta.erro("Erro ao abrir cadastro de produto.", e);
+        }
+    }
+
+    @FXML
+    void cadastroFornecedor(ActionEvent event) {
+        try {
+            String url = "/br/com/ctesop/view/CadastroPessoa.fxml";
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource(url)).load());
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Pessoa");
+            stage.setScene(scene);
+            stage.show();
+            //Carregar o produto na compra alterado
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    carregarComboProduto();
+                }
+            });
+        } catch (Exception e) {
+            Alerta.erro("Erro ao abrir cadastro de fornecedor.", e);
         }
     }
 
@@ -341,6 +381,14 @@ public class CompraController implements Initializable {
     private void carregarComboProduto() {
         try {
             cbProduto.setItems(ProdutoDAO.listar(true));
+        } catch (Exception e) {
+            Alerta.erro("Erro ao consultar dados.", e);
+        }
+    }
+
+    private void carregarComboFornecedor() {
+        try {
+            cbFornecedor.setItems(PessoaDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
         }

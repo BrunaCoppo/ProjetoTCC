@@ -211,7 +211,7 @@ public class CadastroPessoaController implements Initializable {
                 mudarTipo(null);
             }
 
-            if (ProprietarioDAO.existe(new Proprietario(selecionado.getCodigo()))) {
+           if (ProprietarioDAO.existe(new Proprietario(selecionado.getCodigo()))) {
                 cbProprietario.setSelected(true);
             } else {
                 cbProprietario.setSelected(false);
@@ -228,7 +228,6 @@ public class CadastroPessoaController implements Initializable {
             } else {
                 cbFornecedor.setSelected(false);
             }
-
             habilitar(true);
             
         } catch (Exception e) {

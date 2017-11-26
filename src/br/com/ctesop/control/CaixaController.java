@@ -62,7 +62,7 @@ public class CaixaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcDataAbertura.setCellValueFactory(new PropertyValueFactory<>("dataAberturaFormatada"));
-        tcDataFechamento.setCellValueFactory(new PropertyValueFactory<>("dataFechamento"));
+        tcDataFechamento.setCellValueFactory(new PropertyValueFactory<>("dataFechamentoFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         atualizarTabela();
         habilitar(false);

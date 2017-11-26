@@ -52,7 +52,10 @@ public class Caixa {
     }
 
     public String getDataFechamentoFormatada() {
-         return Converter.formatarData(dataFechamento);
+        if (getDataFechamento() == null) {
+            return "";
+        }
+        return Converter.formatarData(dataFechamento);
     }
 
     public float getValorAbertura() {

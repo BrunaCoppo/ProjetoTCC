@@ -14,10 +14,19 @@ import javafx.collections.ObservableList;
 public class Compra {
 
     private int codigo;
+    private Pessoa fornecedor;
     private Date data;
     private String status;
     private ArrayList<ItensCompra> itens = new ArrayList<>();
     private ObservableList<ItensCompra> itensRemover;
+
+    public Compra(int aInt) {
+        this.codigo = codigo;
+    }
+
+    public Compra() {
+        
+    }
 
     public int getCodigo() {
         return codigo;
@@ -29,6 +38,15 @@ public class Compra {
         }
         this.codigo = codigo;
     }
+
+    public Pessoa getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Pessoa fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
 
     public Date getData() {
         return data;

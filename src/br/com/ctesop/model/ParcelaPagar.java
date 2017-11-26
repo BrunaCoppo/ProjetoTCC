@@ -1,6 +1,8 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,6 +17,14 @@ public class ParcelaPagar {
     private Date data;
     private float valorParcela;
     private String status;
+
+    public ParcelaPagar(int aInt, float aFloat) {
+        this.contaPagar = contaPagar;
+    }
+
+    public ParcelaPagar() {
+        
+    }
 
     public int getCodigo() {
         return codigo;
@@ -54,6 +64,16 @@ public class ParcelaPagar {
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
         return nf.format(valorParcela);
+    }
+    
+
+    public void setValor(String valor) throws ExceptionValidacao {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.valorParcela = nf.parse(valor).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Valor inválido.");
+        }
     }
 
     public void setValorParcela(float valorParcela) {

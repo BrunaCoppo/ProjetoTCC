@@ -94,5 +94,25 @@ public class CaixaDAO {
             fechamento(caixa);
         }
     }
+    
+     static Caixa getCaixaAberto(Conexao c) throws Exception {
+        String sql = "select * from tbcaixa where status='A' order by codtbcaixa desc";
+        PreparedStatement ps = c.getConexao().prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            Caixa caixa = new Caixa();
+            caixa.setCodigo(rs.getInt("codtbcaixa"));
+            caixa.setDataAbertura(rs.getDate("dataabertura"));
+            caixa.setValorAbertura(rs.getFloat("valorabertura"));
+            caixa.setDataFechamento(rs.getDate("datafechamento"));
+            caixa.setValorFechamento(rs.getFloat("valorfechamento"));
+            caixa.setStatus(rs.getString("status"));
+            return caixa;
+        } else {
+            throw new Exception("Nenhum caixa aberto");
+        }
+    }
 
 }

@@ -1,7 +1,9 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.Converter;
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -95,6 +97,14 @@ public class ContaPagar {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+    public void setValorFormatado(String valor) throws ExceptionValidacao {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.valor = nf.parse(valor).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Valor inválido.");
+        }
     }
 
     public String getValorFormatado() {

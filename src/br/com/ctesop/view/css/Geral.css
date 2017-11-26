@@ -1,11 +1,12 @@
 .botao-novo,
 .botao-editar,
 .botao-salvar,
-.botao-cancelar {
+.botao-cancelar,
+.botao-pagar{
     -fx-background-size: 13px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 10;
-    -fx-padding: 8 0 8 8;
+    -fx-padding: 8 0 8 8; 
 }
 
 .botao-novo {
@@ -22,4 +23,8 @@
 
 .botao-cancelar {
     -fx-background-image: url('../img/error.png');
+}
+
+.botao-pagar{
+    -fx-background-image: url('../img/dollars.png');
 }

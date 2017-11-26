@@ -35,6 +35,9 @@ public class Fisica {
         if (cpf.trim().length() != 14) {
             throw new ExceptionValidacao("CPF inválido!");
         }
+        
+        
+        
         this.cpf = cpf;
     }
 

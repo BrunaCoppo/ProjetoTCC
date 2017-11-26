@@ -10,6 +10,6 @@ public class Fornecedor extends Pessoa {
     }
 
     public Fornecedor(int codigo) {
-        setCodigo(codigo);
+          setCodigo(codigo);
     }
 }
