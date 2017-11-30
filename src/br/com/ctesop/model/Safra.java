@@ -18,6 +18,14 @@ public class Safra {
     private Date dataTermino;
     private String status;
 
+    public Safra(int aInt, String string) {
+       this.codigo = codigo;
+    }
+
+    public Safra() {
+        
+    }
+        
     public int getCodigo() {
         return codigo;
     }

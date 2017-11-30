@@ -9,41 +9,54 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.PagamentoController">
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.PagamentoController">
    <children>
-      <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="29.0" prefWidth="560.0" spacing="5.0" stylesheets="@css/Geral.css">
                <children>
-                  <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#pagar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-pagar" stylesheets="@css/Geral.css" text="Pagar">
+                  <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#pagar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-conta" stylesheets="@css/Geral.css" text="Pagar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" stylesheets="@css/Geral.css" text="Cancelar">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="90.0" styleClass="botao-cancelar" stylesheets="@css/Geral.css" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <Label text="Conta Pagar *" />
+            <Label text="Selecione um conta a pagar:">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
             <TableView fx:id="tbContaPagar" prefHeight="186.0" prefWidth="570.0">
               <columns>
-                <TableColumn fx:id="tcContaPagar" prefWidth="220.0" text="Conta Pagar" />
-                <TableColumn fx:id="tcDataConta" prefWidth="132.0" text="Data" />
-                  <TableColumn fx:id="tcValor" prefWidth="116.0" text="Valor" />
-                  <TableColumn fx:id="tcStatus" prefWidth="91.0" text="Status" />
+                <TableColumn fx:id="tcContaFornecedor" maxWidth="300.0" prefWidth="220.0" text="Fornecedor" />
+                <TableColumn fx:id="tcContaData" maxWidth="100.0" prefWidth="50.0" text="Data" />
+                  <TableColumn fx:id="tcContaValor" maxWidth="100.0" prefWidth="50.0" text="Valor" />
+                  <TableColumn fx:id="tcContaRestante" maxWidth="100.0" prefWidth="50.0" text="Restante" />
+                  <TableColumn fx:id="tcContaStatus" maxWidth="100.0" prefWidth="50.0" text="Status" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
-            <Label text="Parcela a Pagar *" />
+            <Label text="Selecione uma parcela:">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
             <TableView fx:id="tbParcelaPagar" prefHeight="190.0" prefWidth="561.0">
               <columns>
-                <TableColumn fx:id="tcValorConta" prefWidth="179.0" text="Valor da Conta" />
-                <TableColumn fx:id="tcDataParcela" prefWidth="120.0" text="Data " />
-                  <TableColumn fx:id="tcValorParcela" prefWidth="150.0" text="Valor Parcela" />
-                  <TableColumn fx:id="tcStatus" prefWidth="110.0" text="Status" />
+                <TableColumn fx:id="tcParcelaData" prefWidth="120.0" text="Data " />
+                  <TableColumn fx:id="tcParcelaValor" prefWidth="150.0" text="Valor Parcela" />
+                  <TableColumn fx:id="tcParcelaRestante" prefWidth="179.0" text="Restante Parcela" />
+                  <TableColumn fx:id="tcParcelaStatus" prefWidth="110.0" text="Status" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
          <padding>

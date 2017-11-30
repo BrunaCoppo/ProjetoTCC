@@ -1,10 +1,11 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.Converter;
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -17,8 +18,7 @@ public class Compra {
     private Pessoa fornecedor;
     private Date data;
     private String status;
-    private ArrayList<ItensCompra> itens = new ArrayList<>();
-    private ObservableList<ItensCompra> itensRemover;
+    private ObservableList<ItensCompra> itens = FXCollections.observableArrayList();
 
     public Compra(int aInt) {
         this.codigo = codigo;
@@ -28,6 +28,12 @@ public class Compra {
         
     }
 
+    public Compra(int codigo, String fornecedor) throws ExceptionValidacao {
+        this.codigo = codigo;
+        this.fornecedor = new Fornecedor(fornecedor);
+    }
+
+    
     public int getCodigo() {
         return codigo;
     }
@@ -83,11 +89,11 @@ public class Compra {
         this.status = status;
     }
 
-    public ArrayList<ItensCompra> getItens() {
+    public ObservableList<ItensCompra> getItens() {
         return itens;
     }
 
-    public void setItens(ArrayList<ItensCompra> itens) {
+    public void setItens(ObservableList<ItensCompra> itens) {
         this.itens = itens;
     }
 
@@ -95,8 +101,7 @@ public class Compra {
         itens.add(item);
     }
 
-    public ObservableList<ItensCompra> getItensRemover() {
-        return itensRemover;
+    public void removerItem(ItensCompra item) {
+        itens.remove(item);
     }
-
 }

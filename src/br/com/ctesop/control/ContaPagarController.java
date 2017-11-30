@@ -10,6 +10,7 @@ import br.com.ctesop.model.ParcelaPagar;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -85,8 +87,8 @@ public class ContaPagarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcDatavencimento.setCellValueFactory(new PropertyValueFactory<>("DataFormatada"));
-        tcValorParcela.setCellValueFactory(new PropertyValueFactory<>("valorParcela"));
+        tcDatavencimento.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
+        tcValorParcela.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         tfQuantParcelas.setDisable(true);
@@ -108,23 +110,19 @@ public class ContaPagarController implements Initializable {
     @FXML
     void novo(ActionEvent event) {
         codigo = 0;
-        limpar();
         habilitar(true);
-
     }
 
     @FXML
     void salvar(ActionEvent event) {
         try {
-
             ContaPagar contaPagar = new ContaPagar();
-            
+
             contaPagar.setCodigo(codigo);
             contaPagar.setData(Converter.converterData(dpData.getValue()));
-            contaPagar.setValorFormatado(tfValor.getText());
+            contaPagar.setValor(tfValor.getText());
             contaPagar.setDescricao(tfDescricao.getText());
             contaPagar.setCompra(compra);
-            
 
             if (rbPrazo.isSelected()) {
                 contaPagar.setFormaPagamento("P");
@@ -132,25 +130,14 @@ public class ContaPagarController implements Initializable {
             } else {
                 contaPagar.setFormaPagamento("V");
                 contaPagar.setStatus("P");
-
             }
 
-            gerarParcelas(event);
             List parcelas = tbContaPagar.getItems();
 
-            if (conexao == null) {
-                conexao = new Conexao();
-            }
             ContaPagarDAO.inserir(contaPagar, parcelas, conexao);
 
-            if (compra == null) {
-                conexao.confirmar();
-            }
-
-            Alerta.sucesso("Conta pagar salva com sucesso.");
-
-            limpar();
-            habilitar(false);
+            //Fechar janela
+            ((Stage) dpData.getScene().getWindow()).close();
 
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar", e);
@@ -160,7 +147,8 @@ public class ContaPagarController implements Initializable {
 
     @FXML
     void cancelar(ActionEvent event) throws Throwable {
-        finalize();
+        //fecha janela
+        ((Stage) dpData.getScene().getWindow()).close();
     }
 
     @FXML
@@ -168,12 +156,10 @@ public class ContaPagarController implements Initializable {
         if (rbVista.isSelected()) {
             tfQuantParcelas.setText("1");
             tfQuantParcelas.setDisable(true);
-
             gerarParcelas(null);
         } else {
             tfQuantParcelas.setDisable(false);
         }
-
     }
 
     @FXML
@@ -187,7 +173,7 @@ public class ContaPagarController implements Initializable {
 
             float valorConta = nf.parse(tfValor.getText()).floatValue();
             int quantidadeParcelas = nf.parse(tfQuantParcelas.getText()).intValue();
-            float valorParcela = nf.parse(nf.format(valorConta / quantidadeParcelas)).floatValue();
+            float valorParcela = Math.round((valorConta / quantidadeParcelas) * 100) / 100.0f;
             Date dataVencimento = Converter.converterData(dpData.getValue());
 
             ObservableList<ParcelaPagar> parcelas = FXCollections.observableArrayList();
@@ -248,9 +234,11 @@ public class ContaPagarController implements Initializable {
     }
 
     public void setCompra(Compra compra) throws Exception {
-
         this.compra = compra;
         tfValor.setText(compra.getValorTotalFormatado());
+        tfDescricao.setText("Ref. compra " + compra.getCodigo());
+        tfQuantParcelas.setText("1");
+        dpData.setValue(LocalDate.now());
         gerarParcelas(null);
         novo(null);
     }

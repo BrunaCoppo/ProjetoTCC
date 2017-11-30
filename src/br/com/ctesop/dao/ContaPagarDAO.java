@@ -7,7 +7,6 @@ import br.com.ctesop.model.ParcelaPagar;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,11 +21,7 @@ public class ContaPagarDAO {
 
         String sql = "insert into tbcontapagar (codcompra, datavencimento, descricao, valor, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        if (contaPagar.getCompra() != null) {
-            ps.setInt(1, contaPagar.getCompra().getCodigo());
-        } else {
-            ps.setNull(1, Types.INTEGER);
-        }
+        ps.setInt(1, contaPagar.getCompra().getCodigo());
         ps.setDate(2, new java.sql.Date(contaPagar.getData().getTime()));
         ps.setString(3, contaPagar.getDescricao());
         ps.setFloat(4, contaPagar.getValor());
@@ -38,11 +33,11 @@ public class ContaPagarDAO {
         int codContaGerado = rs.getInt(1);
 
         for (ParcelaPagar parcela : parcelas) {
-            sql = "insert into tbparcelapagar (codtbcontapagar, data, valorparcela, status) VALUES (?, ?, ?, ?)";
+            sql = "insert into tbparcelapagar (codcontapagar, data, valorparcela, status) VALUES (?, ?, ?, ?)";
             ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, codContaGerado);
             ps.setDate(2, new Date(parcela.getData().getTime()));
-            ps.setDouble(3, parcela.getValorParcela());
+            ps.setFloat(3, parcela.getValorParcela());
             ps.setString(4, parcela.getStatus());
             ps.execute();
 
@@ -54,7 +49,7 @@ public class ContaPagarDAO {
 
                 Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);
 
-                if (caixaAberto.getValorFechamento()< contaPagar.getValor()) {
+                if (caixaAberto.getValorFechamento() < contaPagar.getValor()) {
                     throw new Exception("Saldo insuficiente em caixa");
                 }
 
@@ -89,12 +84,13 @@ public class ContaPagarDAO {
         }
     }
 
-    public static ObservableList<ContaPagar> listar(boolean somenteAtivos) throws Exception {
-        String sql = "select * from tbcontapagar ";
-        if (somenteAtivos) {
-            sql += " where cont.status='A' ";
-        }
-        sql += " order by status, datavencimento";
+    public static ObservableList<ContaPagar> listar() throws Exception {
+        String sql = "select * "
+                + "from tbcontapagar as cp "
+                + "inner join tbcompra as c "
+                + "on c.codcompra = cp.codcompra "
+                + "inner join tbpessoa as p "
+                + "on p.codpessoa = c.codfornecedor";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
@@ -102,13 +98,26 @@ public class ContaPagarDAO {
         ObservableList<ContaPagar> lista = FXCollections.observableArrayList();
         while (rs.next()) {
             ContaPagar contaPagar = new ContaPagar();
-            contaPagar.setCodigo(rs.getInt("codcontapagar"));
-            contaPagar.setCompra(new Compra(rs.getInt("codcompra")));
-            contaPagar.setData(rs.getDate("datavencimento"));
-            contaPagar.setDescricao(rs.getString("descricao"));
-            contaPagar.setStatus(rs.getString("status"));
+            contaPagar.setCodigo(rs.getInt("cp.codcontapagar"));
+            contaPagar.setCompra(new Compra(rs.getInt("cp.codcompra"), rs.getString("p.nomepessoa")));
+            contaPagar.setData(rs.getDate("cp.datavencimento"));
+            contaPagar.setValor(rs.getFloat("valor"));
+            contaPagar.setValorPago(PagamentoDAO.consultarPagamentosConta(contaPagar.getCodigo()));
+            contaPagar.setDescricao(rs.getString("cp.descricao"));
+            contaPagar.setStatus(rs.getString("cp.status"));
             lista.add(contaPagar);
         }
         return lista;
+    }
+
+    public static boolean gerouConta(int codCompra, Conexao con) throws Exception {
+        String sql = "select * "
+                + "from tbcontapagar "
+                + "where codcompra=?";
+
+        PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        ps.setInt(1, codCompra);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
     }
 }

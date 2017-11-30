@@ -13,13 +13,13 @@ import java.util.Date;
 public class ContaPagar {
 
     private int codigo = 0;
-
     private Compra compra;
     private Arrendamento arrendamento;
     private Manejo manejo;
     private Date data;
     private String descricao;
     private float valor;
+    private float valorPago;
     private String status;
     private String formaPagamento;
     private int quantidadeParcelas;
@@ -55,6 +55,10 @@ public class ContaPagar {
         this.compra = compra;
     }
 
+    public Pessoa getFornecedor(){
+        return getCompra().getFornecedor();
+    }
+    
     public Arrendamento getArrendamento() {
         return arrendamento;
     }
@@ -79,7 +83,7 @@ public class ContaPagar {
         this.data = data;
     }
 
-    public String getDataaFormatada() {
+    public String getDataFormatada() {
         return Converter.formatarData(data);
     }
 
@@ -98,7 +102,8 @@ public class ContaPagar {
     public void setValor(float valor) {
         this.valor = valor;
     }
-    public void setValorFormatado(String valor) throws ExceptionValidacao {
+
+    public void setValor(String valor) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
             this.valor = nf.parse(valor).floatValue();
@@ -114,8 +119,38 @@ public class ContaPagar {
         return nf.format(this.valor);
     }
 
+    public String getValorPagoFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valorPago);
+    }
+
+     public float getValorRestante() {
+        return this.valor - this.valorPago;
+    }
+     
+    public String getValorRestanteFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valor - this.valorPago);
+    }
+
+    public float getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(float valorPago) {
+        this.valorPago = valorPago;
+    }
+
     public String getStatus() {
-        return status;
+        if(getValorRestante() <= 0){
+            return "P";
+        } else {
+            return "A";
+        }
     }
 
     public void setStatus(String status) {

@@ -25,11 +25,6 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
                      <HBox.margin>
                         <Insets />
@@ -42,27 +37,27 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
             <HBox>
                <children>
-                  <Label text="Cooperativa *">
+                  <Label text="Entrega Produção*">
                      <HBox.margin>
-                        <Insets right="50.0" />
+                        <Insets right="40.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Data Pagamento * ">
+                  <Label text="Data Receber * ">
                      <HBox.margin>
-                        <Insets left="140.0" />
+                        <Insets left="122.0" />
                      </HBox.margin>
                   </Label>
                </children>
             </HBox>
             <HBox>
                <children>
-                  <ComboBox fx:id="cbCooperativa" prefHeight="25.0" prefWidth="188.0" />
-                  <DatePicker fx:id="dpDataPagamento">
+                  <ComboBox fx:id="cbEntregaProducao" prefHeight="25.0" prefWidth="188.0" />
+                  <DatePicker fx:id="dpDataReceber">
                      <HBox.margin>
                         <Insets left="75.0" />
                      </HBox.margin>
@@ -89,17 +84,30 @@
             <HBox>
                <children>
                   <TextField fx:id="tfValor" prefHeight="25.0" prefWidth="148.0" />
-                  <TextField fx:id="tdDescricao" prefHeight="25.0" prefWidth="219.0">
+                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="219.0">
                      <HBox.margin>
                         <Insets left="115.0" />
                      </HBox.margin>
                   </TextField>
                </children>
             </HBox>
-            <Label text="Status *" />
             <HBox>
                <children>
-                  <RadioButton fx:id="rbAtivo" mnemonicParsing="false" selected="true" text="Ativo">
+                  <Label text="Status *">
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Quantidade Parecelas* ">
+                     <HBox.margin>
+                        <Insets left="125.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <RadioButton fx:id="rbVista" mnemonicParsing="false" selected="true" text="Á Vista">
                      <toggleGroup>
                         <ToggleGroup fx:id="status" />
                      </toggleGroup>
@@ -107,14 +115,19 @@
                         <Insets left="10.0" right="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="rbInativo" mnemonicParsing="false" text="Inativo" toggleGroup="$status">
+                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" text="Á Prazo" toggleGroup="$status">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </RadioButton>
+                  <TextField fx:id="tfQuantidadeParcela" onAction="#gerarParcela">
+                     <HBox.margin>
+                        <Insets left="95.0" />
+                     </HBox.margin>
+                  </TextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="30.0" />
+                  <Insets bottom="20.0" />
                </VBox.margin>
             </HBox>
             <TableView fx:id="tbContaReceber" prefHeight="124.0" prefWidth="644.0">

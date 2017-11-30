@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.MenuController">
-    <stylesheets>
-        <URL value="@css/Menu.css" />
-    </stylesheets>
    <children>
       <MenuBar layoutX="33.0" layoutY="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -35,7 +31,9 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#caixa" text="Caixa" />
                   <MenuItem mnemonicParsing="false" onAction="#compra" text="Compra" />
-                  <MenuItem mnemonicParsing="false" onAction="#contaPagar" text="Conta á Pagar" />
+                  <MenuItem mnemonicParsing="false" onAction="#pagamento" text="Pagamento" />
+                  <MenuItem mnemonicParsing="false" onAction="#entregaProducao" text="Entrega Produção" />
+                  <MenuItem mnemonicParsing="false" onAction="#recebimento" text="Recebimento" />
                </items></Menu>
             <Menu mnemonicParsing="false" text="Sistema">
                <items>

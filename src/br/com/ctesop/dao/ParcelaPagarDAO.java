@@ -34,27 +34,25 @@ public class ParcelaPagarDAO {
 
     }
 
-    public static ObservableList<ParcelaPagar> listar(boolean somenteAtivos) throws Exception {
+    public static ObservableList<ParcelaPagar> listar(ContaPagar cp) throws Exception {
         String sql = ""
                 + " select *"
                 + " from tbparcelapagar as p"
-                + " inner join tbcontapagar as c on c.codcontapagar = p.codcontapagar";
-        if (somenteAtivos) {
-            sql += " where p.status='A' ";
-        }
-        sql += " order by p.status, p.data ";
+                + " inner join tbcontapagar as c on c.codcontapagar = p.codcontapagar "
+                + " where p.codcontapagar=?";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
+        ps.setInt(1, cp.getCodigo());
         ResultSet rs = ps.executeQuery();
         ObservableList<ParcelaPagar> lista = FXCollections.observableArrayList();
         while (rs.next()) {
             ParcelaPagar parcelaPagar = new ParcelaPagar();
-            //parcelaPagar.setContaPagar(new ContaPagar(rs.getInt("c.codcontapagar"), rs.getDate("c.nomeestado")));
+            parcelaPagar.setContaPagar(cp);
             parcelaPagar.setCodigo(rs.getInt("p.codparcelapagar"));
             parcelaPagar.setData(rs.getDate("p.data"));
-            parcelaPagar.setValorParcela(rs.getFloat("p.data"));
-
+            parcelaPagar.setValorParcela(rs.getFloat("p.valorparcela"));
+            parcelaPagar.setValorPago(PagamentoDAO.consultarPagamentosParcela(parcelaPagar.getCodigo()));
             parcelaPagar.setStatus(rs.getString("p.status"));
             lista.add(parcelaPagar);
         }

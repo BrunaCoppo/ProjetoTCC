@@ -17,7 +17,7 @@
          <children>
             <HBox spacing="5.0">
                <children>
-                  <Button fx:id="btnAbertura" mnemonicParsing="false" onAction="#abertura" prefWidth="63.0" text="Abertura" />
+                  <Button fx:id="btnAbertura" mnemonicParsing="false" onAction="#abertura" prefWidth="80.0" text="Abertura" />
                   <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmar" text="Confirmar" />
                   <Button fx:id="btnFechamento" mnemonicParsing="false" onAction="#fechamento" text="Fechamento" />
                </children>
@@ -42,8 +42,13 @@
               <columns>
                 <TableColumn fx:id="tcDataAbertura" prefWidth="191.0" text="Data Abertura" />
                   <TableColumn fx:id="tcDataFechamento" prefWidth="229.0" text="Data Fechamento" />
+                  <TableColumn fx:id="tcValorAbertura" prefWidth="229.0" text="Valor Abertura" />
+                  <TableColumn fx:id="tcValorFechamento" prefWidth="229.0" text="Saldo" />
                 <TableColumn fx:id="tcStatus" prefWidth="135.0" text="Status" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <Label text="* Campos obrigatórios">
                <font>

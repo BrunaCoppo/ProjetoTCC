@@ -1,9 +1,9 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,6 +16,7 @@ public class ParcelaPagar {
     private ContaPagar contaPagar;
     private Date data;
     private float valorParcela;
+    private float valorPago;
     private String status;
 
     public ParcelaPagar(int aInt, float aFloat) {
@@ -23,7 +24,7 @@ public class ParcelaPagar {
     }
 
     public ParcelaPagar() {
-        
+
     }
 
     public int getCodigo() {
@@ -43,8 +44,7 @@ public class ParcelaPagar {
     }
 
     public String getDataFormatada() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(data);
+        return Converter.formatarData(data);
     }
 
     public Date getData() {
@@ -65,7 +65,6 @@ public class ParcelaPagar {
         nf.setMaximumFractionDigits(2);
         return nf.format(valorParcela);
     }
-    
 
     public void setValor(String valor) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -78,6 +77,25 @@ public class ParcelaPagar {
 
     public void setValorParcela(float valorParcela) {
         this.valorParcela = valorParcela;
+    }
+
+    public float getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(float valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public float getValorRestante() {
+        return this.valorParcela - this.valorPago;
+    }
+
+    public String getValorRestanteFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valorParcela - this.valorPago);
     }
 
     public String getStatus() {

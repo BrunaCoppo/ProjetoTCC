@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 /**
  *
  * @author Bruna
@@ -81,26 +80,24 @@ public class SafraDAO {
 
     public static void salvar(Safra safra) throws Exception {
         if (safra.getCodigo() == 0) {
-            if (existe(safra)) {
+          /*  if (existe(safra)) {
                 throw new ExceptionValidacao("A safra já está cadastrada.");
-            }
+            }*/
             inserir(safra);
         } else {
             alterar(safra);
         }
     }
-
+/*
     private static boolean existe(Safra safra) throws Exception {
         String sql = "select count(codsafra) from tbsafra where datainicio=? and status=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
-        //ps.setDate(1, safra.getDataInicio());
-       // ps.setString(2, safra.getStatus());
+        ps.setDate(1, new java.sql.Date(safra.getDataInicio()));
+        ps.setString(2, safra.getStatus());
         ResultSet rs = ps.executeQuery();
         rs.next();
         return (rs.getInt(1) > 0);
     }
-    
-    
-
+*/
 }

@@ -41,7 +41,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" text="Cancelar">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="90.0" styleClass="botao-cancelar" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -57,28 +57,28 @@
                               <Label text="Fornecedor*" />
                               <HBox>
                                  <children>
-                                    <ComboBox fx:id="cbFornecedor" prefHeight="25.0" prefWidth="202.0" />
+                                    <ComboBox fx:id="cbFornecedor" prefHeight="25.0" prefWidth="388.0" />
                                     <Button fx:id="btnCadastroFornecedor" mnemonicParsing="false" onAction="#cadastroFornecedor" text="..." />
                                  </children>
                               </HBox>
                               <Label text="Data *" />
                               <DatePicker fx:id="dpData" />
-                              <Label text="Valor" />
+                              <Label text="Valor Total" />
                               <TextField fx:id="tfValorTotal" editable="false" prefWidth="174.0" />
                               <Label text="Status *" />
                               <HBox>
                                  <children>
-                                    <RadioButton fx:id="rbConfirmado" mnemonicParsing="false" selected="true" text="Confirmado">
+                                    <RadioButton fx:id="rbPendente" mnemonicParsing="false" selected="true" text="Pendente">
                                        <HBox.margin>
-                                          <Insets right="20.0" />
+                                          <Insets left="10.0" right="20.0" />
                                        </HBox.margin>
                                        <toggleGroup>
                                           <ToggleGroup fx:id="status" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="rbPendente" mnemonicParsing="false" text="Pendente" toggleGroup="$status">
+                                    <RadioButton fx:id="rbConfirmado" mnemonicParsing="false" text="Finalizado" toggleGroup="$status">
                                        <HBox.margin>
-                                          <Insets left="10.0" right="20.0" />
+                                          <Insets right="20.0" />
                                        </HBox.margin>
                                     </RadioButton>
                                     <RadioButton fx:id="rbCancelado" mnemonicParsing="false" text="Cancelado" toggleGroup="$status" />
@@ -86,10 +86,14 @@
                               </HBox>
                               <TableView fx:id="tbCompra" prefHeight="174.0" prefWidth="563.0">
                                 <columns>
-                                  <TableColumn fx:id="tcData" prefWidth="184.0" text="Data" />
-                                  <TableColumn fx:id="tcValor" prefWidth="223.0" text="Valor" />
-                                    <TableColumn fx:id="tcStatus" prefWidth="149.0" text="Status" />
+                                    <TableColumn fx:id="tcFornecedor" maxWidth="300.0" prefWidth="184.0" text="Fornecedor" />
+                                  <TableColumn fx:id="tcData" maxWidth="150.0" prefWidth="184.0" text="Data" />
+                                  <TableColumn fx:id="tcValor" maxWidth="150.0" prefWidth="223.0" text="Valor" />
+                                    <TableColumn fx:id="tcStatus" maxWidth="150.0" prefWidth="149.0" text="Status" />
                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
                               </TableView>
                            </children>
                         </VBox>

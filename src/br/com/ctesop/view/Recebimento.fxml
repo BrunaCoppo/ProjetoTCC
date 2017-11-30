@@ -9,43 +9,33 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="br.com.ctesop.control.RecebimentoController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.RecebimentoController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="36.0" prefWidth="560.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-novo" text="Novo">
+                  <Button fx:id="btnReceber" mnemonicParsing="false" onAction="#receber" prefHeight="50.0" prefWidth="80.0" styleClass="botao-conta" stylesheets="@css/Geral.css" text="Receber">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-editar" text="Editar">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-salvar" text="Salvar">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" styleClass="botao-excluir" text="Excluir">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="80.0" styleClass="botao-cancelar" stylesheets="@css/Geral.css" text="Cancelar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <Label text="Conta Receber" />
+            <Label text="Selecione a conta a receber" />
             <TableView prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="179.0" text="Cooperativa" />
+                <TableColumn minWidth="5.0" prefWidth="94.0" text="Valor" />
+                  <TableColumn prefWidth="75.0" text="Data" />
               </columns>
             </TableView>
-            <Label text="Parcela Receber" />
+            <Label text="Selecione a parcela a receber" />
             <TableView prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />

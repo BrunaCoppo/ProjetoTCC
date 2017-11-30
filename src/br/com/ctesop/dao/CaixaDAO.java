@@ -21,9 +21,8 @@ public class CaixaDAO {
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setDate(1, new java.sql.Date(caixa.getDataAbertura().getTime()));
         ps.setFloat(2, caixa.getValorAbertura());
-        ps.setFloat(3, caixa.getValorFechamento());
+        ps.setFloat(3, caixa.getValorAbertura());
         ps.setString(4, caixa.getStatus());
-
         ps.execute();
         con.confirmar();
 
@@ -68,7 +67,6 @@ public class CaixaDAO {
         ps.setDate(3, new java.sql.Date(caixa.getDataFechamento().getTime()));
         ps.setFloat(4, caixa.getValorFechamento());
         ps.setString(5, caixa.getStatus());
-
         ps.setInt(6, caixa.getCodigo());
 
         ps.execute();

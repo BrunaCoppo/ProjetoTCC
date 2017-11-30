@@ -109,6 +109,7 @@ public class CadastroCidadeController implements Initializable {
 
     @FXML
     public void salvar(ActionEvent event) {
+       
         try {
             Cidade cidade = new Cidade();
             cidade.setCodigo(codigo);

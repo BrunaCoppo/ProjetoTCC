@@ -4,17 +4,18 @@ import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.dao.CompraDAO;
 import br.com.ctesop.dao.Conexao;
+import br.com.ctesop.dao.ContaPagarDAO;
 import br.com.ctesop.dao.PessoaDAO;
 import br.com.ctesop.dao.ProdutoDAO;
 import br.com.ctesop.model.Compra;
-import br.com.ctesop.model.Fornecedor;
 import br.com.ctesop.model.ItensCompra;
 import br.com.ctesop.model.Pessoa;
 import br.com.ctesop.model.Produto;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -91,7 +92,10 @@ public class CompraController implements Initializable {
 
     @FXML
     private TableView<Compra> tbCompra;
-    
+
+    @FXML
+    private TableColumn<Compra, String> tcFornecedor;
+
     @FXML
     private TableColumn<Compra, String> tcData;
 
@@ -134,17 +138,19 @@ public class CompraController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        tcProduto.setCellValueFactory(new PropertyValueFactory<>("produto"));
-        tcQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        tcValorUnitario.setCellValueFactory(new PropertyValueFactory<>("valorUnitario"));
-        tbItemCompra.refresh();
-
-        tcValor.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-        tcData.setCellValueFactory(new PropertyValueFactory<>("DataFormatada"));
+        tcFornecedor.setCellValueFactory(new PropertyValueFactory<>("fornecedor"));
+        tcValor.setCellValueFactory(new PropertyValueFactory<>("valorTotalFormatado"));
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        tcProduto.setCellValueFactory(new PropertyValueFactory<>("produto"));
+        tcQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidadeFormatada"));
+        tcValorUnitario.setCellValueFactory(new PropertyValueFactory<>("valorUnitarioFormatado"));
+        tbItemCompra.refresh();
 
         carregarComboFornecedor();
         carregarComboProduto();
+        atualizarTabela();
         habilitar(false);
         limpar();
     }
@@ -163,17 +169,41 @@ public class CompraController implements Initializable {
         }
         try {
             Compra selecionado = tbCompra.getSelectionModel().getSelectedItem();
+
+            if (selecionado.getStatus().equalsIgnoreCase("F")) {
+                Alerta.alerta("Compra já finalizada!");
+                return;
+            }
+            if (selecionado.getStatus().equalsIgnoreCase("C")) {
+                Alerta.alerta("Compra cancelada!");
+                return;
+            }
             codigo = selecionado.getCodigo();
             dpData.setValue(Converter.toLocalDate(selecionado.getData()));
             tfValorTotal.setText(selecionado.getValorTotalFormatado());
+            cbFornecedor.getSelectionModel().select(selecionado.getFornecedor());
+            
+            if(selecionado.getStatus().equalsIgnoreCase("P")){
+                rbPendente.setSelected(true);
+            } else if(selecionado.getStatus().equalsIgnoreCase("C")){
+                rbCancelado.setSelected(true);
+            } else {
+                rbConfirmado.setSelected(true);
+            }
+            
+            tbItemCompra.setItems(selecionado.getItens());
+            tbItemCompra.refresh();
+
+            habilitar(true);
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     @FXML
     void salvar(ActionEvent event) {
+        Conexao c;
 
         try {
             Compra compra = new Compra();
@@ -193,7 +223,7 @@ public class CompraController implements Initializable {
                 compra.setStatus("F");
             }
 
-            ArrayList<ItensCompra> itens = new ArrayList<>();
+            ObservableList<ItensCompra> itens = FXCollections.observableArrayList();
             for (ItensCompra ic : tbItemCompra.getItems()) {
                 ic.setCompra(compra);
                 itens.add(ic);
@@ -206,19 +236,20 @@ public class CompraController implements Initializable {
                 throw new Exception("Compra sem itens.");
             }
 
-            Conexao c = new Conexao();
+            c = new Conexao();
 
             int codigo = CompraDAO.salvar(compra, c);
             compra.setCodigo(codigo);
-            
+
             if (compra.getStatus().equalsIgnoreCase("F")) {
 
+                contaPagar(c, compra);
+
+                if (!ContaPagarDAO.gerouConta(compra.getCodigo(),c)) {
+                    throw new Exception("Não gerou conta a pagar");
+                }
+
                 for (ItensCompra ic : tbItemCompra.getItems()) {
-
-                    ((Stage) tbItemCompra.getScene().getWindow()).close();
-
-                    contaPagar(c, compra);
-
                     Produto produto = ic.getProduto();
                     produto.setQuantidade(ic.getQuantidade());
                     ProdutoDAO.alterarQuantidade(produto, c);
@@ -226,12 +257,10 @@ public class CompraController implements Initializable {
             }
 
             c.confirmar();
-
-            Alerta.sucesso("Compra realizada com sucesso.");
-
             limpar();
             habilitar(false);
-
+            atualizarTabela();
+            
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
             e.printStackTrace();
@@ -242,7 +271,7 @@ public class CompraController implements Initializable {
     public void contaPagar(Conexao c, Compra compra) throws Exception {
         String url = "/br/com/ctesop/view/ContaPagar.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
-        Parent root = loader.load();//Faz carregar o arquivo FXML
+        Parent root = loader.load();
         ContaPagarController controler = loader.getController();
         controler.setConexao(c);
         controler.setCompra(compra);
@@ -250,19 +279,18 @@ public class CompraController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Conta Pagar");
         stage.setScene(scene);
-        stage.showAndWait();//Abrir a janela e esperar
-
+        stage.showAndWait();
     }
 
     @FXML
     void cancelar(ActionEvent event) {
-        habilitar(false);
+        habilitar(false);    
         limpar();
     }
 
     @FXML
     void removerItem(ActionEvent event) {
-        ItensCompra ic = new ItensCompra();
+        ItensCompra ic = tbItemCompra.getSelectionModel().getSelectedItem();
         tbItemCompra.getItems().remove(ic);
         tbItemCompra.refresh();
     }
@@ -283,22 +311,22 @@ public class CompraController implements Initializable {
 
         for (ItensCompra ic2 : tbItemCompra.getItems()) {
             total += ic2.getSubtotal();
-
         }
 
         tfValorTotal.setText(nf.format(total));
         limparItens();
-
     }
 
     private void atualizarTabela() {
         try {
-            //tbCompra.setItems(CompraDAO.listar(false));
+            tbCompra.setItems(CompraDAO.listar());
             tbCompra.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
+            e.printStackTrace();
         }
     }
+
     @FXML
     public void cadastroProduto(ActionEvent event) {
         try {
@@ -350,7 +378,7 @@ public class CompraController implements Initializable {
         rbPendente.setSelected(false);
         rbConfirmado.setSelected(true);
         rbCancelado.setSelected(false);
-        tbItemCompra.getItems().clear();
+        tbItemCompra.setItems(FXCollections.observableArrayList());
     }
 
     private void limparItens() {
@@ -365,7 +393,8 @@ public class CompraController implements Initializable {
         btnSalvar.setDisable(!habilitar);
         btnCancelar.setDisable(!habilitar);
         tpItemCompra.setDisable(!habilitar);
-        tpCompra.setDisable(!habilitar);
+        cbFornecedor.setDisable(!habilitar);
+        btnCadastroFornecedor.setDisable(!habilitar);
         tfValorTotal.setDisable(!habilitar);
         dpData.setDisable(!habilitar);
         rbCancelado.setDisable(!habilitar);
@@ -375,7 +404,6 @@ public class CompraController implements Initializable {
         tfValorUnitario.setDisable(!habilitar);
         cbProduto.setDisable(!habilitar);
         btnCadastroProduto.setDisable(!habilitar);
-
     }
 
     private void carregarComboProduto() {

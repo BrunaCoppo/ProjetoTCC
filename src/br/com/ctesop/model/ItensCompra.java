@@ -45,11 +45,10 @@ public class ItensCompra {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    public String getQuantidadeFormataad(){
+
+    public String getQuantidadeFormatada() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(2);
-        nf.setMinimumFractionDigits(2);
         return nf.format(quantidade);
     }
 
@@ -75,7 +74,7 @@ public class ItensCompra {
     @Override
     public boolean equals(Object o) {
         if (o instanceof ItensCompra) {
-            return ((ItensCompra) o).getCodigo() == getCodigo();
+            return ((ItensCompra) o).getCompra().getCodigo() == getCompra().getCodigo() && ((ItensCompra) o).getProduto().getCodigo() == getProduto().getCodigo();
         }
         return false;
     }

@@ -56,6 +56,12 @@ public class CaixaController implements Initializable {
     @FXML
     private TableColumn<Caixa, String> tcDataFechamento;
 
+     @FXML
+    private TableColumn<Caixa, String> tcValorAbertura;
+
+    @FXML
+    private TableColumn<Caixa, String> tcValorFechamento;
+
     @FXML
     private TableColumn<Caixa, String> tcStatus;
 
@@ -63,6 +69,8 @@ public class CaixaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcDataAbertura.setCellValueFactory(new PropertyValueFactory<>("dataAberturaFormatada"));
         tcDataFechamento.setCellValueFactory(new PropertyValueFactory<>("dataFechamentoFormatada"));
+        tcValorAbertura.setCellValueFactory(new PropertyValueFactory<>("valorAberturaFormatado"));
+        tcValorFechamento.setCellValueFactory(new PropertyValueFactory<>("valorFechamentoFormatado"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         atualizarTabela();
         habilitar(false);

@@ -87,7 +87,7 @@ public class CadastroSafraController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tiposafra"));
+        tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tipoSafra"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         carregarComboProduto();
         carregarComboTipoSafra();
@@ -156,6 +156,7 @@ public class CadastroSafraController implements Initializable {
             Alerta.alerta("Erro ao salvar.", e);
         } catch (Exception e) {
             Alerta.erro("Erro ao salvar.", e);
+            e.printStackTrace();
         }
     }
 

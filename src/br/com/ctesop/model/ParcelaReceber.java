@@ -15,9 +15,18 @@ public class ParcelaReceber {
     private int codigo;
     private ContaReceber contaReceber;
     private float valor;
+    private float valorRecebido;
     private Date dataRecebimento;
     private Date dataVencimento;
     private String Status;
+
+    public ParcelaReceber(int aInt, float aFloat) {
+        this.codigo = codigo;
+    }
+
+    public ParcelaReceber() {
+        
+    }
 
     public int getCodigo() {
         return codigo;
@@ -57,6 +66,18 @@ public class ParcelaReceber {
         } catch (ParseException ex) {
             throw new ExceptionValidacao("Valor inválido.");
         }
+    }
+
+    public float getValorRecebido() {
+        return valorRecebido;
+    }
+
+    public void setValorRecebido(float valorRecebido) {
+        this.valorRecebido = valorRecebido;
+    }
+
+    public float getValorRestante() {
+        return this.valor - this.valorRecebido;
     }
 
     public Date getDataRecebimento() {
