@@ -7,7 +7,6 @@ import br.com.ctesop.dao.ContaReceberDAO;
 import br.com.ctesop.dao.CooperativaDAO;
 import br.com.ctesop.dao.EntregaProducaoDAO;
 import br.com.ctesop.dao.SafraDAO;
-import br.com.ctesop.model.Compra;
 import br.com.ctesop.model.Cooperativa;
 import br.com.ctesop.model.EntregaProducao;
 import br.com.ctesop.model.Safra;
@@ -79,6 +78,9 @@ public class EntregaProducaoController implements Initializable {
     private TextField tfDescricao;
 
     @FXML
+    private TextField tfValor;
+
+    @FXML
     private RadioButton rbPendente;
 
     @FXML
@@ -140,18 +142,25 @@ public class EntregaProducaoController implements Initializable {
         try {
             EntregaProducao selecionado = tbEntregaProducao.getSelectionModel().getSelectedItem();
 
-            if (selecionado.getStatus().equalsIgnoreCase("F")) {
-                Alerta.alerta("Compra já finalizada!");
+            if (selecionado.getStatus().equalsIgnoreCase("V")) {
+                Alerta.alerta("Entrega de produto já vendida!");
                 return;
             }
             if (selecionado.getStatus().equalsIgnoreCase("C")) {
-                Alerta.alerta("Compra cancelada!");
+                Alerta.alerta("Entrega de produto cancelada!");
                 return;
             }
+                     
+             if (selecionado.getStatus().equalsIgnoreCase("E")) {
+                Alerta.alerta("Entrega de produto entregue!");
+                return;
+            }
+             
             codigo = selecionado.getCodigo();
             dpData.setValue(Converter.toLocalDate(selecionado.getData()));
             tfDesconto.setText(selecionado.getDescontoFormatado());
             tfDescricao.setText(selecionado.getDescricao());
+            tfValor.setText(selecionado.getValorFormatado());
             tfQuantidadeEntregue.setText(selecionado.getQuantidadeFormatada());
             cbCooperativa.getSelectionModel().select(selecionado.getCooperativa());
             cbSafra.getSelectionModel().select(selecionado.getSafra());
@@ -164,7 +173,7 @@ public class EntregaProducaoController implements Initializable {
                 rbEntregue.setSelected(true);
             } else {
                 rbCancelada.setSelected(true);
-            }            
+            }
 
             habilitar(true);
 
@@ -208,7 +217,7 @@ public class EntregaProducaoController implements Initializable {
             int codigo = EntregaProducaoDAO.salvar(entregaProducao, c);
             entregaProducao.setCodigo(codigo);
 
-            if (entregaProducao.getStatus().equalsIgnoreCase("F")) {
+            if (entregaProducao.getStatus().equalsIgnoreCase("V")) {
 
                 contaReceber(c, entregaProducao);
 
@@ -297,6 +306,7 @@ public class EntregaProducaoController implements Initializable {
         tfDesconto.setText("");
         tfDescricao.setText("");
         tfQuantidadeEntregue.setText("");
+        tfValor.setText("");
         cbCooperativa.setValue(null);
         cbSafra.setValue(null);
         dpData.setValue(null);
@@ -319,6 +329,7 @@ public class EntregaProducaoController implements Initializable {
         tfDesconto.setDisable(!habilitar);
         tfDescricao.setDisable(!habilitar);
         tfQuantidadeEntregue.setDisable(!habilitar);
+        tfValor.setDisable(!habilitar);
         dpData.setDisable(!habilitar);
         rbCancelada.setDisable(!habilitar);
         rbEntregue.setDisable(!habilitar);

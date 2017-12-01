@@ -37,9 +37,6 @@ public class RecebimentoDAO {
 
         Caixa caixaAberto = CaixaDAO.getCaixaAberto(con);
 
-        if (caixaAberto.getValorFechamento() < recebimento.getValorRecebimento()) {
-            throw new Exception("Saldo insuficiente em caixa");
-        }
 
         sql = "insert into tbmovimentacaocaixa (codrecebimento, codtbcaixa, data, valor, status) VALUES (?, ?, ?, ?, ?)";
         ps = con.getConexao().prepareStatement(sql);
@@ -50,7 +47,7 @@ public class RecebimentoDAO {
         ps.setString(5, "P");
         ps.execute();
 
-        sql = "update tbcaixa set valorfechamento=valorfechamento-? where codtbcaixa=?";
+        sql = "update tbcaixa set valorfechamento=valorfechamento+? where codtbcaixa=?";
         ps = con.getConexao().prepareStatement(sql);
         ps.setDouble(1, recebimento.getValorRecebimento());
         ps.setInt(2, caixaAberto.getCodigo());
@@ -96,16 +93,16 @@ public class RecebimentoDAO {
         return lista;
     }
 
-    public static float consultarPagamentosConta(int codContaPagar) throws Exception {
-        String sql = "select sum(p.valor) "
-                + " from tbpagamento as p"
-                + " inner join tbparcelapagar as pc "
-                + " on pc.codparcelapagar = p.codparcelapagar"
-                + " where pc.codcontapagar=?";
+    public static float consultarRecebimentosEntrega(int codEntrega) throws Exception {
+        String sql = "select sum(r.valorrecebimento) "
+                + " from tbrecebimento as r"
+                + " inner join tbparcelareceber as pr "
+                + " on pr.codparcelareceber = r.codparcelareceber"
+                + " where pr.codcontareceber=?";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, codContaPagar);
+        ps.setInt(1, codEntrega);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return rs.getFloat(1);
@@ -113,14 +110,14 @@ public class RecebimentoDAO {
         return 0;
     }
 
-    public static float consultarPagamentosParcela(int codParcela) throws Exception {
-        String sql = "select sum(p.valor) "
-                + " from tbpagamento as p"
-                + " where p.codparcelapagar=?";
+    public static float consultarRecebimentoParcela(int codRecebimento) throws Exception {
+        String sql = "select sum(r.valorrecebimento) "
+                + " from tbrecebimento as r"
+                + " where r.codparcelareceber=?";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
-        ps.setInt(1, codParcela);
+        ps.setInt(1, codRecebimento);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return rs.getFloat(1);

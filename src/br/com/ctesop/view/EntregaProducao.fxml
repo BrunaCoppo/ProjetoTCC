@@ -52,7 +52,7 @@
                   </Label>
                   <Label text="Data *">
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets />
                      </HBox.margin>
                   </Label>
                </children>
@@ -67,7 +67,7 @@
                   </Button>
                   <DatePicker fx:id="dpData">
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets />
                      </HBox.margin>
                   </DatePicker>
                </children>
@@ -81,7 +81,7 @@
                   </Label>
                   <Label text="Quantidade Entregue *">
                      <HBox.margin>
-                        <Insets left="35.0" />
+                        <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -96,7 +96,7 @@
                   </Button>
                   <TextField fx:id="tfQuantidadeEntregue">
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -110,7 +110,7 @@
                   </Label>
                   <Label text="Descrição">
                      <HBox.margin>
-                        <Insets left="107.0" />
+                        <Insets left="80.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -124,35 +124,53 @@
                   </TextField>
                   <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="228.0">
                      <HBox.margin>
-                        <Insets left="70.0" />
+                        <Insets left="45.0" />
                      </HBox.margin>
                   </TextField>
                </children>
             </HBox>
-            <Label text="Status" />
             <HBox>
                <children>
+                  <Label text="Valor*">
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Status">
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TextField fx:id="tfValor" editable="false" text="0,00">
+                     <HBox.margin>
+                        <Insets right="40.0" />
+                     </HBox.margin>
+                  </TextField>
                   <RadioButton fx:id="rbPendente" mnemonicParsing="false" selected="true" text="Pendente">
                      <toggleGroup>
                         <ToggleGroup fx:id="status" />
                      </toggleGroup>
                      <HBox.margin>
-                        <Insets left="10.0" right="20.0" />
+                        <Insets left="50.0" right="10.0" />
                      </HBox.margin>
                   </RadioButton>
                   <RadioButton fx:id="rbEntregue" mnemonicParsing="false" text="Entregue" toggleGroup="$status">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
                   </RadioButton>
                   <RadioButton fx:id="rbVendido" mnemonicParsing="false" text="Vendido" toggleGroup="$status">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
                   </RadioButton>
                   <RadioButton fx:id="rbCancelada" mnemonicParsing="false" text="Cancelada" toggleGroup="$status">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="10.0" />
                      </HBox.margin></RadioButton>
                </children>
             </HBox>

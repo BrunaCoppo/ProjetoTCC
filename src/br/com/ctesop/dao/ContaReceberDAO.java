@@ -22,7 +22,7 @@ public class ContaReceberDAO {
         String sql = "insert into tbcontareceber (codentregaproducao, valorcontareceber, datapagamento, descricao, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setInt(1, contaReceber.getEntregaProducao().getCodigo());
-         ps.setFloat(2, contaReceber.getValor());
+         ps.setFloat(2, contaReceber.getValorRecebido());
         ps.setDate(3, new java.sql.Date(contaReceber.getData().getTime()));
         ps.setString(4, contaReceber.getDecricao());
         ps.setString(5, contaReceber.getStatus());
@@ -75,7 +75,7 @@ public class ContaReceberDAO {
 
                 sql = "update tbcaixa set valorfechamento=valorfechamento-? where codtbcaixa=?";
                 ps = c.getConexao().prepareStatement(sql);
-                ps.setDouble(1, contaReceber.getValor());
+                ps.setDouble(1, contaReceber.getValorRecebido());
                 ps.setInt(2, caixaAberto.getCodigo());
                 ps.execute();
             }
@@ -96,8 +96,8 @@ public class ContaReceberDAO {
             contaReceber.setCodigo(rs.getInt("cp.codcontapagar"));
             contaReceber.setEntregaProducao(new EntregaProducao(rs.getInt("cr.codentregaproducao"), rs.getString("e.codsafra")));
             contaReceber.setData(rs.getDate("cr.datavencimento"));
-            contaReceber.setValor(rs.getFloat("cr.valor"));
-            contaReceber.setValorRecebido(RecebimentoDAO.consultarPagamentosConta(contaReceber.getCodigo()));
+            contaReceber.setValorRecebido(rs.getFloat("cr.valor"));
+            contaReceber.setValorRecebido(RecebimentoDAO.consultarRecebimentosEntrega(contaReceber.getCodigo()));
             contaReceber.setDecricao(rs.getString("cr.descricao"));
             contaReceber.setStatus(rs.getString("cr.status"));
             lista.add(contaReceber);

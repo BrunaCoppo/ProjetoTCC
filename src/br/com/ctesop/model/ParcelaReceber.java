@@ -1,6 +1,7 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,11 +29,18 @@ public class ParcelaReceber {
         
     }
 
+    public ParcelaReceber(String pccodparcelapagar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getCodigo() {
         return codigo;
     }
 
     public void setCodigo(int codigo) {
+         if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

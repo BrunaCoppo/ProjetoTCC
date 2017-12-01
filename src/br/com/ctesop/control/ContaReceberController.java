@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
@@ -11,11 +7,11 @@ import br.com.ctesop.dao.Conexao;
 import br.com.ctesop.dao.ContaReceberDAO;
 import br.com.ctesop.model.ContaReceber;
 import br.com.ctesop.model.EntregaProducao;
-import br.com.ctesop.model.ParcelaPagar;
 import br.com.ctesop.model.ParcelaReceber;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -113,13 +109,13 @@ public class ContaReceberController implements Initializable {
     }
 
     @FXML
-    void salvar(ActionEvent event) {
+    void salvar(ActionEvent event) {      
         try {
             ContaReceber contaRecebimento = new ContaReceber();
 
             contaRecebimento.setCodigo(codigo);
             contaRecebimento.setData(Converter.converterData(dpDataReceber.getValue()));
-            contaRecebimento.setValor(tfValor.getText());
+            contaRecebimento.setValorRecebido(tfValor.getText());
             contaRecebimento.setDecricao(tfDescricao.getText());
             contaRecebimento.setEntregaProducao(entregaProducao);
 
@@ -148,9 +144,20 @@ public class ContaReceberController implements Initializable {
     void cancelar(ActionEvent event) throws Throwable {
         ((Stage) dpDataReceber.getScene().getWindow()).close();
     }
-    
+
     @FXML
-    void gerarParcelas(ActionEvent event) throws Exception {
+    void trocaFormaPagamento(ActionEvent event) throws Exception {
+        if (rbVista.isSelected()) {
+            tfQuantidadeParcela.setText("1");
+            tfQuantidadeParcela.setDisable(true);
+            gerarParcela(null);
+        } else {
+            tfQuantidadeParcela.setDisable(false);
+        }
+    }
+
+    @FXML
+    void gerarParcela(ActionEvent event) throws Exception {
         try {
             NumberFormat nf = NumberFormat.getNumberInstance();
             nf.setMaximumFractionDigits(2);
@@ -194,6 +201,7 @@ public class ContaReceberController implements Initializable {
     private void limpar() {
         tfValor.setText("");
         tfDescricao.setText("");
+        tfQuantidadeParcela.setText("");
         dpDataReceber.setValue(null);
         rbVista.setSelected(true);
     }
@@ -204,6 +212,7 @@ public class ContaReceberController implements Initializable {
         btnCancelar.setDisable(!habilitar);
         tfDescricao.setDisable(!habilitar);
         tfValor.setDisable(!habilitar);
+        tfQuantidadeParcela.setDisable(!habilitar);
         dpDataReceber.setDisable(!habilitar);
         rbPrazo.setDisable(!habilitar);
         rbVista.setDisable(!habilitar);
@@ -229,8 +238,13 @@ public class ContaReceberController implements Initializable {
         return entregaProducao;
     }
 
-    public void setEntregaProducao(EntregaProducao entregaProducao) {
+    public void setEntregaProducao(EntregaProducao entregaProducao) throws Exception {
         this.entregaProducao = entregaProducao;
+        tfValor.setText(entregaProducao.getValorFormatado());
+        tfDescricao.setText("Ref. entrega " + entregaProducao.getCodigo());
+        tfQuantidadeParcela.setText("1");
+        dpDataReceber.setValue(LocalDate.now());
+        gerarParcela(null);
+        novo(null);
     }
-
 }

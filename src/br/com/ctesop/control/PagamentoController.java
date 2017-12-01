@@ -1,7 +1,6 @@
 package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
-import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.dao.ContaPagarDAO;
 import br.com.ctesop.dao.PagamentoDAO;
 import br.com.ctesop.dao.ParcelaPagarDAO;
@@ -17,9 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;

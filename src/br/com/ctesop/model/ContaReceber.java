@@ -2,6 +2,7 @@ package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.controller.util.ExceptionValidacao;
+import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -14,18 +15,37 @@ public class ContaReceber {
 
     private int codigo = 0;
     private EntregaProducao entregaProducao;
-    private float valor;
+    private float valorPago;
     private Date data;
     private String decricao;
     private String status;
     private float valorRecebido;
     private String formaRecebimento;
+    private int quantidadeParcelas;
+
+    public int getQuantidadeParcelas() {
+        return quantidadeParcelas;
+    }
+
+    public void setQuantidadeParcelas(int quantidadeParcelas) {
+        this.quantidadeParcelas = quantidadeParcelas;
+    }
+
+    public String getQtdeParcelaFormatada() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.getQuantidadeParcelas());
+    }
 
     public int getCodigo() {
         return codigo;
     }
 
     public void setCodigo(int codigo) {
+         if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 
@@ -37,20 +57,20 @@ public class ContaReceber {
         this.entregaProducao = entregaProducao;
     }
 
-    public float getValor() {
-        return valor;
+    public float getValorPago() {
+        return valorPago;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public void setValorPago(float valor) {
+        this.valorPago = valor;
     }
-    
-        public void setValor(String valor) throws ExceptionValidacao {
+
+    public void setValorPago(String valorPago) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
-            this.valor = nf.parse(valor).floatValue();
+            this.valorPago = nf.parse(valorPago).floatValue();
         } catch (ParseException ex) {
-            throw new ExceptionValidacao("Valor inválido.");
+            throw new ExceptionValidacao("Valor pago inválido.");
         }
     }
 
@@ -73,22 +93,23 @@ public class ContaReceber {
     public void setDecricao(String decricao) {
         this.decricao = decricao;
     }
-    public String getValorRecebidoFormatado() {
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setMinimumFractionDigits(2);
-        nf.setMaximumFractionDigits(2);
-        return nf.format(this.valorRecebido);
-    }
 
-     public float getValorRestante() {
-        return this.valor - this.valorRecebido;
+    public float getValorRestante() {
+        return this.valorPago - this.valorRecebido;
     }
-     
+    public void setValorRecebido(String recebido) throws ExceptionValidacao {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.valorRecebido = nf.parse(recebido).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Valor recebido inválido.");
+        }
+    }
     public String getValorRestanteFormatado() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        return nf.format(this.valor - this.valorRecebido);
+        return nf.format(this.valorPago - this.valorRecebido);
     }
 
     public float getValorRecebido() {
@@ -98,11 +119,16 @@ public class ContaReceber {
     public void setValorRecebido(float valorRecebido) {
         this.valorRecebido = valorRecebido;
     }
+    
+   public String getValorRecebidoFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valorRecebido);
+    }
    
-
-
     public String getStatus() {
-        if (getValorRecebido()<= 0) {
+        if (getValorRecebido() <= 0) {
             return "P";
         } else {
             return "A";
@@ -120,7 +146,5 @@ public class ContaReceber {
     public void setFormaRecebimento(String formaRecebimento) {
         this.formaRecebimento = formaRecebimento;
     }
-    
-    
 
 }

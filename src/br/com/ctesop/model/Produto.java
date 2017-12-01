@@ -34,6 +34,9 @@ public class Produto {
     }
 
     public void setCodigo(int codigo) {
+         if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

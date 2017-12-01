@@ -20,9 +20,6 @@ public class Cooperativa {
     }
 
     public Cooperativa(int codigo) {
-        if (codigo < 0) {
-            throw new InvalidParameterException("Código inválido.");
-        }
         this.codigo = codigo;
     }
 
@@ -37,6 +34,9 @@ public class Cooperativa {
     }
 
     public void setCodigo(int codigo) {
+         if (codigo < 0) {
+            throw new InvalidParameterException("Código inválido.");
+        }
         this.codigo = codigo;
     }
 

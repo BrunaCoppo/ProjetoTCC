@@ -21,7 +21,9 @@ public class EntregaProducao {
     private float desconto;
     private String descricao;
     private String status;
+    private float valor;
 
+    
     public EntregaProducao(int aInt, String string) {
         this.codigo = codigo;
     }
@@ -80,6 +82,30 @@ public class EntregaProducao {
         return nf.format(quantidadeEntregue);
     }
 
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+        public void setValor(String valor) throws ExceptionValidacao {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        try {
+            this.valor = nf.parse(valor).floatValue();
+        } catch (ParseException ex) {
+            throw new ExceptionValidacao("Valor inválido.");
+        }
+    }
+
+    public String getValorFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valor);
+    }
+    
     public float getDesconto() {
         return desconto;
     }
