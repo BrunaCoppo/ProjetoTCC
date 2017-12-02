@@ -86,7 +86,7 @@
             </HBox>
             <HBox>
                <children>
-                  <TextField fx:id="tfValor" prefHeight="25.0" prefWidth="148.0">
+                  <TextField fx:id="tfValor" editable="false" prefHeight="25.0" prefWidth="148.0" text="0,00">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin></TextField>
@@ -128,10 +128,9 @@
             </HBox>
             <TableView fx:id="tbContaReceber" prefHeight="124.0" prefWidth="644.0">
               <columns>
-                <TableColumn fx:id="tcCooperativa" prefWidth="198.0" text="Cooperativa" />
-                <TableColumn fx:id="tcDataPagamento" prefWidth="145.0" text="Data Pagamento" />
-                  <TableColumn fx:id="tcValor" prefWidth="110.0" text="Valor" />
-                  <TableColumn fx:id="tcStatus" prefWidth="106.0" text="Status" />
+                <TableColumn fx:id="tcDataRecebimento" prefWidth="214.0" text="Data Recebimento" />
+                  <TableColumn fx:id="tcValorParcela" prefWidth="208.0" text="Valor da Parcela" />
+                  <TableColumn fx:id="tcStatus" prefWidth="137.0" text="Status" />
               </columns>
             </TableView>
          </children>

@@ -20,7 +20,7 @@ public class EntregaProducaoDAO {
 
     public static int inserir(EntregaProducao entregaProducao, Conexao c) throws Exception {
 
-        String sql = "insert into tbentregaproducao (codcooperativa, codsafra, dataentrega, quantidadeentregue , quantidadedesconto, descricao, status) values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into tbentregaproducao (codcooperativa, codsafra, dataentrega, quantidadeentregue , quantidadedesconto, descricao, status, valorunidade) values (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, entregaProducao.getCooperativa().getCodigo());
         ps.setInt(2, entregaProducao.getSafra().getCodigo());
@@ -29,6 +29,7 @@ public class EntregaProducaoDAO {
         ps.setFloat(5, entregaProducao.getDesconto());
         ps.setString(6, entregaProducao.getDescricao());
         ps.setString(7, entregaProducao.getStatus());
+        ps.setFloat(8, entregaProducao.getValor());
         ps.execute();
 
         ResultSet rs = ps.getGeneratedKeys();
@@ -40,7 +41,7 @@ public class EntregaProducaoDAO {
 
     private static void alterar(EntregaProducao entregaproducao, Conexao c) throws Exception {
 
-        String sql = "update tbentregaproducao set codcooperativa=?, codsafra=?, dataentrega=?, quantidadeentregue=?, quantidadedesconto=?, descricao=?, status=? where codentregaproducao=?";
+        String sql = "update tbentregaproducao set codcooperativa=?, codsafra=?, dataentrega=?, quantidadeentregue=?, quantidadedesconto=?, descricao=?, status=?, valorunidade=? where codentregaproducao=?";
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, entregaproducao.getCooperativa().getCodigo());
         ps.setInt(2, entregaproducao.getSafra().getCodigo());
@@ -49,7 +50,8 @@ public class EntregaProducaoDAO {
         ps.setFloat(5, entregaproducao.getDesconto());
         ps.setString(6, entregaproducao.getDescricao());
         ps.setString(7, entregaproducao.getStatus());
-        ps.setInt(8, entregaproducao.getCodigo());
+        ps.setFloat(8, entregaproducao.getValor());
+        ps.setInt(9, entregaproducao.getCodigo());
         ps.execute();
 
     }
@@ -89,6 +91,7 @@ public class EntregaProducaoDAO {
             entregaProducao.setQuantidadeEntregue(rs.getFloat("e.quantidadeentregue"));
             entregaProducao.setDescricao(rs.getString("e.descricao"));
             entregaProducao.setStatus(rs.getString("e.status"));
+            entregaProducao.setValor(rs.getFloat("e.valorunidade"));
 
             lista.add(entregaProducao);
 

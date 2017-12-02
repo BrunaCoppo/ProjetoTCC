@@ -28,7 +28,7 @@
                </children>
             </HBox>
             <Label text="Selecione a conta a receber" />
-            <TableView fx:id="tcEntregaProducao" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tbContaReceber" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="tcCooperativa" prefWidth="245.0" text="Cooperativa" />
                 <TableColumn fx:id="tcValorEntrega" minWidth="5.0" prefWidth="122.0" text="Valor" />
@@ -37,7 +37,7 @@
               </columns>
             </TableView>
             <Label text="Selecione a parcela a receber" />
-            <TableView fx:id="tcParcelaReceber" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tbParcelaReceber" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="tcDataPagamento" prefWidth="147.0" text="Data" />
                 <TableColumn fx:id="tcValorParcela" prefWidth="150.0" text="Valor" />

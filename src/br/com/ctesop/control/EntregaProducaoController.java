@@ -119,7 +119,7 @@ public class EntregaProducaoController implements Initializable {
         tcDesconto.setCellValueFactory(new PropertyValueFactory<>("descontoFormatado"));
         tcQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidadeFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
+        
         carregarComboCooperativa();
         carregarComboSafra();
         atualizarTabela();
@@ -150,11 +150,7 @@ public class EntregaProducaoController implements Initializable {
                 Alerta.alerta("Entrega de produto cancelada!");
                 return;
             }
-                     
-             if (selecionado.getStatus().equalsIgnoreCase("E")) {
-                Alerta.alerta("Entrega de produto entregue!");
-                return;
-            }
+ 
              
             codigo = selecionado.getCodigo();
             dpData.setValue(Converter.toLocalDate(selecionado.getData()));
@@ -191,8 +187,9 @@ public class EntregaProducaoController implements Initializable {
             entregaProducao.setCodigo(codigo);
             entregaProducao.setCooperativa(cbCooperativa.getSelectionModel().getSelectedItem());
             entregaProducao.setSafra(cbSafra.getSelectionModel().getSelectedItem());
-            entregaProducao.setDesconto(nf.parse(tfDesconto.getText()).intValue());
+            entregaProducao.setDesconto(nf.parse(tfDesconto.getText()).floatValue());
             entregaProducao.setQuantidadeEntregue(nf.parse(tfQuantidadeEntregue.getText()).intValue());
+            entregaProducao.setValor(nf.parse(tfValor.getText()).floatValue());
             entregaProducao.setData(Converter.converterData(dpData.getValue()));
 
             if (entregaProducao.getData() == null) {
@@ -350,7 +347,7 @@ public class EntregaProducaoController implements Initializable {
             cbSafra.setItems(SafraDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
-        }
+        }                                              
     }
 
     private void atualizarTabela() {

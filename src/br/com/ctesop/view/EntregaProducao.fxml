@@ -79,7 +79,7 @@
                         <Insets right="200.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Quantidade Entregue *">
+                  <Label text="Quantidade de saca*">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -103,14 +103,14 @@
             </HBox>
             <HBox>
                <children>
-                  <Label text="Desconto* ">
+                  <Label text="Desconto por saca* ">
                      <HBox.margin>
-                        <Insets right="100.0" />
+                        <Insets right="55.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="Descrição">
                      <HBox.margin>
-                        <Insets left="80.0" />
+                        <Insets left="75.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -131,9 +131,9 @@
             </HBox>
             <HBox>
                <children>
-                  <Label text="Valor*">
+                  <Label text="Valor por saca">
                      <HBox.margin>
-                        <Insets right="100.0" />
+                        <Insets right="45.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="Status">
@@ -145,7 +145,7 @@
             </HBox>
             <HBox>
                <children>
-                  <TextField fx:id="tfValor" editable="false" text="0,00">
+                  <TextField fx:id="tfValor">
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin>
@@ -155,7 +155,7 @@
                         <ToggleGroup fx:id="status" />
                      </toggleGroup>
                      <HBox.margin>
-                        <Insets left="50.0" right="10.0" />
+                        <Insets left="35.0" right="10.0" />
                      </HBox.margin>
                   </RadioButton>
                   <RadioButton fx:id="rbEntregue" mnemonicParsing="false" text="Entregue" toggleGroup="$status">

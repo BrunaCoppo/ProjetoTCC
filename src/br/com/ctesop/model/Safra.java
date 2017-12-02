@@ -1,31 +1,32 @@
-
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 import java.util.Date;
-
 
 /**
  *
  * @author Bruna
  */
 public class Safra {
-    
-    private int codigo = 0 ;
+
+    private int codigo = 0;
     private Produto produto;
     private TipoSafra tipoSafra;
     private Date dataInicio;
     private Date dataTermino;
     private String status;
 
-    public Safra(int aInt, String string) {
-       this.codigo = codigo;
+    public Safra(int aInt, String nomeProduto) throws ExceptionValidacao {
+        this.codigo = codigo;
+        this.produto = new Produto();
+       this.produto.setNome(nomeProduto);
     }
 
     public Safra() {
-        
+
     }
-        
+
     public int getCodigo() {
         return codigo;
     }
@@ -76,8 +77,7 @@ public class Safra {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-  
+
     @Override
     public String toString() {
         return getStatus();

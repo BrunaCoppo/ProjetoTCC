@@ -15,7 +15,7 @@ public class ContaReceber {
 
     private int codigo = 0;
     private EntregaProducao entregaProducao;
-    private float valorPago;
+    private float valor;
     private Date data;
     private String decricao;
     private String status;
@@ -57,18 +57,18 @@ public class ContaReceber {
         this.entregaProducao = entregaProducao;
     }
 
-    public float getValorPago() {
-        return valorPago;
+    public float getValor() {
+        return valor;
     }
 
-    public void setValorPago(float valor) {
-        this.valorPago = valor;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
     public void setValorPago(String valorPago) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
-            this.valorPago = nf.parse(valorPago).floatValue();
+            this.valor = nf.parse(valorPago).floatValue();
         } catch (ParseException ex) {
             throw new ExceptionValidacao("Valor pago inválido.");
         }
@@ -95,7 +95,7 @@ public class ContaReceber {
     }
 
     public float getValorRestante() {
-        return this.valorPago - this.valorRecebido;
+        return this.valor- this.valorRecebido;
     }
     public void setValorRecebido(String recebido) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -109,7 +109,7 @@ public class ContaReceber {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        return nf.format(this.valorPago - this.valorRecebido);
+        return nf.format(this.valor - this.valorRecebido);
     }
 
     public float getValorRecebido() {

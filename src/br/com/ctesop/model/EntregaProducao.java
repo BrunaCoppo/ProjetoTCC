@@ -1,4 +1,3 @@
-
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.Converter;
@@ -23,13 +22,16 @@ public class EntregaProducao {
     private String status;
     private float valor;
 
-    
     public EntregaProducao(int aInt, String string) {
         this.codigo = codigo;
     }
 
     public EntregaProducao() {
 
+    }
+
+    public String getProduto() {
+        return getSafra().getProduto().getNome();
     }
 
     public int getCodigo() {
@@ -90,7 +92,7 @@ public class EntregaProducao {
         this.valor = valor;
     }
 
-        public void setValor(String valor) throws ExceptionValidacao {
+    public void setValor(String valor) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
             this.valor = nf.parse(valor).floatValue();
@@ -105,7 +107,23 @@ public class EntregaProducao {
         nf.setMaximumFractionDigits(2);
         return nf.format(this.valor);
     }
-    
+
+    public double getValorTotal() {
+        double total = 0;
+        double totalDesconto = 0;
+       // totalDesconto += (getDesconto() * getQuantidadeEntregue());
+        total += (getQuantidadeEntregue() * getValor());
+        //total += (total - totalDesconto);
+        return total;
+    }
+
+    public String getValorTotalFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.getValorTotal());
+    }
+
     public float getDesconto() {
         return desconto;
     }

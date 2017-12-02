@@ -125,7 +125,7 @@ public class PagamentoController implements Initializable {
             pagamento.setPacelaPagar(parcela);
             pagamento.setValor(valorPagar);
             pagamento.setStatus("P");
-            
+
             PagamentoDAO.pagar(pagamento);
             
             atualizarTabelaContas();

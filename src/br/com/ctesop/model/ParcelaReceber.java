@@ -15,10 +15,9 @@ public class ParcelaReceber {
 
     private int codigo;
     private ContaReceber contaReceber;
-    private float valor;
     private float valorRecebido;
-    private Date dataRecebimento;
-    private Date dataVencimento;
+    private float valorParcela;
+    private Date data;
     private String Status;
 
     public ParcelaReceber(int aInt, float aFloat) {
@@ -26,7 +25,7 @@ public class ParcelaReceber {
     }
 
     public ParcelaReceber() {
-        
+
     }
 
     public ParcelaReceber(String pccodparcelapagar) {
@@ -38,7 +37,7 @@ public class ParcelaReceber {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -52,28 +51,19 @@ public class ParcelaReceber {
         this.contaReceber = contaReceber;
     }
 
-    public float getValor() {
-        return valor;
+    public float getValorParcela() {
+        return valorParcela;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public void setValorParcela(float valorParcela) {
+        this.valorParcela = valorParcela;
     }
 
-    public String getValorFormatado() {
+    public String getValorParcelaFormatado() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        return nf.format(valor);
-    }
-
-    public void setValor(String valor) throws ExceptionValidacao {
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        try {
-            this.valor = nf.parse(valor).floatValue();
-        } catch (ParseException ex) {
-            throw new ExceptionValidacao("Valor inválido.");
-        }
+        return nf.format(valorParcela);
     }
 
     public float getValorRecebido() {
@@ -85,34 +75,22 @@ public class ParcelaReceber {
     }
 
     public float getValorRestante() {
-        return this.valor - this.valorRecebido;
+        return this.valorParcela - this.valorRecebido;
     }
 
-    public Date getDataRecebimento() {
-        return dataRecebimento;
+    public Date getData() {
+        return data;
     }
 
-    public void setDataRecebimento(Date dataRecebimento) {
-        this.dataRecebimento = dataRecebimento;
+    public void setData(Date data) {
+        this.data = data;
     }
 
-    public String getDataRecebimentoFormatada() {
+    public String getDataFormatada() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(dataRecebimento);
+        return sdf.format(data);
     }
 
-    public Date getDataVencimento() {
-        return dataVencimento;
-    }
-
-    public void setDataVencimento(Date dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
-
-    public String getDataVencimentoFormatada() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(dataVencimento);
-    }
 
     public String getStatus() {
         return Status;

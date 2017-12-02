@@ -1,4 +1,3 @@
-
 package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
@@ -16,6 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -80,26 +81,33 @@ public class ContaReceberController implements Initializable {
     private TableView<ParcelaReceber> tbContaReceber;
 
     @FXML
-    private TableColumn<ParcelaReceber, String> tcCooperativa;
+    private TableColumn<ParcelaReceber, String> tcDataRecebimento;
 
     @FXML
-    private TableColumn<ParcelaReceber, String> tcDataPagamento;
-
-    @FXML
-    private TableColumn<ParcelaReceber, String> tcValor;
+    private TableColumn<ParcelaReceber, String> tcValorParcela;
 
     @FXML
     private TableColumn<ParcelaReceber, String> tcStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcCooperativa.setCellValueFactory(new PropertyValueFactory<>("cooperativa"));
-        tcDataPagamento.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
-        tcValor.setCellValueFactory(new PropertyValueFactory<>("valorFormatado"));
+        tcDataRecebimento.setCellValueFactory(new PropertyValueFactory<>("dataRecebimentoFormatada"));
+        tcValorParcela.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        tfQuantidadeParcela.setDisable(true);
         limpar();
         habilitar(false);
+
+        tfQuantidadeParcela.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    gerarParcela(null);
+                } catch (Exception ex) {
+                    Logger.getLogger(ContaPagarController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     @FXML
@@ -109,7 +117,7 @@ public class ContaReceberController implements Initializable {
     }
 
     @FXML
-    void salvar(ActionEvent event) {      
+    void salvar(ActionEvent event) {
         try {
             ContaReceber contaRecebimento = new ContaReceber();
 
@@ -174,11 +182,11 @@ public class ContaReceberController implements Initializable {
 
             for (int numeroParcela = 1; numeroParcela <= quantidadeParcelas; numeroParcela++) {
                 ParcelaReceber parcela = new ParcelaReceber();
-                parcela.setDataVencimento(dataVencimento);
+                parcela.setData(dataVencimento);
                 parcela.setStatus("A");
-                parcela.setValor(valorParcela);
+                parcela.setValorParcela(valorParcela);
                 if (numeroParcela == quantidadeParcelas) {
-                    parcela.setValor(valorReceber - (valorParcela * (numeroParcela - 1)));
+                    parcela.setValorParcela(valorReceber - (valorParcela * (numeroParcela - 1)));
                 }
                 parcelas.add(parcela);
 
@@ -240,7 +248,7 @@ public class ContaReceberController implements Initializable {
 
     public void setEntregaProducao(EntregaProducao entregaProducao) throws Exception {
         this.entregaProducao = entregaProducao;
-        tfValor.setText(entregaProducao.getValorFormatado());
+        tfValor.setText(entregaProducao.getValorTotalFormatado());
         tfDescricao.setText("Ref. entrega " + entregaProducao.getCodigo());
         tfQuantidadeParcela.setText("1");
         dpDataReceber.setValue(LocalDate.now());

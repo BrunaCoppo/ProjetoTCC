@@ -2,11 +2,18 @@ package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
 import br.com.ctesop.dao.ContaPagarDAO;
+import br.com.ctesop.dao.ContaReceberDAO;
+import br.com.ctesop.dao.EntregaProducaoDAO;
 import br.com.ctesop.dao.PagamentoDAO;
 import br.com.ctesop.dao.ParcelaPagarDAO;
+import br.com.ctesop.dao.ParcelaReceberDAO;
+import br.com.ctesop.dao.RecebimentoDAO;
 import br.com.ctesop.model.ContaPagar;
+import br.com.ctesop.model.ContaReceber;
 import br.com.ctesop.model.Pagamento;
 import br.com.ctesop.model.ParcelaPagar;
+import br.com.ctesop.model.ParcelaReceber;
+import br.com.ctesop.model.Recebimento;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Date;
@@ -18,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,98 +34,96 @@ import javafx.scene.control.TextInputDialog;
  */
 public class RecebimentoController implements Initializable {
 
- @FXML
+    @FXML
     private Button btnReceber;
 
     @FXML
     private Button btnCancelar;
 
     @FXML
-    private TableView<?> tcEntregaProducao;
+    private TableView<ContaReceber> tbContaReceber;
 
     @FXML
-    private TableColumn<?, ?> tcCooperativa;
+    private TableColumn<ContaReceber, String> tcCooperativa;
 
     @FXML
-    private TableColumn<?, ?> tcValorEntrega;
+    private TableColumn<ContaReceber, String> tcValorEntrega;
 
     @FXML
-    private TableColumn<?, ?> tcDataEntrega;
+    private TableColumn<ContaReceber, String> tcDataEntrega;
 
     @FXML
-    private TableColumn<?, ?> tcStatus;
+    private TableColumn<ContaReceber, String> tcStatus;
 
     @FXML
-    private TableView<?> tcParcelaReceber;
+    private TableView<ParcelaReceber> tbParcelaReceber;
 
     @FXML
-    private TableColumn<?, ?> tcDataPagamento;
+    private TableColumn<ParcelaReceber, String> tcDataPagamento;
 
     @FXML
-    private TableColumn<?, ?> tcValorParcela;
+    private TableColumn<ParcelaReceber, String> tcValorParcela;
 
     @FXML
-    private TableColumn<?, ?> tcRestante;
-
-
+    private TableColumn<ParcelaReceber, String> tcRestante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
     }
 
     @FXML
     void cancelar(ActionEvent event) {
-
+        ((Stage) tbContaReceber.getScene().getWindow()).close();
     }
 
     @FXML
     void receber(ActionEvent event) {
- try {
+        try {
 
-            if (tbContaPagar.getSelectionModel().isEmpty()) {
-                Alerta.alerta("Selecione uma conta a pagar");
+            if (tbContaReceber.getSelectionModel().isEmpty()) {
+                Alerta.alerta("Selecione uma conta a receber");
                 return;
             }
-            if (tbParcelaPagar.getSelectionModel().isEmpty()) {
-                Alerta.alerta("Selecione uma parcela a pagar");
+            if (tbParcelaReceber.getSelectionModel().isEmpty()) {
+                Alerta.alerta("Selecione uma parcela a receber");
                 return;
             }
 
             TextInputDialog caixaTexto = new TextInputDialog("0,00");
-            caixaTexto.setHeaderText("Pagamento");
-            caixaTexto.setContentText("Informe o valor a pagar:");
+            caixaTexto.setHeaderText("Recebimento");
+            caixaTexto.setContentText("Informe o valor a recebido:");
             caixaTexto.showAndWait();
 
             NumberFormat nf = NumberFormat.getNumberInstance();
-            float valorPagar = nf.parse(caixaTexto.getResult()).floatValue();
-            
-            ParcelaPagar parcela = tbParcelaPagar.getSelectionModel().getSelectedItem();
-            if(valorPagar > parcela.getValorRestante()){
-                valorPagar = parcela.getValorRestante();
+            float valorReceber = nf.parse(caixaTexto.getResult()).floatValue();
+
+            ParcelaReceber parcela = tbParcelaReceber.getSelectionModel().getSelectedItem();
+            if (valorReceber > parcela.getValorRestante()) {
+                valorReceber = parcela.getValorRestante();
             }
-            
-            
-            Pagamento pagamento = new Pagamento();
-            pagamento.setData(new Date());
-            pagamento.setDescricao("Pagamento da parcela " + parcela.getCodigo());
-            pagamento.setPacelaPagar(parcela);
-            pagamento.setValor(valorPagar);
-            pagamento.setStatus("P");
-            
-            PagamentoDAO.pagar(pagamento);
-            
-            atualizarTabelaContas();
+
+            Recebimento recebimento = new Recebimento();
+            recebimento.setDataRecebimento(new Date());
+            recebimento.setDescricao("Recebimento da parcela " + parcela.getCodigo());
+            recebimento.setParcelaReceber(parcela);
+            recebimento.setValorRecebimento(valorReceber);
+            recebimento.setStatus("P");
+
+            RecebimentoDAO.receber(recebimento);
+
+            atualizarTabelaConta();
             atualizarTabelaParcelas();
         } catch (Exception e) {
             Alerta.alerta(e.getMessage());
             e.printStackTrace();
         }
     }
-        private void atualizarTabelaEntrega() {
+
+    private void atualizarTabelaConta() {
         try {
-            t.setItems(ContaPagarDAO.listar());
-            tbContaPagar.refresh();
+            tbContaReceber.setItems(ContaReceberDAO.listar());
+            tbContaReceber.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
             e.printStackTrace();
@@ -126,12 +132,12 @@ public class RecebimentoController implements Initializable {
 
     private void atualizarTabelaParcelas() {
         try {
-            if (tbContaPagar.getSelectionModel().isEmpty()) {
+            if (tbParcelaReceber.getSelectionModel().isEmpty()) {
                 return;
             }
-            ContaPagar cp = tbContaPagar.getSelectionModel().getSelectedItem();
-            tbParcelaPagar.setItems(ParcelaPagarDAO.listar(cp));
-            tbParcelaPagar.refresh();
+            ParcelaReceber pr = tbParcelaReceber.getSelectionModel().getSelectedItem();
+            //tbParcelaReceber.setItems(ParcelaReceberDAO.listar(pr));
+            tbParcelaReceber.refresh();
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
             e.printStackTrace();

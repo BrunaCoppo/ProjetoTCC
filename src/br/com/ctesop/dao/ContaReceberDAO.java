@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 public class ContaReceberDAO {
       public static void inserir(ContaReceber contaReceber, List<ParcelaReceber> parcelas, Conexao c) throws Exception {
 
-        String sql = "insert into tbcontareceber (codentregaproducao, valorcontareceber, datapagamento, descricao, status) values (?,?,?,?,?)";
+        String sql = "insert into tbcontasreceber (codentregaproducao, valorcontareceber, datapagamento, descricao, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setInt(1, contaReceber.getEntregaProducao().getCodigo());
          ps.setFloat(2, contaReceber.getValorRecebido());
@@ -33,13 +33,12 @@ public class ContaReceberDAO {
         int codContaGerado = rs.getInt(1);
 
         for (ParcelaReceber parcela : parcelas) {
-            sql = "insert into tbparcelareceber (codcontareceber, valorrecebimento, datarecebimento, datavencimento, status) VALUES (?, ?, ?, ?, ?)";
+            sql = "insert into tbparcelareceber (codcontasreceber, valorrecebimento, data, status) VALUES (?, ?, ?, ?)";
             ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, codContaGerado);
-            ps.setFloat(2, parcela.getValor());
-            ps.setDate(3, new Date(parcela.getDataRecebimento().getTime()));
-            ps.setDate(4, new Date(parcela.getDataVencimento().getTime()));
-            ps.setString(5, parcela.getStatus());
+            ps.setFloat(2, parcela.getValorRecebido());
+            ps.setDate(3, new Date(parcela.getData().getTime()));
+            ps.setString(4, parcela.getStatus());
             ps.execute();
 
             rs = ps.getGeneratedKeys();
@@ -50,12 +49,12 @@ public class ContaReceberDAO {
 
                 Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);            
 
-                sql = "insert into tbrecebimento (codparcelareceber, valorrecebimento, datarecebimento, descricao, status) VALUES (?, ?, ?, ?, ?)";
+                sql = "insert into tbrecebimento (codparcelareceber, valorrecebimento, data, descricao, status) VALUES (?, ?, ?, ?, ?)";
                 ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, codParcela);
                 ps.setString(2, "Recebimento a vista da conta " + codContaGerado);
-                 ps.setFloat(3, parcela.getValor());
-                ps.setDate(3, new Date(parcela.getDataRecebimento().getTime()));
+                 ps.setFloat(3, parcela.getValorRecebido());
+                ps.setDate(3, new Date(parcela.getData().getTime()));
                
                 ps.setString(5, "P");
                 ps.execute();
@@ -68,8 +67,8 @@ public class ContaReceberDAO {
                 ps = c.getConexao().prepareStatement(sql);
                 ps.setInt(1, codRecebimento);
                 ps.setInt(2, caixaAberto.getCodigo());
-                ps.setDate(3, new Date(parcela.getDataRecebimento().getTime()));
-                ps.setDouble(4, parcela.getValor());
+                ps.setDate(3, new Date(parcela.getData().getTime()));
+                ps.setDouble(4, parcela.getValorRecebido());
                 ps.setString(5, "P");
                 ps.execute();
 
@@ -83,7 +82,7 @@ public class ContaReceberDAO {
     }
 
     public static ObservableList<ContaReceber> listar() throws Exception {
-        String sql = "select * from tbcontareceber as cr "
+        String sql = "select * from tbcontasreceber as cr "
                 + "inner join tbentregaproducao as e "
                 + "on e.codentregaproducao = cr.codentregaproducao ";
 
@@ -93,7 +92,7 @@ public class ContaReceberDAO {
         ObservableList<ContaReceber> lista = FXCollections.observableArrayList();
         while (rs.next()) {
             ContaReceber contaReceber = new ContaReceber();
-            contaReceber.setCodigo(rs.getInt("cp.codcontapagar"));
+            contaReceber.setCodigo(rs.getInt("cp.codcontasreceber"));
             contaReceber.setEntregaProducao(new EntregaProducao(rs.getInt("cr.codentregaproducao"), rs.getString("e.codsafra")));
             contaReceber.setData(rs.getDate("cr.datavencimento"));
             contaReceber.setValorRecebido(rs.getFloat("cr.valor"));
@@ -107,7 +106,7 @@ public class ContaReceberDAO {
 
     public static boolean gerouConta(int codEntregaProducao, Conexao con) throws Exception {
         String sql = "select * "
-                + "from tbcontareceber "
+                + "from tbcontasreceber "
                 + "where codentregaproducao=?";
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
