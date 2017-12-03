@@ -19,10 +19,10 @@ import javafx.collections.ObservableList;
 public class ContaReceberDAO {
       public static void inserir(ContaReceber contaReceber, List<ParcelaReceber> parcelas, Conexao c) throws Exception {
 
-        String sql = "insert into tbcontasreceber (codentregaproducao, valorcontareceber, datapagamento, descricao, status) values (?,?,?,?,?)";
+        String sql = "insert into tbcontasreceber (codentregaproducao, valorcontasreceber, datapagamento, descricao, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setInt(1, contaReceber.getEntregaProducao().getCodigo());
-         ps.setFloat(2, contaReceber.getValorRecebido());
+        ps.setFloat(2, contaReceber.getValorRecebido());
         ps.setDate(3, new java.sql.Date(contaReceber.getData().getTime()));
         ps.setString(4, contaReceber.getDecricao());
         ps.setString(5, contaReceber.getStatus());
@@ -33,7 +33,7 @@ public class ContaReceberDAO {
         int codContaGerado = rs.getInt(1);
 
         for (ParcelaReceber parcela : parcelas) {
-            sql = "insert into tbparcelareceber (codcontasreceber, valorrecebimento, data, status) VALUES (?, ?, ?, ?)";
+            sql = "insert into tbparcelareceber (codcontasreceber, valorparcela, data, status) VALUES (?, ?, ?, ?)";
             ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, codContaGerado);
             ps.setFloat(2, parcela.getValorRecebido());
@@ -49,11 +49,11 @@ public class ContaReceberDAO {
 
                 Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);            
 
-                sql = "insert into tbrecebimento (codparcelareceber, valorrecebimento, data, descricao, status) VALUES (?, ?, ?, ?, ?)";
+                sql = "insert into tbrecebimento (codparcelareceber, valorrecebimento, datarecebimento, descricao, status) VALUES (?, ?, ?, ?, ?)";
                 ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, codParcela);
                 ps.setString(2, "Recebimento a vista da conta " + codContaGerado);
-                 ps.setFloat(3, parcela.getValorRecebido());
+                ps.setFloat(3, parcela.getValorRecebido());
                 ps.setDate(3, new Date(parcela.getData().getTime()));
                
                 ps.setString(5, "P");

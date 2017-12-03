@@ -111,9 +111,9 @@ public class EntregaProducao {
     public double getValorTotal() {
         double total = 0;
         double totalDesconto = 0;
-       // totalDesconto += (getDesconto() * getQuantidadeEntregue());
+        totalDesconto = (getDesconto() * getQuantidadeEntregue());
         total += (getQuantidadeEntregue() * getValor());
-        //total += (total - totalDesconto);
+        total = (total - totalDesconto);
         return total;
     }
 

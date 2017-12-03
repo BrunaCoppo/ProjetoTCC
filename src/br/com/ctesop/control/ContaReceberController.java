@@ -91,7 +91,7 @@ public class ContaReceberController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcDataRecebimento.setCellValueFactory(new PropertyValueFactory<>("dataRecebimentoFormatada"));
+        tcDataRecebimento.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcValorParcela.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
@@ -104,7 +104,7 @@ public class ContaReceberController implements Initializable {
                 try {
                     gerarParcela(null);
                 } catch (Exception ex) {
-                    Logger.getLogger(ContaPagarController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ContaReceberController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -220,7 +220,6 @@ public class ContaReceberController implements Initializable {
         btnCancelar.setDisable(!habilitar);
         tfDescricao.setDisable(!habilitar);
         tfValor.setDisable(!habilitar);
-        tfQuantidadeParcela.setDisable(!habilitar);
         dpDataReceber.setDisable(!habilitar);
         rbPrazo.setDisable(!habilitar);
         rbVista.setDisable(!habilitar);
