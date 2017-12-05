@@ -1,9 +1,6 @@
 package br.com.ctesop.dao;
 
-import br.com.ctesop.controller.util.ExceptionValidacao;
-import br.com.ctesop.model.Cidade;
 import br.com.ctesop.model.ContaPagar;
-import br.com.ctesop.model.Estado;
 import br.com.ctesop.model.ParcelaPagar;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -4,6 +4,7 @@ import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ public class EntregaProducao {
     private String status;
     private float valor;
 
-    public EntregaProducao(int aInt, String string) {
+    public EntregaProducao(int aInt) {
         this.codigo = codigo;
     }
 
@@ -30,8 +31,9 @@ public class EntregaProducao {
 
     }
 
-    public String getProduto() {
-        return getSafra().getProduto().getNome();
+    public EntregaProducao(int codigo, String cooperativa) throws ExceptionValidacao {
+        this.codigo = codigo;
+        this.cooperativa = new Cooperativa(cooperativa);
     }
 
     public int getCodigo() {
@@ -162,6 +164,20 @@ public class EntregaProducao {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return getCooperativa() + sdf.format(getData());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EntregaProducao) {
+            return ((EntregaProducao) o).getCodigo() == getCodigo();
+        }
+        return false;
     }
 
 }

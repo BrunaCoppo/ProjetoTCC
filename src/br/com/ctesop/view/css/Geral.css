@@ -2,7 +2,8 @@
 .botao-editar,
 .botao-salvar,
 .botao-cancelar,
-.botao-conta{
+.botao-conta,
+.botao-cadastro{
     -fx-background-size: 13px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 8;
@@ -27,4 +28,8 @@
 
 .botao-conta{
     -fx-background-image: url('../img/dollars.png');
+}
+
+.botao-cadastro{
+    -fx-background-image: url('../img/folder-6.png');
 }

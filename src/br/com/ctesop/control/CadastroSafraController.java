@@ -51,7 +51,7 @@ public class CadastroSafraController implements Initializable {
 
     @FXML
     private Button btnCadastroProduto;
-    
+
     @FXML
     private Button btnCadastroTipoSafra;
 
@@ -85,9 +85,17 @@ public class CadastroSafraController implements Initializable {
     @FXML
     private TableColumn<Safra, String> tcStatus;
 
+    @FXML
+    private TableColumn<Safra, String> tcDataInicio;
+
+    @FXML
+    private TableColumn<Safra, String> tcDataTermino;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcTipoSafra.setCellValueFactory(new PropertyValueFactory<>("tipoSafra"));
+        tcDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicioFormatada"));
+        tcDataTermino.setCellValueFactory(new PropertyValueFactory<>("dataTerminoFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         carregarComboProduto();
         carregarComboTipoSafra();
@@ -158,6 +166,12 @@ public class CadastroSafraController implements Initializable {
             Alerta.erro("Erro ao salvar.", e);
             e.printStackTrace();
         }
+    }
+ 
+    @FXML
+    void trocarStatus(ActionEvent event) {
+        
+         
     }
 
     private void atualizarTabela() {
@@ -232,7 +246,6 @@ public class CadastroSafraController implements Initializable {
             Alerta.erro("Erro ao abrir Cadastro de Produto.", e);
         }
     }
-   
 
     @FXML
     void cadastrarTipoSafra(ActionEvent event) {

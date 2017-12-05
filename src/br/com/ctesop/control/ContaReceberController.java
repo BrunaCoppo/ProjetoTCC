@@ -168,6 +168,7 @@ public class ContaReceberController implements Initializable {
     void gerarParcela(ActionEvent event) throws Exception {
         try {
             NumberFormat nf = NumberFormat.getNumberInstance();
+            
             nf.setMaximumFractionDigits(2);
             nf.setMinimumFractionDigits(2);
 

@@ -1,9 +1,8 @@
 package br.com.ctesop.model;
 
-import br.com.ctesop.controller.util.ExceptionValidacao;
+import br.com.ctesop.controller.util.Converter;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,10 +25,6 @@ public class ParcelaReceber {
 
     public ParcelaReceber() {
 
-    }
-
-    public ParcelaReceber(String pccodparcelapagar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getCodigo() {
@@ -87,8 +82,7 @@ public class ParcelaReceber {
     }
 
     public String getDataFormatada() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(data);
+        return Converter.formatarData(data);
     }
 
 

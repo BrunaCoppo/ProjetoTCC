@@ -209,6 +209,9 @@ public class EntregaProducaoController implements Initializable {
                 entregaProducao.setStatus("C");
             }
 
+            if (entregaProducao.getStatus().equals("V")&& entregaProducao.getValor()<=0) {
+                throw new Exception("Informe o valorda venda.");
+            }
             c = new Conexao();
 
             int codigo = EntregaProducaoDAO.salvar(entregaProducao, c);

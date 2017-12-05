@@ -6,6 +6,7 @@ import br.com.ctesop.model.Safra;
 import br.com.ctesop.model.TipoSafra;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,7 +26,11 @@ public class SafraDAO {
         ps.setInt(1, safra.getProduto().getCodigo());
         ps.setInt(2, safra.getTipoSafra().getCodigo());
         ps.setDate(3, new java.sql.Date(safra.getDataInicio().getTime()));
-        ps.setDate(4, new java.sql.Date(safra.getDataTermino().getTime()));
+        if (safra.getDataTermino() == null) {
+            ps.setNull(4, Types.DATE);
+        } else {
+            ps.setDate(4, new java.sql.Date(safra.getDataTermino().getTime()));
+        }
         ps.setString(5, safra.getStatus());
 
         ps.execute();
@@ -63,16 +68,22 @@ public class SafraDAO {
 
     public static void alterar(Safra safra) throws Exception {
 
-        String sql = "update tbsafra set codproduto=?, codtiposafra=?, status=? where codsafra=?";
+        String sql = "update tbsafra set codproduto=?, codtiposafra=?, datainicio=?, datatermino=?, status=? where codsafra=?";
 
         Conexao con = new Conexao();
 
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
         ps.setInt(1, safra.getProduto().getCodigo());
         ps.setInt(2, safra.getTipoSafra().getCodigo());
-        ps.setString(3, safra.getStatus());
+            ps.setDate(3, new java.sql.Date(safra.getDataInicio().getTime()));
+        if (safra.getDataTermino() == null) {
+            ps.setNull(4, Types.DATE);
+        } else {
+            ps.setDate(4, new java.sql.Date(safra.getDataTermino().getTime()));
+        }
+        ps.setString(5, safra.getStatus());
 
-        ps.setInt(4, safra.getCodigo());
+        ps.setInt(6, safra.getCodigo());
 
         ps.execute();
         con.confirmar();
@@ -80,24 +91,10 @@ public class SafraDAO {
 
     public static void salvar(Safra safra) throws Exception {
         if (safra.getCodigo() == 0) {
-          /*  if (existe(safra)) {
-                throw new ExceptionValidacao("A safra já está cadastrada.");
-            }*/
             inserir(safra);
         } else {
             alterar(safra);
         }
     }
-/*
-    private static boolean existe(Safra safra) throws Exception {
-        String sql = "select count(codsafra) from tbsafra where datainicio=? and status=?";
-        Conexao c = new Conexao();
-        PreparedStatement ps = c.getConexao().prepareStatement(sql);
-        ps.setDate(1, new java.sql.Date(safra.getDataInicio()));
-        ps.setString(2, safra.getStatus());
-        ResultSet rs = ps.executeQuery();
-        rs.next();
-        return (rs.getInt(1) > 0);
-    }
-*/
+
 }

@@ -1,9 +1,7 @@
 
 package br.com.ctesop.dao;
 
-import br.com.ctesop.model.ContaPagar;
 import br.com.ctesop.model.ContaReceber;
-import br.com.ctesop.model.ParcelaPagar;
 import br.com.ctesop.model.ParcelaReceber;
 import java.sql.Date;
 import java.sql.PreparedStatement;

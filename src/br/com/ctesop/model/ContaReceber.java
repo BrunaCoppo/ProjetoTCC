@@ -37,13 +37,14 @@ public class ContaReceber {
         nf.setMaximumFractionDigits(2);
         return nf.format(this.getQuantidadeParcelas());
     }
+    
 
     public int getCodigo() {
         return codigo;
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -65,12 +66,19 @@ public class ContaReceber {
         this.valor = valor;
     }
 
-    public void setValorPago(String valorPago) throws ExceptionValidacao {
+    public String getValorFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.getValor());
+    }
+
+    public void setValor(String valor) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
-            this.valor = nf.parse(valorPago).floatValue();
+            this.valor = nf.parse(valor).floatValue();
         } catch (ParseException ex) {
-            throw new ExceptionValidacao("Valor pago inválido.");
+            throw new ExceptionValidacao("Valor Recebido inválido.");
         }
     }
 
@@ -95,8 +103,9 @@ public class ContaReceber {
     }
 
     public float getValorRestante() {
-        return this.valor- this.valorRecebido;
+        return this.valor - this.valorRecebido;
     }
+
     public void setValorRecebido(String recebido) throws ExceptionValidacao {
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
@@ -105,6 +114,7 @@ public class ContaReceber {
             throw new ExceptionValidacao("Valor recebido inválido.");
         }
     }
+
     public String getValorRestanteFormatado() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
@@ -119,14 +129,14 @@ public class ContaReceber {
     public void setValorRecebido(float valorRecebido) {
         this.valorRecebido = valorRecebido;
     }
-    
-   public String getValorRecebidoFormatado() {
+
+    public String getValorRecebidoFormatado() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
         return nf.format(this.valorRecebido);
     }
-   
+
     public String getStatus() {
         if (getValorRecebido() <= 0) {
             return "P";

@@ -1,9 +1,7 @@
 package br.com.ctesop.dao;
 
-import br.com.ctesop.model.Compra;
 import br.com.ctesop.model.Cooperativa;
 import br.com.ctesop.model.EntregaProducao;
-import br.com.ctesop.model.ItensCompra;
 import br.com.ctesop.model.Safra;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -1,23 +1,18 @@
 package br.com.ctesop.control;
 
 import br.com.ctesop.controller.util.Alerta;
-import br.com.ctesop.dao.ContaPagarDAO;
 import br.com.ctesop.dao.ContaReceberDAO;
-import br.com.ctesop.dao.EntregaProducaoDAO;
-import br.com.ctesop.dao.PagamentoDAO;
-import br.com.ctesop.dao.ParcelaPagarDAO;
 import br.com.ctesop.dao.ParcelaReceberDAO;
 import br.com.ctesop.dao.RecebimentoDAO;
-import br.com.ctesop.model.ContaPagar;
 import br.com.ctesop.model.ContaReceber;
-import br.com.ctesop.model.Pagamento;
-import br.com.ctesop.model.ParcelaPagar;
 import br.com.ctesop.model.ParcelaReceber;
 import br.com.ctesop.model.Recebimento;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -40,36 +36,57 @@ public class RecebimentoController implements Initializable {
     @FXML
     private Button btnCancelar;
 
-    @FXML
+       @FXML
     private TableView<ContaReceber> tbContaReceber;
 
     @FXML
-    private TableColumn<ContaReceber, String> tcCooperativa;
+    private TableColumn<ContaReceber, String> tcContaCooperativa;
 
     @FXML
-    private TableColumn<ContaReceber, String> tcValorEntrega;
+    private TableColumn<ContaReceber, String> tcContaValor;
 
     @FXML
-    private TableColumn<ContaReceber, String> tcDataEntrega;
+    private TableColumn<ContaReceber, String> tcContaData;
 
     @FXML
-    private TableColumn<ContaReceber, String> tcStatus;
+    private TableColumn<ContaReceber, String> tcStatusConta;
 
     @FXML
     private TableView<ParcelaReceber> tbParcelaReceber;
 
     @FXML
-    private TableColumn<ParcelaReceber, String> tcDataPagamento;
+    private TableColumn<ParcelaReceber, String> tcParcelaData;
 
     @FXML
-    private TableColumn<ParcelaReceber, String> tcValorParcela;
+    private TableColumn<ParcelaReceber, String> tcParcelaValor;
 
     @FXML
-    private TableColumn<ParcelaReceber, String> tcRestante;
+    private TableColumn<ParcelaReceber, String> tcParcelaRestante;
+
+    @FXML
+    private TableColumn<ParcelaReceber, String> tcStatusParcela;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tcContaCooperativa.setCellValueFactory(new PropertyValueFactory<>("cooperativa"));
+        tcContaValor.setCellValueFactory(new PropertyValueFactory<>("valorFormatado"));
+        tcContaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
+        tcStatusConta.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        tcParcelaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
+        tcParcelaValor.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
+        tcParcelaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestante"));
+        tcStatusParcela.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        atualizarTabelaConta();
+
+        tbContaReceber.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ContaReceber>() {
+            @Override
+            public void changed(ObservableValue<? extends ContaReceber> observable, ContaReceber oldValue, ContaReceber newValue) {
+                atualizarTabelaParcelas();
+            }
+        });
     }
 
     @FXML
@@ -135,10 +152,11 @@ public class RecebimentoController implements Initializable {
             if (tbParcelaReceber.getSelectionModel().isEmpty()) {
                 return;
             }
-            ParcelaReceber pr = tbParcelaReceber.getSelectionModel().getSelectedItem();
-            //tbParcelaReceber.setItems(ParcelaReceberDAO.listar(pr));
+            ContaReceber cr = tbContaReceber.getSelectionModel().getSelectedItem();
+            tbParcelaReceber.setItems(ParcelaReceberDAO.listar(cr));
             tbParcelaReceber.refresh();
         } catch (Exception e) {
+            
             Alerta.erro("Erro ao consultar dados.", e);
             e.printStackTrace();
         }

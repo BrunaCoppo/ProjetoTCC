@@ -1,7 +1,9 @@
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.Converter;
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -17,10 +19,10 @@ public class Safra {
     private Date dataTermino;
     private String status;
 
-    public Safra(int aInt, String nomeProduto) throws ExceptionValidacao {
+    public Safra(int codigo, String nomeProduto) throws ExceptionValidacao {
         this.codigo = codigo;
         this.produto = new Produto();
-       this.produto.setNome(nomeProduto);
+        this.produto.setNome(nomeProduto);
     }
 
     public Safra() {
@@ -61,13 +63,24 @@ public class Safra {
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
-
+    public String getDataInicioFormatada() {
+        return Converter.formatarData(dataInicio);
+    }
     public Date getDataTermino() {
         return dataTermino;
     }
 
     public void setDataTermino(Date dataTermino) {
         this.dataTermino = dataTermino;
+    }
+
+    public String getDataTerminoFormatada() {
+        if (getDataTermino()== null
+        
+            ) {
+            return "";
+        }
+        return Converter.formatarData(dataTermino);
     }
 
     public String getStatus() {
@@ -80,7 +93,8 @@ public class Safra {
 
     @Override
     public String toString() {
-        return getStatus();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return getTipoSafra() + " " + getProduto() + " " + sdf.format(getDataInicio());
     }
 
     @Override

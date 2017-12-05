@@ -15,6 +15,17 @@ public class Cooperativa {
     private String endereco;
     private String status;
 
+
+    public Cooperativa(int codigo, String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+
+    }
+
+    Cooperativa(String nome) throws ExceptionValidacao {
+        setNome(nome);
+    }
+
     public Cooperativa() {
         this.codigo = 0;
     }
@@ -23,18 +34,12 @@ public class Cooperativa {
         this.codigo = codigo;
     }
 
-    public Cooperativa(int codigo, String nome) {
-        this.codigo = codigo;
-        this.nome = nome;
-
-    }
-
     public int getCodigo() {
         return codigo;
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -52,7 +57,7 @@ public class Cooperativa {
         return nome;
     }
 
-    public void setNome(String nome) throws ExceptionValidacao{
+    public void setNome(String nome) throws ExceptionValidacao {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Nome obrigatório.");
         }
@@ -71,7 +76,7 @@ public class Cooperativa {
         return endereco;
     }
 
-    public void setEndereco(String endereco) throws ExceptionValidacao{
+    public void setEndereco(String endereco) throws ExceptionValidacao {
         if (nome.isEmpty()) {
             throw new ExceptionValidacao("Endereço obrigatório.");
         }
@@ -85,8 +90,6 @@ public class Cooperativa {
         }
         this.endereco = endereco;
     }
-
-    
 
     public String getStatus() {
         return status;

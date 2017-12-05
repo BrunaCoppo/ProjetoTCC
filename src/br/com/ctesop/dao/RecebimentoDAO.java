@@ -1,8 +1,6 @@
 package br.com.ctesop.dao;
 
 import br.com.ctesop.model.Caixa;
-import br.com.ctesop.model.Pagamento;
-import br.com.ctesop.model.ParcelaPagar;
 import br.com.ctesop.model.ParcelaReceber;
 import br.com.ctesop.model.Recebimento;
 import java.sql.Date;
@@ -70,6 +68,7 @@ public class RecebimentoDAO {
                 + " select *"
                 + " from tbrecebimento as r "
                 + " inner join tbparcelareceber as pr on pr.codparcelareceber = r.codparcelareceber";
+               
         if (somenteAtivos) {
             sql += " where r.status='A' ";
         }
@@ -98,7 +97,7 @@ public class RecebimentoDAO {
                 + " from tbrecebimento as r"
                 + " inner join tbparcelareceber as pr "
                 + " on pr.codparcelareceber = r.codparcelareceber"
-                + " where pr.codcontareceber=?";
+                + " where pr.codcontasreceber=?";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);

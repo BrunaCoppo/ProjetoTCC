@@ -19,6 +19,14 @@ public class ContaPagarDAO {
 
     public static void inserir(ContaPagar contaPagar, List<ParcelaPagar> parcelas, Conexao c) throws Exception {
 
+        if (contaPagar.getFormaPagamento().equalsIgnoreCase("V")) {
+            Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);
+            
+            if (caixaAberto.getValorFechamento()< contaPagar.getValor()) {
+                throw  new Exception("Saldo insficiente em caixa.");
+            }
+        }
+        
         String sql = "insert into tbcontapagar (codcompra, datavencimento, descricao, valor, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setInt(1, contaPagar.getCompra().getCodigo());

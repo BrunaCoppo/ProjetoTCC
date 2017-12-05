@@ -108,7 +108,7 @@
             </HBox>
             <HBox>
                <children>
-                  <RadioButton fx:id="rbVista" mnemonicParsing="false" selected="true" text="Á Vista">
+                  <RadioButton fx:id="rbVista" mnemonicParsing="false" onAction="#trocaFormaPagamento" selected="true" text="À Vista">
                      <toggleGroup>
                         <ToggleGroup fx:id="status" />
                      </toggleGroup>
@@ -116,7 +116,7 @@
                         <Insets left="10.0" right="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" text="Á Prazo" toggleGroup="$status">
+                  <RadioButton fx:id="rbPrazo" mnemonicParsing="false" onAction="#trocaFormaPagamento" text="A Prazo" toggleGroup="$status">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

@@ -1,4 +1,3 @@
-
 package br.com.ctesop.dao;
 
 import br.com.ctesop.model.Caixa;
@@ -17,7 +16,12 @@ import javafx.collections.ObservableList;
  * @author Bruna
  */
 public class ContaReceberDAO {
-      public static void inserir(ContaReceber contaReceber, List<ParcelaReceber> parcelas, Conexao c) throws Exception {
+
+    public static void inserir(ContaReceber contaReceber, List<ParcelaReceber> parcelas, Conexao c) throws Exception {
+
+        if (contaReceber.getFormaRecebimento().equalsIgnoreCase("V")) {
+            CaixaDAO.getCaixaAberto(c);
+        }
 
         String sql = "insert into tbcontasreceber (codentregaproducao, valorcontasreceber, datapagamento, descricao, status) values (?,?,?,?,?)";
         PreparedStatement ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -47,15 +51,14 @@ public class ContaReceberDAO {
 
             if (contaReceber.getFormaRecebimento().equalsIgnoreCase("V")) {
 
-                Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);            
+                Caixa caixaAberto = CaixaDAO.getCaixaAberto(c);
 
                 sql = "insert into tbrecebimento (codparcelareceber, valorrecebimento, datarecebimento, descricao, status) VALUES (?, ?, ?, ?, ?)";
                 ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, codParcela);
-                ps.setString(2, "Recebimento a vista da conta " + codContaGerado);
-                ps.setFloat(3, parcela.getValorRecebido());
+                ps.setFloat(2, parcela.getValorRecebido());
                 ps.setDate(3, new Date(parcela.getData().getTime()));
-               
+                ps.setString(4, "Recebimento a vista da conta " + codContaGerado);
                 ps.setString(5, "P");
                 ps.execute();
 
@@ -72,7 +75,7 @@ public class ContaReceberDAO {
                 ps.setString(5, "P");
                 ps.execute();
 
-                sql = "update tbcaixa set valorfechamento=valorfechamento-? where codtbcaixa=?";
+                sql = "update tbcaixa set valorfechamento=valorfechamento+? where codtbcaixa=?";
                 ps = c.getConexao().prepareStatement(sql);
                 ps.setDouble(1, contaReceber.getValorRecebido());
                 ps.setInt(2, caixaAberto.getCodigo());
@@ -84,7 +87,9 @@ public class ContaReceberDAO {
     public static ObservableList<ContaReceber> listar() throws Exception {
         String sql = "select * from tbcontasreceber as cr "
                 + "inner join tbentregaproducao as e "
-                + "on e.codentregaproducao = cr.codentregaproducao ";
+                + "on e.codentregaproducao = cr.codentregaproducao "
+                + "inner join tbcooperativa as co "
+                + "on co.codcooperativa = e.codcooperativa";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);
@@ -92,10 +97,10 @@ public class ContaReceberDAO {
         ObservableList<ContaReceber> lista = FXCollections.observableArrayList();
         while (rs.next()) {
             ContaReceber contaReceber = new ContaReceber();
-            contaReceber.setCodigo(rs.getInt("cp.codcontasreceber"));
-            contaReceber.setEntregaProducao(new EntregaProducao(rs.getInt("cr.codentregaproducao"), rs.getString("e.codsafra")));
-            contaReceber.setData(rs.getDate("cr.datavencimento"));
-            contaReceber.setValorRecebido(rs.getFloat("cr.valor"));
+            contaReceber.setCodigo(rs.getInt("cr.codcontasreceber"));
+            contaReceber.setEntregaProducao(new EntregaProducao(rs.getInt("e.codentregaproducao"), rs.getString("co.nomecooperativa")));
+            contaReceber.setData(rs.getDate("cr.datapagamento"));
+            contaReceber.setValor(rs.getFloat("valorcontasreceber"));
             contaReceber.setValorRecebido(RecebimentoDAO.consultarRecebimentosEntrega(contaReceber.getCodigo()));
             contaReceber.setDecricao(rs.getString("cr.descricao"));
             contaReceber.setStatus(rs.getString("cr.status"));
