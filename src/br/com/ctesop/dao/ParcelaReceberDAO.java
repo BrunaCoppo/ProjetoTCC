@@ -35,8 +35,8 @@ public class ParcelaReceberDAO {
         String sql = ""
                 + " select *"
                 + " from tbparcelareceber as p"
-                + " inner join tbcontareceber as c on c.codcontareceber = p.codcontareceber "
-                + " where p.codcontareceber=?";
+                + " inner join tbcontasreceber as c on c.codcontasreceber = p.codcontasreceber "
+                + " where p.codcontasreceber=?";
 
         Conexao con = new Conexao();
         PreparedStatement ps = con.getConexao().prepareStatement(sql);

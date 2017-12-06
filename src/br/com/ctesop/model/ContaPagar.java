@@ -45,7 +45,7 @@ public class ContaPagar {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -59,10 +59,10 @@ public class ContaPagar {
         this.compra = compra;
     }
 
-    public Pessoa getFornecedor(){
+    public Pessoa getFornecedor() {
         return getCompra().getFornecedor();
     }
-    
+
     public Arrendamento getArrendamento() {
         return arrendamento;
     }
@@ -130,10 +130,10 @@ public class ContaPagar {
         return nf.format(this.valorPago);
     }
 
-     public float getValorRestante() {
+    public float getValorRestante() {
         return this.valor - this.valorPago;
     }
-     
+
     public String getValorRestanteFormatado() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
@@ -150,10 +150,14 @@ public class ContaPagar {
     }
 
     public String getStatus() {
-        if(getValorRestante() <= 0){
-            return "P";
+        return status;
+    }
+
+    public String getStatusFormatado() {
+        if (getValorRestante() <= 0) {
+            return "Pago";
         } else {
-            return "A";
+            return "Aberta";
         }
     }
 

@@ -23,6 +23,10 @@ public class ContaReceber {
     private String formaRecebimento;
     private int quantidadeParcelas;
 
+    public Cooperativa getCooperativa() {
+        return getEntregaProducao().getCooperativa();
+    }
+
     public int getQuantidadeParcelas() {
         return quantidadeParcelas;
     }
@@ -37,7 +41,6 @@ public class ContaReceber {
         nf.setMaximumFractionDigits(2);
         return nf.format(this.getQuantidadeParcelas());
     }
-    
 
     public int getCodigo() {
         return codigo;
@@ -137,12 +140,16 @@ public class ContaReceber {
         return nf.format(this.valorRecebido);
     }
 
-    public String getStatus() {
+    public String getStatusFormatado() {
         if (getValorRecebido() <= 0) {
-            return "P";
+            return "Paga";
         } else {
-            return "A";
+            return "Aberta";
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {

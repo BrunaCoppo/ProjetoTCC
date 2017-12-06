@@ -75,7 +75,7 @@ public class PagamentoController implements Initializable {
         tcContaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcContaValor.setCellValueFactory(new PropertyValueFactory<>("valorFormatado"));
         tcContaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestanteFormatado"));
-        tcContaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        tcContaStatus.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
 
         tcParcelaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcParcelaValor.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));

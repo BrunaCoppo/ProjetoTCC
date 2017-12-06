@@ -40,7 +40,7 @@ public class ContaReceberDAO {
             sql = "insert into tbparcelareceber (codcontasreceber, valorparcela, data, status) VALUES (?, ?, ?, ?)";
             ps = c.getConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, codContaGerado);
-            ps.setFloat(2, parcela.getValorRecebido());
+            ps.setFloat(2, parcela.getValorParcela());
             ps.setDate(3, new Date(parcela.getData().getTime()));
             ps.setString(4, parcela.getStatus());
             ps.execute();

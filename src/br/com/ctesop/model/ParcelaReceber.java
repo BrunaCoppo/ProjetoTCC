@@ -3,7 +3,6 @@ package br.com.ctesop.model;
 import br.com.ctesop.controller.util.Converter;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,6 +72,13 @@ public class ParcelaReceber {
         return this.valorParcela - this.valorRecebido;
     }
 
+    public String getValorRestanteFormatado() {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf.format(this.valorParcela - this.valorRecebido);
+    }
+
     public Date getData() {
         return data;
     }
@@ -85,7 +91,6 @@ public class ParcelaReceber {
         return Converter.formatarData(data);
     }
 
-
     public String getStatus() {
         return Status;
     }
@@ -94,4 +99,11 @@ public class ParcelaReceber {
         this.Status = Status;
     }
 
+    public String getStatusFormatado() {
+        if (getValorRecebido() == getValorParcela()) {
+            return "Paga";
+        } else {
+            return "Aberta";
+        }
+    }
 }

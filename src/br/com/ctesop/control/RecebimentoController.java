@@ -36,7 +36,7 @@ public class RecebimentoController implements Initializable {
     @FXML
     private Button btnCancelar;
 
-       @FXML
+    @FXML
     private TableView<ContaReceber> tbContaReceber;
 
     @FXML
@@ -44,6 +44,9 @@ public class RecebimentoController implements Initializable {
 
     @FXML
     private TableColumn<ContaReceber, String> tcContaValor;
+    
+    @FXML
+    private TableColumn<ContaReceber, String> tcContaRestante;
 
     @FXML
     private TableColumn<ContaReceber, String> tcContaData;
@@ -66,17 +69,17 @@ public class RecebimentoController implements Initializable {
     @FXML
     private TableColumn<ParcelaReceber, String> tcStatusParcela;
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcContaCooperativa.setCellValueFactory(new PropertyValueFactory<>("cooperativa"));
         tcContaValor.setCellValueFactory(new PropertyValueFactory<>("valorFormatado"));
+        tcContaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestanteFormatado"));
         tcContaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
-        tcStatusConta.setCellValueFactory(new PropertyValueFactory<>("status"));
+        tcStatusConta.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
 
         tcParcelaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcParcelaValor.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
-        tcParcelaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestante"));
+        tcParcelaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestanteFormatado"));
         tcStatusParcela.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         atualizarTabelaConta();
@@ -149,14 +152,14 @@ public class RecebimentoController implements Initializable {
 
     private void atualizarTabelaParcelas() {
         try {
-            if (tbParcelaReceber.getSelectionModel().isEmpty()) {
+            if (tbContaReceber.getSelectionModel().isEmpty()) {
                 return;
             }
             ContaReceber cr = tbContaReceber.getSelectionModel().getSelectedItem();
             tbParcelaReceber.setItems(ParcelaReceberDAO.listar(cr));
             tbParcelaReceber.refresh();
         } catch (Exception e) {
-            
+
             Alerta.erro("Erro ao consultar dados.", e);
             e.printStackTrace();
         }
