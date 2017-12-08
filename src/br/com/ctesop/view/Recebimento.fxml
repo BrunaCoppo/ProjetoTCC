@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.RecebimentoController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.RecebimentoController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -31,19 +31,19 @@
             <TableView fx:id="tbContaReceber" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="tcContaCooperativa" prefWidth="164.0" text="Cooperativa" />
-                <TableColumn fx:id="tcContaValor" minWidth="5.0" prefWidth="86.0" text="Valor" />
-                  <TableColumn fx:id="tcContaRestante" prefWidth="139.0" text="Valor Restante" />
-                  <TableColumn fx:id="tcContaData" prefWidth="88.0" text="Data" />
-                  <TableColumn fx:id="tcStatusConta" prefWidth="82.0" text="Status" />
+                <TableColumn fx:id="tcContaValor" minWidth="5.0" prefWidth="95.0" text="Valor" />
+                  <TableColumn fx:id="tcContaRestante" prefWidth="151.0" text="Valor Restante" />
+                  <TableColumn fx:id="tcContaData" prefWidth="79.0" text="Data" />
+                  <TableColumn fx:id="tcStatusConta" prefWidth="86.0" text="Status" />
               </columns>
             </TableView>
             <Label text="Selecione a parcela a receber" />
             <TableView fx:id="tbParcelaReceber" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="tcParcelaData" prefWidth="147.0" text="Data" />
-                <TableColumn fx:id="tcParcelaValor" prefWidth="150.0" text="Valor" />
-                  <TableColumn fx:id="tcParcelaRestante" prefWidth="148.0" text="Restante Parcela" />
-                  <TableColumn fx:id="tcStatusParcela" prefWidth="114.0" text="Status" />
+                <TableColumn fx:id="tcParcelaData" prefWidth="166.0" text="Data" />
+                <TableColumn fx:id="tcParcelaValor" prefWidth="155.0" text="Valor" />
+                  <TableColumn fx:id="tcParcelaRestante" prefWidth="151.0" text="Restante Parcela" />
+                  <TableColumn fx:id="tcStatusParcela" prefWidth="101.0" text="Status" />
               </columns>
             </TableView>
          </children>

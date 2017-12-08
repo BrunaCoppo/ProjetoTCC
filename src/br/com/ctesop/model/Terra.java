@@ -17,6 +17,14 @@ public class Terra {
     private String descricao;
     private String status;
 
+    public Terra(int aInt, String string) {
+        this.codigo = codigo;
+    }
+
+    public Terra() {
+        
+    }
+
     public int getCodigo() {
         return codigo;
     }

@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.ContaPagarController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.ContaPagarController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="130.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fillWidth="false" prefHeight="200.0" prefWidth="130.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="32.0" prefWidth="560.0" spacing="5.0" stylesheets="@css/Geral.css">
                <children>
@@ -44,11 +44,6 @@
                         <Insets right="18.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Valor * ">
-                     <HBox.margin>
-                        <Insets left="70.0" />
-                     </HBox.margin>
-                  </Label>
                </children>
             </HBox>
             <HBox>
@@ -58,42 +53,31 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </DatePicker>
-                  <TextField fx:id="tfValor" editable="false" onAction="#gerarParcelas" text="0,00">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </TextField>
                </children>
             </HBox>
+            <Label text="Descrição " />
+            <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="203.0" />
+            <Label text="Valor * " />
+            <TextField fx:id="tfValor" editable="false" onAction="#gerarParcelas" text="0,00" />
             <HBox>
                <children>
-                  <Label text="Descrição ">
-                     <HBox.margin>
-                        <Insets right="85.0" />
-                     </HBox.margin>
-                  </Label>
                   <Label text="Forma de pagamento">
                      <HBox.margin>
-                        <Insets left="100.0" />
+                        <Insets />
                      </HBox.margin>
                   </Label>
                   <Label text="Quantidade de parcelas">
                      <HBox.margin>
-                        <Insets left="45.0" />
+                        <Insets left="75.0" />
                      </HBox.margin>
                   </Label>
                </children>
             </HBox>
             <HBox>
                <children>
-                  <TextField fx:id="tfDescricao" prefHeight="25.0" prefWidth="203.0">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </TextField>
                   <RadioButton fx:id="rbVista" mnemonicParsing="false" onAction="#trocaFormaPagamento" selected="true" text="À Vista">
                      <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets />
                      </HBox.margin>
                      <toggleGroup>
                         <ToggleGroup fx:id="FormaPagamento" />
@@ -106,15 +90,15 @@
                   </RadioButton>
                   <TextField fx:id="tfQuantParcelas" onAction="#gerarParcelas" text="1">
                      <HBox.margin>
-                        <Insets left="22.0" />
+                        <Insets left="50.0" />
                      </HBox.margin>
                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="30.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tbContaPagar" prefHeight="195.0" prefWidth="560.0">
+            <TableView fx:id="tbContaPagar" prefHeight="339.0" prefWidth="576.0">
               <columns>
                 <TableColumn fx:id="tcDatavencimento" prefWidth="185.0" text="Data Vencimento" />
                 <TableColumn fx:id="tcValorParcela" prefWidth="241.0" text="Valor da Parcela" />

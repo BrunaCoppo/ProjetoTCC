@@ -49,7 +49,10 @@ public class Compra {
         return fornecedor;
     }
 
-    public void setFornecedor(Pessoa fornecedor) {
+    public void setFornecedor(Pessoa fornecedor) throws ExceptionValidacao {
+         if (fornecedor == null) {
+            throw new ExceptionValidacao("Fornecedor inválido!");
+        }
         this.fornecedor = fornecedor;
     }
 

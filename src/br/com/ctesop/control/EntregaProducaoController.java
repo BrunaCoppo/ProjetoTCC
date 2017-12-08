@@ -119,7 +119,7 @@ public class EntregaProducaoController implements Initializable {
         tcDesconto.setCellValueFactory(new PropertyValueFactory<>("descontoFormatado"));
         tcQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidadeFormatada"));
         tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        
+
         carregarComboCooperativa();
         carregarComboSafra();
         atualizarTabela();
@@ -129,9 +129,11 @@ public class EntregaProducaoController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
+
         codigo = 0;
         limpar();
         habilitar(true);
+        tfValor.setText("0,00");
     }
 
     @FXML
@@ -150,8 +152,7 @@ public class EntregaProducaoController implements Initializable {
                 Alerta.alerta("Entrega de produto cancelada!");
                 return;
             }
- 
-             
+
             codigo = selecionado.getCodigo();
             dpData.setValue(Converter.toLocalDate(selecionado.getData()));
             tfDesconto.setText(selecionado.getDescontoFormatado());
@@ -209,7 +210,7 @@ public class EntregaProducaoController implements Initializable {
                 entregaProducao.setStatus("C");
             }
 
-            if (entregaProducao.getStatus().equals("V")&& entregaProducao.getValor()<=0) {
+            if (entregaProducao.getStatus().equals("V") && entregaProducao.getValor() <= 0) {
                 throw new Exception("Informe o valorda venda.");
             }
             c = new Conexao();
@@ -350,7 +351,7 @@ public class EntregaProducaoController implements Initializable {
             cbSafra.setItems(SafraDAO.listar(true));
         } catch (Exception e) {
             Alerta.erro("Erro ao consultar dados.", e);
-        }                                              
+        }
     }
 
     private void atualizarTabela() {

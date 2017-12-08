@@ -51,7 +51,10 @@ public class Cidade {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(Estado estado) throws ExceptionValidacao {
+         if (estado == null) {
+            throw new ExceptionValidacao("Estado inválida!");
+        }
         this.estado = estado;
     }
 

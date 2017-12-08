@@ -80,7 +80,7 @@ public class PagamentoController implements Initializable {
         tcParcelaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcParcelaValor.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
         tcParcelaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestanteFormatado"));
-        tcParcelaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        tcParcelaStatus.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
 
         atualizarTabelaContas();
 
@@ -109,6 +109,7 @@ public class PagamentoController implements Initializable {
             caixaTexto.setHeaderText("Pagamento");
             caixaTexto.setContentText("Informe o valor a pagar:");
             caixaTexto.showAndWait();
+            
 
             NumberFormat nf = NumberFormat.getNumberInstance();
             float valorPagar = nf.parse(caixaTexto.getResult()).floatValue();

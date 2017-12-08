@@ -80,7 +80,7 @@ public class RecebimentoController implements Initializable {
         tcParcelaData.setCellValueFactory(new PropertyValueFactory<>("dataFormatada"));
         tcParcelaValor.setCellValueFactory(new PropertyValueFactory<>("valorParcelaFormatado"));
         tcParcelaRestante.setCellValueFactory(new PropertyValueFactory<>("valorRestanteFormatado"));
-        tcStatusParcela.setCellValueFactory(new PropertyValueFactory<>("status"));
+        tcStatusParcela.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
 
         atualizarTabelaConta();
 
@@ -118,6 +118,7 @@ public class RecebimentoController implements Initializable {
             NumberFormat nf = NumberFormat.getNumberInstance();
             float valorReceber = nf.parse(caixaTexto.getResult()).floatValue();
 
+            
             ParcelaReceber parcela = tbParcelaReceber.getSelectionModel().getSelectedItem();
             if (valorReceber > parcela.getValorRestante()) {
                 valorReceber = parcela.getValorRestante();
@@ -128,7 +129,7 @@ public class RecebimentoController implements Initializable {
             recebimento.setDescricao("Recebimento da parcela " + parcela.getCodigo());
             recebimento.setParcelaReceber(parcela);
             recebimento.setValorRecebimento(valorReceber);
-            recebimento.setStatus("P");
+            recebimento.setStatus("R");
 
             RecebimentoDAO.receber(recebimento);
 

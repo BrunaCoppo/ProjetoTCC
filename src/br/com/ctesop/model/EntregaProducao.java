@@ -48,7 +48,10 @@ public class EntregaProducao {
         return cooperativa;
     }
 
-    public void setCooperativa(Cooperativa cooperativa) {
+    public void setCooperativa(Cooperativa cooperativa) throws ExceptionValidacao {
+        if (cooperativa == null) {
+            throw new ExceptionValidacao("Cooperativa inválida!");
+        }
         this.cooperativa = cooperativa;
     }
 
@@ -56,7 +59,10 @@ public class EntregaProducao {
         return safra;
     }
 
-    public void setSafra(Safra safra) {
+    public void setSafra(Safra safra) throws ExceptionValidacao {
+        if (safra == null) {
+            throw new ExceptionValidacao("Safra inválida!");
+        }
         this.safra = safra;
     }
 
@@ -64,7 +70,10 @@ public class EntregaProducao {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+        if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 
@@ -85,6 +94,7 @@ public class EntregaProducao {
         nf.setMaximumFractionDigits(2);
         return nf.format(quantidadeEntregue);
     }
+    
 
     public float getValor() {
         return valor;
@@ -94,7 +104,7 @@ public class EntregaProducao {
         this.valor = valor;
     }
 
-    public void setValor(String valor) throws ExceptionValidacao {
+    public void setValor(String valor) throws ExceptionValidacao {        
         NumberFormat nf = NumberFormat.getNumberInstance();
         try {
             this.valor = nf.parse(valor).floatValue();

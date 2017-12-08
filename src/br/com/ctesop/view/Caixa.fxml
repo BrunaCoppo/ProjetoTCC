@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="514.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CaixaController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CaixaController">
    <children>
       <VBox fillWidth="false" prefHeight="467.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -38,13 +38,13 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tbCaixa" prefHeight="181.0" prefWidth="583.0">
+            <TableView fx:id="tbCaixa" prefHeight="194.0" prefWidth="594.0">
               <columns>
                 <TableColumn fx:id="tcDataAbertura" prefWidth="191.0" text="Data Abertura" />
                   <TableColumn fx:id="tcDataFechamento" prefWidth="229.0" text="Data Fechamento" />
-                  <TableColumn fx:id="tcValorAbertura" prefWidth="229.0" text="Valor Abertura" />
-                  <TableColumn fx:id="tcValorFechamento" prefWidth="229.0" text="Saldo" />
-                <TableColumn fx:id="tcStatus" prefWidth="135.0" text="Status" />
+                  <TableColumn fx:id="tcValorAbertura" prefWidth="141.0" text="Valor Abertura" />
+                  <TableColumn fx:id="tcValorFechamento" prefWidth="145.0" text="Saldo" />
+                <TableColumn fx:id="tcStatus" prefWidth="84.0" text="Status" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

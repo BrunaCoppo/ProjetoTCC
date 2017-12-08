@@ -98,12 +98,14 @@ public class ParcelaReceber {
     public void setStatus(String Status) {
         this.Status = Status;
     }
-
-    public String getStatusFormatado() {
-        if (getValorRecebido() == getValorParcela()) {
-            return "Paga";
+    
+        public String getStatusFormatado() {
+        if (getValorRestante() <= 0) {
+            return "Recebido";
         } else {
             return "Aberta";
         }
     }
+
+
 }

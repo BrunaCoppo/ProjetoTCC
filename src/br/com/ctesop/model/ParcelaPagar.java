@@ -33,7 +33,7 @@ public class ParcelaPagar {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -55,7 +55,10 @@ public class ParcelaPagar {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+           if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 
@@ -109,4 +112,13 @@ public class ParcelaPagar {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public String getStatusFormatado() {
+        if (getValorRestante() <= 0) {
+            return "Pago";
+        } else {
+            return "Aberta";
+        }
+    }
+
 }

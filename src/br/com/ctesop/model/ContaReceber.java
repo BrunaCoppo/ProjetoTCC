@@ -141,8 +141,8 @@ public class ContaReceber {
     }
 
     public String getStatusFormatado() {
-        if (getValorRecebido() <= 0) {
-            return "Paga";
+        if (getValorRestante() <= 0) {
+            return "Recebido";
         } else {
             return "Aberta";
         }

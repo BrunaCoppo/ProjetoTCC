@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.PagamentoController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.PagamentoController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -47,7 +47,7 @@
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Label>
-            <TableView fx:id="tbParcelaPagar" prefHeight="190.0" prefWidth="561.0">
+            <TableView fx:id="tbParcelaPagar" prefHeight="203.0" prefWidth="610.0">
               <columns>
                 <TableColumn fx:id="tcParcelaData" prefWidth="120.0" text="Data " />
                   <TableColumn fx:id="tcParcelaValor" prefWidth="150.0" text="Valor Parcela" />

@@ -35,10 +35,13 @@ public class Fisica {
         if (cpf.trim().length() != 14) {
             throw new ExceptionValidacao("CPF inválido!");
         }
+        if (!validaCpf(cpf)) {
+            throw new ExceptionValidacao("CPF inválido!");
+        }
         this.cpf = cpf;
     }
 
-    public boolean valida(String cpf) {
+    public boolean validaCpf(String cpf) {
 
         String s1, s2, s3, s4, s5, s6, s7, s8, s9, confere = "";
         int n1, n2, n3, n4, n5, n6, n7, n8, n9, verificador1, verificador2;

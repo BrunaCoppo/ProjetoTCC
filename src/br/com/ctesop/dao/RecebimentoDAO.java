@@ -53,7 +53,7 @@ public class RecebimentoDAO {
 
         //atualiza status parcela
         if (recebimento.getParcelaReceber().getValorRestante() <= recebimento.getValorRecebimento()) {
-            sql = "update tbparcelapagar set status='P' where codparcelareceber=?";
+            sql = "update tbparcelareceber set status='P' where codparcelareceber=?";
             ps = con.getConexao().prepareStatement(sql);
             ps.setDouble(1, recebimento.getParcelaReceber().getCodigo());
             ps.execute();

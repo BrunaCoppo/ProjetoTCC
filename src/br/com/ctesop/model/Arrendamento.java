@@ -1,6 +1,6 @@
-
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.util.Date;
 
 /**
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Bruna
  */
 public class Arrendamento {
-    
+
     private int codigo;
     private Terra terra;
     private Date data;
@@ -28,7 +28,10 @@ public class Arrendamento {
         return terra;
     }
 
-    public void setTerra(Terra terra) {
+    public void setTerra(Terra terra) throws ExceptionValidacao {
+        if (terra == null) {
+            throw new ExceptionValidacao("Terra inválida!");
+        }
         this.terra = terra;
     }
 
@@ -36,7 +39,10 @@ public class Arrendamento {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+         if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 
@@ -63,8 +69,5 @@ public class Arrendamento {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
-    
-    
+
 }

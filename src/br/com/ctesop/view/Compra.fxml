@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CompraController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ctesop.control.CompraController">
    <children>
       <VBox fillWidth="false" layoutX="14.0" layoutY="14.0" prefHeight="460.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -83,8 +83,11 @@
                                     </RadioButton>
                                     <RadioButton fx:id="rbCancelado" mnemonicParsing="false" text="Cancelado" toggleGroup="$status" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </VBox.margin>
                               </HBox>
-                              <TableView fx:id="tbCompra" prefHeight="174.0" prefWidth="563.0">
+                              <TableView fx:id="tbCompra" prefHeight="204.0" prefWidth="576.0">
                                 <columns>
                                     <TableColumn fx:id="tcFornecedor" maxWidth="300.0" prefWidth="184.0" text="Fornecedor" />
                                   <TableColumn fx:id="tcData" maxWidth="150.0" prefWidth="184.0" text="Data" />
@@ -119,8 +122,11 @@
                               <Label text="Quantidade *" />
                               <TextField fx:id="tfQuantidade" />
                               <Label text="Valo Unitário *" />
-                              <TextField fx:id="tfValorUnitario" />
-                              <TableView fx:id="tbItemCompra" prefHeight="136.0" prefWidth="535.0">
+                              <TextField fx:id="tfValorUnitario">
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </VBox.margin></TextField>
+                              <TableView fx:id="tbItemCompra" prefHeight="188.0" prefWidth="535.0">
                                 <columns>
                                   <TableColumn fx:id="tcProduto" minWidth="200.0" prefWidth="200.0" text="Produto" />
                                   <TableColumn fx:id="tcQuantidade" prefWidth="75.0" text="Quantidade" />
