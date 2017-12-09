@@ -42,6 +42,8 @@ public class Fisica {
     }
 
     public boolean validaCpf(String cpf) {
+        
+        cpf = cpf.replace(".","").replace("-", "");
 
         String s1, s2, s3, s4, s5, s6, s7, s8, s9, confere = "";
         int n1, n2, n3, n4, n5, n6, n7, n8, n9, verificador1, verificador2;

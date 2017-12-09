@@ -103,6 +103,16 @@ public class MenuController implements Initializable {
         abrir("Recebimento", "Recebimento");
     }
 
+    @FXML
+    public void arrendamento(ActionEvent event) {
+        abrir("CadastroArrendamento", "Cadastro Arrendamento");
+    }
+
+    @FXML
+    public void manejo(ActionEvent event) {
+        abrir("Manejo", "Cadastro Manejo");
+    }
+
     private void abrir(String arquivo, String titulo) {
         try {
             String url = "/br/com/ctesop/view/" + arquivo + ".fxml";

@@ -43,7 +43,10 @@ public class ParcelaPagar {
         return contaPagar;
     }
 
-    public void setContaPagar(ContaPagar contaPagar) {
+    public void setContaPagar(ContaPagar contaPagar) throws ExceptionValidacao {
+        if (contaPagar == null) {
+            throw new ExceptionValidacao("Conta Pagar inválida!");
+        }
         this.contaPagar = contaPagar;
     }
 
@@ -56,7 +59,7 @@ public class ParcelaPagar {
     }
 
     public void setData(Date data) throws ExceptionValidacao {
-           if (data == null) {
+        if (data == null) {
             throw new ExceptionValidacao("Data inválida!");
         }
         this.data = data;
@@ -112,7 +115,7 @@ public class ParcelaPagar {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public String getStatusFormatado() {
         if (getValorRestante() <= 0) {
             return "Pago";

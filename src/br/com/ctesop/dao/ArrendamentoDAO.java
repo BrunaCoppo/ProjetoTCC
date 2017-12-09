@@ -2,8 +2,6 @@ package br.com.ctesop.dao;
 
 import br.com.ctesop.controller.util.ExceptionValidacao;
 import br.com.ctesop.model.Arrendamento;
-import br.com.ctesop.model.Cidade;
-import br.com.ctesop.model.Estado;
 import br.com.ctesop.model.Terra;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +16,7 @@ public class ArrendamentoDAO {
 
     public static void inserir(Arrendamento arrendamento) throws Exception {
 
-        String sql = "insert into tbarrendamento (codterra, data, valor, descricao, status) values (?,?,?,?,?)";
+        String sql = "insert into tbarrendamendo (codterra, data, valor, descricao, status) values (?,?,?,?,?)";
 
         Conexao con = new Conexao();
 
@@ -37,8 +35,11 @@ public class ArrendamentoDAO {
     public static ObservableList<Arrendamento> listar(boolean somenteAtivos) throws Exception {
         String sql = ""
                 + " select *"
-                + " from tbarrendamento as a"
-                + " inner join tbterra as t on t.codterra = a.codterra";
+                + " from tbarrendamendo as a"
+                + " inner join tbterra as t "
+                + "on t.codterra = a.codterra"
+                + " inner join tbcidade as c"
+                + " on c.codcidade= t.codcidade";
         if (somenteAtivos) {
             sql += " where a.status='A' ";
         }
@@ -52,7 +53,7 @@ public class ArrendamentoDAO {
             Arrendamento arrendamento = new Arrendamento();
             arrendamento.setCodigo(rs.getInt("a.codarrendamento"));
             arrendamento.setData(rs.getDate("a.data"));
-            arrendamento.setTerra(new Terra(rs.getInt("t.codestado"), rs.getString("t.nomeestado")));
+            arrendamento.setTerra(new Terra(rs.getInt("a.codterra"), rs.getString("c.nomecidade")));
             arrendamento.setValor(rs.getFloat("a.valor"));
             arrendamento.setDescricao(rs.getString("a.descricao"));
             arrendamento.setStatus(rs.getString("a.status"));
@@ -63,7 +64,7 @@ public class ArrendamentoDAO {
 
     public static void alterar(Arrendamento arrendamento) throws Exception {
 
-        String sql = "update tbarrendamento set codterra=?, data=?, valor=?, descricao=?, status=? where codarrendamento=?";
+        String sql = "update tbarrendamendo set codterra=?, data=?, valor=?, descricao=?, status=? where codarrendamento=?";
 
         Conexao con = new Conexao();
 
@@ -92,7 +93,7 @@ public class ArrendamentoDAO {
     }
 
     private static boolean existe(Arrendamento arrendamento) throws Exception {
-        String sql = "select count(codarrendamento) from tbarrendamento where codestado=?";
+        String sql = "select count(codarrendamento) from tbarrendamendo where codterra=?";
         Conexao c = new Conexao();
         PreparedStatement ps = c.getConexao().prepareStatement(sql);
         ps.setInt(1, arrendamento.getTerra().getCodigo());

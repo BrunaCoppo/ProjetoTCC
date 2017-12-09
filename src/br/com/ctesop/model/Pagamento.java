@@ -25,7 +25,7 @@ public class Pagamento {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -35,7 +35,10 @@ public class Pagamento {
         return pacelaPagar;
     }
 
-    public void setPacelaPagar(ParcelaPagar pacelaPagar) {
+    public void setPacelaPagar(ParcelaPagar pacelaPagar) throws ExceptionValidacao {
+        if (pacelaPagar == null) {
+            throw new ExceptionValidacao("Parcela inválida!");
+        }
         this.pacelaPagar = pacelaPagar;
     }
 
@@ -51,7 +54,10 @@ public class Pagamento {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+        if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 

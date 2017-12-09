@@ -15,7 +15,6 @@ public class Cooperativa {
     private String endereco;
     private String status;
 
-
     public Cooperativa(int codigo, String nome) {
         this.codigo = codigo;
         this.nome = nome;
@@ -49,7 +48,10 @@ public class Cooperativa {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(Cidade cidade) throws ExceptionValidacao {
+        if (cidade == null) {
+            throw new ExceptionValidacao("Cidade inválida!");
+        }
         this.cidade = cidade;
     }
 

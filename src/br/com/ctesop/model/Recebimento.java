@@ -25,7 +25,7 @@ public class Recebimento {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -35,7 +35,10 @@ public class Recebimento {
         return parcelaReceber;
     }
 
-    public void setParcelaReceber(ParcelaReceber parcelaReceber) {
+    public void setParcelaReceber(ParcelaReceber parcelaReceber) throws ExceptionValidacao {
+        if (parcelaReceber == null) {
+            throw new ExceptionValidacao("Parcela Receber inválida!");
+        }
         this.parcelaReceber = parcelaReceber;
     }
 

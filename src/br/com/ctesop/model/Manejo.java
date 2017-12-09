@@ -1,6 +1,6 @@
-
 package br.com.ctesop.model;
 
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Bruna
  */
 public class Manejo {
-    
+
     private int codigo;
     private Terra terra;
     private TipoManejo tipManejo;
@@ -24,7 +24,7 @@ public class Manejo {
     }
 
     public void setCodigo(int codigo) {
-         if (codigo < 0) {
+        if (codigo < 0) {
             throw new InvalidParameterException("Código inválido.");
         }
         this.codigo = codigo;
@@ -34,7 +34,10 @@ public class Manejo {
         return terra;
     }
 
-    public void setTerra(Terra terra) {
+    public void setTerra(Terra terra) throws ExceptionValidacao {
+        if (terra == null) {
+            throw new ExceptionValidacao("Terra inválida!");
+        }
         this.terra = terra;
     }
 
@@ -42,7 +45,10 @@ public class Manejo {
         return tipManejo;
     }
 
-    public void setTipManejo(TipoManejo tipManejo) {
+    public void setTipManejo(TipoManejo tipManejo) throws ExceptionValidacao {
+        if (tipManejo == null) {
+            throw new ExceptionValidacao("Tipo Manejo inválida!");
+        }
         this.tipManejo = tipManejo;
     }
 
@@ -50,7 +56,10 @@ public class Manejo {
         return safra;
     }
 
-    public void setSafra(Safra safra) {
+    public void setSafra(Safra safra) throws ExceptionValidacao {
+        if (safra == null) {
+            throw new ExceptionValidacao("Safra inválida!");
+        }
         this.safra = safra;
     }
 
@@ -58,7 +67,14 @@ public class Manejo {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(String descricao) throws ExceptionValidacao {
+        if (descricao.trim().length() < 2) {
+            throw new ExceptionValidacao("Descrição muito curto.");
+        }
+        if (descricao.trim().length() > 200) {
+            throw new ExceptionValidacao("Desceição muito longo.");
+
+        }
         this.descricao = descricao;
     }
 
@@ -74,7 +90,10 @@ public class Manejo {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+        if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 
@@ -85,7 +104,5 @@ public class Manejo {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
-    
+
 }

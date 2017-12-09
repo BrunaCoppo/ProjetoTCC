@@ -44,7 +44,7 @@ public class RecebimentoController implements Initializable {
 
     @FXML
     private TableColumn<ContaReceber, String> tcContaValor;
-    
+
     @FXML
     private TableColumn<ContaReceber, String> tcContaRestante;
 
@@ -115,23 +115,26 @@ public class RecebimentoController implements Initializable {
             caixaTexto.setContentText("Informe o valor a recebido:");
             caixaTexto.showAndWait();
 
-            NumberFormat nf = NumberFormat.getNumberInstance();
-            float valorReceber = nf.parse(caixaTexto.getResult()).floatValue();
+            try {
+                NumberFormat nf = NumberFormat.getNumberInstance();
+                float valorReceber = nf.parse(caixaTexto.getResult()).floatValue();
 
-            
-            ParcelaReceber parcela = tbParcelaReceber.getSelectionModel().getSelectedItem();
-            if (valorReceber > parcela.getValorRestante()) {
-                valorReceber = parcela.getValorRestante();
+                ParcelaReceber parcela = tbParcelaReceber.getSelectionModel().getSelectedItem();
+                if (valorReceber > parcela.getValorRestante()) {
+                    valorReceber = parcela.getValorRestante();
+                }
+
+                Recebimento recebimento = new Recebimento();
+                recebimento.setDataRecebimento(new Date());
+                recebimento.setDescricao("Recebimento da parcela " + parcela.getCodigo());
+                recebimento.setParcelaReceber(parcela);
+                recebimento.setValorRecebimento(valorReceber);
+                recebimento.setStatus("R");
+
+                RecebimentoDAO.receber(recebimento);
+            } catch (Exception e) {
+                Alerta.alerta("Valor invalido.");
             }
-
-            Recebimento recebimento = new Recebimento();
-            recebimento.setDataRecebimento(new Date());
-            recebimento.setDescricao("Recebimento da parcela " + parcela.getCodigo());
-            recebimento.setParcelaReceber(parcela);
-            recebimento.setValorRecebimento(valorReceber);
-            recebimento.setStatus("R");
-
-            RecebimentoDAO.receber(recebimento);
 
             atualizarTabelaConta();
             atualizarTabelaParcelas();

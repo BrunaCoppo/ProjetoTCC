@@ -124,6 +124,9 @@ public class ContaPagarController implements Initializable {
             contaPagar.setDescricao(tfDescricao.getText());
             contaPagar.setCompra(compra);
 
+            if (contaPagar.getData() == null) {
+                throw new Exception("Data inválida.");
+            }
             if (rbPrazo.isSelected()) {
                 contaPagar.setFormaPagamento("P");
                 contaPagar.setStatus("A");

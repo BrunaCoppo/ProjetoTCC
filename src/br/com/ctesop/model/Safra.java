@@ -44,7 +44,10 @@ public class Safra {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(Produto produto) throws ExceptionValidacao {
+        if (produto == null) {
+            throw new ExceptionValidacao("Produto inválida!");
+        }
         this.produto = produto;
     }
 
@@ -52,7 +55,10 @@ public class Safra {
         return tipoSafra;
     }
 
-    public void setTipoSafra(TipoSafra tipoSafra) {
+    public void setTipoSafra(TipoSafra tipoSafra) throws ExceptionValidacao {
+        if (tipoSafra == null) {
+            throw new ExceptionValidacao("Tipo da Safra inválida!");
+        }
         this.tipoSafra = tipoSafra;
     }
 
@@ -63,9 +69,11 @@ public class Safra {
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
+
     public String getDataInicioFormatada() {
         return Converter.formatarData(dataInicio);
     }
+
     public Date getDataTermino() {
         return dataTermino;
     }
@@ -75,9 +83,7 @@ public class Safra {
     }
 
     public String getDataTerminoFormatada() {
-        if (getDataTermino()== null
-        
-            ) {
+        if (getDataTermino() == null) {
             return "";
         }
         return Converter.formatarData(dataTermino);

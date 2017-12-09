@@ -25,7 +25,7 @@ public class Compra {
     }
 
     public Compra() {
-        
+
     }
 
     public Compra(int codigo, String fornecedor) throws ExceptionValidacao {
@@ -33,7 +33,6 @@ public class Compra {
         this.fornecedor = new Fornecedor(fornecedor);
     }
 
-    
     public int getCodigo() {
         return codigo;
     }
@@ -50,18 +49,20 @@ public class Compra {
     }
 
     public void setFornecedor(Pessoa fornecedor) throws ExceptionValidacao {
-         if (fornecedor == null) {
+        if (fornecedor == null) {
             throw new ExceptionValidacao("Fornecedor inválido!");
         }
         this.fornecedor = fornecedor;
     }
 
-
     public Date getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+        if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 

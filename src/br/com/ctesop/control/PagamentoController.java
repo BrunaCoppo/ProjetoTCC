@@ -109,26 +109,27 @@ public class PagamentoController implements Initializable {
             caixaTexto.setHeaderText("Pagamento");
             caixaTexto.setContentText("Informe o valor a pagar:");
             caixaTexto.showAndWait();
-            
 
-            NumberFormat nf = NumberFormat.getNumberInstance();
-            float valorPagar = nf.parse(caixaTexto.getResult()).floatValue();
-            
-            ParcelaPagar parcela = tbParcelaPagar.getSelectionModel().getSelectedItem();
-            if(valorPagar > parcela.getValorRestante()){
-                valorPagar = parcela.getValorRestante();
+            try {
+                NumberFormat nf = NumberFormat.getNumberInstance();
+                float valorPagar = nf.parse(caixaTexto.getResult()).floatValue();
+
+                ParcelaPagar parcela = tbParcelaPagar.getSelectionModel().getSelectedItem();
+                if (valorPagar > parcela.getValorRestante()) {
+                    valorPagar = parcela.getValorRestante();
+                }
+                Pagamento pagamento = new Pagamento();
+                pagamento.setData(new Date());
+                pagamento.setDescricao("Pagamento da parcela " + parcela.getCodigo());
+                pagamento.setPacelaPagar(parcela);
+                pagamento.setValor(valorPagar);
+                pagamento.setStatus("P");
+
+                PagamentoDAO.pagar(pagamento);
+            } catch (Exception e) {
+                Alerta.alerta("Valor invalido");
             }
-            
-            
-            Pagamento pagamento = new Pagamento();
-            pagamento.setData(new Date());
-            pagamento.setDescricao("Pagamento da parcela " + parcela.getCodigo());
-            pagamento.setPacelaPagar(parcela);
-            pagamento.setValor(valorPagar);
-            pagamento.setStatus("P");
 
-            PagamentoDAO.pagar(pagamento);
-            
             atualizarTabelaContas();
             atualizarTabelaParcelas();
         } catch (Exception e) {
@@ -138,7 +139,8 @@ public class PagamentoController implements Initializable {
     }
 
     @FXML
-    void cancelar(ActionEvent event) {
+    void cancelar(ActionEvent event
+    ) {
         //fecha janela
         ((Stage) tbContaPagar.getScene().getWindow()).close();
     }

@@ -36,7 +36,7 @@ public class Pessoa {
         return juridica;
     }
 
-    public void setJuridica(Juridica juridica) {
+    public void setJuridica(Juridica juridica) throws ExceptionValidacao {
         this.juridica = juridica;
     }
 
@@ -53,7 +53,7 @@ public class Pessoa {
     }
 
     public void setCidade(Cidade cidade) throws ExceptionValidacao {
-        if(cidade == null){
+        if (cidade == null) {
             throw new ExceptionValidacao("Cidade inválida!");
         }
         this.cidade = cidade;
@@ -64,9 +64,9 @@ public class Pessoa {
     }
 
     public void setNome(String nome) throws ExceptionValidacao {
-        if(nome.trim().length() < 3){
+        if (nome.trim().length() < 3) {
             throw new ExceptionValidacao("Nome inválido!");
-        }        
+        }
         this.nome = nome;
     }
 
@@ -98,7 +98,7 @@ public class Pessoa {
         return email;
     }
 
-    public void setEmail(String email) {        
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -123,6 +123,5 @@ public class Pessoa {
         }
         return false;
     }
-
 
 }

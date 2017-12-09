@@ -1,6 +1,7 @@
 package br.com.ctesop.model;
 
 import br.com.ctesop.controller.util.Converter;
+import br.com.ctesop.controller.util.ExceptionValidacao;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.Date;
@@ -41,7 +42,10 @@ public class ParcelaReceber {
         return contaReceber;
     }
 
-    public void setContaReceber(ContaReceber contaReceber) {
+    public void setContaReceber(ContaReceber contaReceber) throws ExceptionValidacao {
+        if (contaReceber == null) {
+            throw new ExceptionValidacao("Conta Receber inválida!");
+        }
         this.contaReceber = contaReceber;
     }
 
@@ -83,7 +87,10 @@ public class ParcelaReceber {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) throws ExceptionValidacao {
+        if (data == null) {
+            throw new ExceptionValidacao("Data inválida!");
+        }
         this.data = data;
     }
 
@@ -98,14 +105,13 @@ public class ParcelaReceber {
     public void setStatus(String Status) {
         this.Status = Status;
     }
-    
-        public String getStatusFormatado() {
+
+    public String getStatusFormatado() {
         if (getValorRestante() <= 0) {
             return "Recebido";
         } else {
             return "Aberta";
         }
     }
-
 
 }

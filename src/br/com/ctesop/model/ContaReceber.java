@@ -57,7 +57,10 @@ public class ContaReceber {
         return entregaProducao;
     }
 
-    public void setEntregaProducao(EntregaProducao entregaProducao) {
+    public void setEntregaProducao(EntregaProducao entregaProducao) throws ExceptionValidacao {
+        if (entregaProducao == null) {
+            throw new ExceptionValidacao("Entrega de Produção inválida!");
+        }
         this.entregaProducao = entregaProducao;
     }
 

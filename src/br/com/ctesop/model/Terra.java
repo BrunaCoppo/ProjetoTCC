@@ -100,7 +100,7 @@ public class Terra {
 
     @Override
     public String toString() {
-        return getDescricao();
+        return getDescricao() + " "+ getTamanhoFormatado() + " " + getCidade();
     }
 
     @Override

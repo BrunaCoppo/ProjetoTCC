@@ -55,7 +55,10 @@ public class ContaPagar {
         return compra;
     }
 
-    public void setCompra(Compra compra) {
+    public void setCompra(Compra compra) throws ExceptionValidacao {
+        if (compra == null) {
+            throw new ExceptionValidacao("Compra inválida!");
+        }
         this.compra = compra;
     }
 
@@ -67,7 +70,10 @@ public class ContaPagar {
         return arrendamento;
     }
 
-    public void setArrendamento(Arrendamento arrendamento) {
+    public void setArrendamento(Arrendamento arrendamento) throws ExceptionValidacao {
+        if (arrendamento == null) {
+            throw new ExceptionValidacao("Arrendamento inválida!");
+        }
         this.arrendamento = arrendamento;
     }
 
